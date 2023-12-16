@@ -1,0 +1,95 @@
+package gena
+
+import "math"
+
+/*
+XX YX  0
+XY YY  0
+X0 Y0  1
+*/
+type Matrix struct {
+	XX, YX,
+	XY, YY,
+	X0, Y0 float64
+}
+
+var Identity = Matrix{
+	1, 0,
+	0, 1,
+	0, 0,
+}
+
+func Translate(v V2) Matrix {
+	return Matrix{
+		1, 0,
+		0, 1,
+		X(v), Y(v),
+	}
+}
+
+func Scale(v V2) Matrix {
+	return Matrix{
+		X(v), 0,
+		0, Y(v),
+		0, 0,
+	}
+}
+
+func Rotate(angle float64) Matrix {
+	c := math.Cos(angle)
+	s := math.Sin(angle)
+	return Matrix{
+		c, s,
+		-s, c,
+		0, 0,
+	}
+}
+
+func Shear(v V2) Matrix {
+	return Matrix{
+		1, Y(v),
+		X(v), 1,
+		0, 0,
+	}
+}
+
+func (a Matrix) Multiply(b Matrix) Matrix {
+	return Matrix{
+		a.XX*b.XX + a.YX*b.XY,
+		a.XX*b.YX + a.YX*b.YY,
+		a.XY*b.XX + a.YY*b.XY,
+		a.XY*b.YX + a.YY*b.YY,
+		a.X0*b.XX + a.Y0*b.XY + b.X0,
+		a.X0*b.YX + a.Y0*b.YY + b.Y0,
+	}
+}
+
+func (a Matrix) TransformVector(p V2) V2 {
+	return complex(
+		a.XX*X(p)+a.XY*Y(p),
+		a.YX*X(p)+a.YY*Y(p),
+	)
+}
+
+func (a Matrix) TransformPoint(v V2) V2 {
+	return complex(
+		a.XX*X(v)+a.XY*Y(v)+a.X0,
+		a.YX*X(v)+a.YY*Y(v)+a.Y0,
+	)
+}
+
+func (a Matrix) Translate(v V2) Matrix {
+	return Translate(v).Multiply(a)
+}
+
+func (a Matrix) Scale(v V2) Matrix {
+	return Scale(v).Multiply(a)
+}
+
+func (a Matrix) Rotate(angle float64) Matrix {
+	return Rotate(angle).Multiply(a)
+}
+
+func (a Matrix) Shear(v V2) Matrix {
+	return Shear(v).Multiply(a)
+}
