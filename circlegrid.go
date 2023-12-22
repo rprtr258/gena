@@ -92,7 +92,6 @@ func CircleGrid(c Canvas, lineWidth float64, circleNumMin, circleNumMax int) {
 						dc.DrawLine(complex(r/2, 0), complex(r*2/3-r*0.05, 0))
 						dc.Stroke()
 					}
-
 				}
 			})
 		}
