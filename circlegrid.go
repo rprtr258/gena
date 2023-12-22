@@ -49,7 +49,7 @@ func CircleGrid(c Canvas, lineWidth float64, circleNumMin, circleNumMax int) {
 			dc.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
 			dc.DrawCircleV2(v, w/2*RandomFloat64(0.1, 0.5))
 			dc.Fill()
-			func(lineWidth float64, c Canvas, v V2, r float64) {
+			func(c Canvas, v V2, r float64) {
 				rnd := rand.Intn(4)
 				col := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
 				dc.Stack(func(dc *Context) {
@@ -93,7 +93,7 @@ func CircleGrid(c Canvas, lineWidth float64, circleNumMin, circleNumMax int) {
 
 					}
 				})
-			}(lineWidth, c, v, w/2*RandomFloat64(0.6, 0.95))
+			}(c, v, w/2*RandomFloat64(0.6, 0.95))
 		}
 	}
 }
