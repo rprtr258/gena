@@ -16,5 +16,5 @@ func ellipse() {
 		})
 	}
 	dc.DrawImageAnchored(gena.LoadImage("cmd/gopher.png"), S/2, S/2, 0.5, 0.5)
-	dc.SavePNG("ellipse.png")
+	gena.SavePNG("ellipse.png", dc.Image())
 }

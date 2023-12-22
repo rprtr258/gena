@@ -2,7 +2,6 @@
 package gena
 
 import (
-	"errors"
 	"image"
 	"image/color"
 	"image/jpeg"
@@ -17,6 +16,15 @@ import (
 	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/math/f64"
 )
+
+func Size(img *image.RGBA) V2 {
+	return complex(float64(img.Bounds().Dx()), float64(img.Bounds().Dy()))
+}
+
+// FillBackground fills the background of the Canvas
+func FillBackground(img *image.RGBA, bg color.RGBA) {
+	draw.Draw(img, img.Bounds(), &image.Uniform{bg}, image.Point{}, draw.Src)
+}
 
 type LineCap int
 
@@ -54,8 +62,7 @@ var (
 )
 
 type Context struct {
-	width         int
-	height        int
+	width, height int
 	rasterizer    *raster.Rasterizer
 	im            *image.RGBA
 	mask          *image.Alpha
@@ -76,19 +83,12 @@ type Context struct {
 	fontFace      font.Face
 	fontHeight    float64
 	matrix        Matrix
-	stack         []*Context
 }
 
 // NewContext creates a new image.RGBA with the specified width and height
 // and prepares a context for rendering onto that image.
 func NewContext(width, height int) *Context {
 	return NewContextForRGBA(image.NewRGBA(image.Rect(0, 0, width, height)))
-}
-
-// NewContextForImage copies the specified image into a new image.RGBA
-// and prepares a context for rendering onto that image.
-func NewContextForImage(im image.Image) *Context {
-	return NewContextForRGBA(imageToRGBA(im))
 }
 
 // NewContextForRGBA prepares a context for rendering onto the specified image.
@@ -119,7 +119,7 @@ func (dc *Context) GetCurrentPoint() (V2, bool) {
 }
 
 // Image returns the image that has been drawn by this context.
-func (dc *Context) Image() image.Image {
+func (dc *Context) Image() *image.RGBA {
 	return dc.im
 }
 
@@ -133,26 +133,16 @@ func (dc *Context) Height() int {
 	return dc.height
 }
 
-// SavePNG encodes the image as a PNG and writes it to disk.
-func (dc *Context) SavePNG(path string) {
-	SavePNG(path, dc.im)
-}
-
-// SaveJPG encodes the image as a JPG and writes it to disk.
-func (dc *Context) SaveJPG(path string, quality int) error {
-	return SaveJPG(path, dc.im, quality)
-}
-
 // EncodePNG encodes the image as a PNG and writes it to the provided io.Writer.
-func (dc *Context) EncodePNG(w io.Writer) error {
-	return png.Encode(w, dc.im)
+func (dc *Context) EncodePNG(w io.Writer) {
+	must(png.Encode(w, dc.im))
 }
 
 // EncodeJPG encodes the image as a JPG and writes it to the provided io.Writer
 // in JPEG 4:2:0 baseline format with the given options.
 // Default parameters are used if a nil *jpeg.Options is passed.
-func (dc *Context) EncodeJPG(w io.Writer, o *jpeg.Options) error {
-	return jpeg.Encode(w, dc.im, o)
+func (dc *Context) EncodeJPG(w io.Writer, o *jpeg.Options) {
+	must(jpeg.Encode(w, dc.im, o))
 }
 
 // SetDash sets the current dash pattern to use. Call with zero arguments to
@@ -247,15 +237,14 @@ func (dc *Context) SetHexColor(x string) {
 	dc.SetRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, a)
 }
 
-// SetRGBA255 sets the current color. r, g, b, a values should be between 0 and
-// 255, inclusive.
+// SetRGBA255 sets the current color. r, g, b, a values should be between 0 and 255, inclusive.
 func (dc *Context) SetRGBA255(cl color.RGBA, a int) {
 	dc.color = color.NRGBA{cl.R, cl.G, cl.B, uint8(a)}
 	dc.setFillAndStrokeColor(dc.color)
 }
 
-// SetRGB255 sets the current color. r, g, b values should be between 0 and 255,
-// inclusive. Alpha will be set to 255 (fully opaque).
+// SetRGB255 sets the current color. r, g, b values should be between 0 and 255, inclusive.
+// Alpha will be set to 255 (fully opaque).
 func (dc *Context) SetRGB255(r, g, b int) {
 	dc.SetRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, 255)
 }
@@ -509,20 +498,18 @@ func (dc *Context) ClipPreserve() {
 	}
 }
 
-// SetMask allows you to directly set the *image.Alpha to be used as a clipping
-// mask. It must be the same size as the context, else an error is returned
-// and the mask is unchanged.
-func (dc *Context) SetMask(mask *image.Alpha) error {
+// SetMask allows you to directly set the *image.Alpha to be used as a clipping mask.
+// It must be the same size as the context.
+func (dc *Context) SetMask(mask *image.Alpha) {
 	if mask.Bounds().Size() != dc.im.Bounds().Size() {
-		return errors.New("mask size must match context size")
+		panic("mask size must match context size")
 	}
+
 	dc.mask = mask
-	return nil
 }
 
-// AsMask returns an *image.Alpha representing the alpha channel of this
-// context. This can be useful for advanced clipping operations where you first
-// render the mask geometry and then use it as a mask.
+// AsMask returns an *image.Alpha representing the alpha channel of this context.
+// This can be useful for advanced clipping operations where you first render the mask geometry and then use it as a mask.
 func (dc *Context) AsMask() *image.Alpha {
 	mask := image.NewAlpha(dc.im.Bounds())
 	draw.Draw(mask, dc.im.Bounds(), dc.im, image.Point{}, draw.Src)
@@ -611,7 +598,7 @@ func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
 
 func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 	const n = 16
-	for i := 0; i < n; i++ {
+	for i := range n {
 		a1 := Lerp(angle1, angle2, float64(i+0)/n)
 		a2 := Lerp(angle1, angle2, float64(i+1)/n)
 		v0 := center + Mul2(Rotation(a1), r)
@@ -657,7 +644,7 @@ func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 	}
 
 	dc.NewSubPath()
-	for i := 0; i < n; i++ {
+	for i := range n {
 		a := rotation + angle*float64(i)
 		dc.LineToV2(Polar(r, a) + complex(x, y))
 	}
@@ -882,15 +869,13 @@ func (dc *Context) InvertY() {
 func (dc *Context) Stack(fn func(*Context)) {
 	// Push saves the current state of the context for later retrieval. These
 	// can be nested.
-	dc.stack = append(dc.stack, func(dc Context) *Context { return &dc }(*dc)) // you cannot just &*x to copy pointer&value
+	old := func(dc Context) *Context { return &dc }(*dc) // you cannot just &*x to copy pointer&value
 
 	fn(dc)
 
 	// Pop restores the last saved context state from the stack.
 	before := *dc
-	s := dc.stack
-	x, s := s[len(s)-1], s[:len(s)-1]
-	*dc = *x
+	*dc = *old
 	dc.mask = before.mask
 	dc.strokePath = before.strokePath
 	dc.fillPath = before.fillPath

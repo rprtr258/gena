@@ -1,6 +1,9 @@
 package gena
 
-import "math"
+import (
+	"image"
+	"math"
+)
 
 type circles struct {
 	pos                V2
@@ -13,17 +16,17 @@ type circles struct {
 //   - dotsN: The number of dots in each circle.
 //   - colorMin: The minimum color.
 //   - colorMax: The maximum color.
-func PerlinPearls(c Canvas, lineWidth float64, alpha uint8, circleN, dotsN, colorMin, colorMax, iters int) {
-	ctex := NewContextForRGBA(c.Img())
-	ctex.SetLineWidth(0.5)
-	ctex.SetColor(Black)
+func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN, colorMin, colorMax, iters int) {
+	dc := NewContextForRGBA(c)
+	dc.SetLineWidth(0.5)
+	dc.SetColor(Black)
 
 	cs := make([]circles, 0)
 	for len(cs) < circleN {
 		c := circles{
 			pos: complex(
-				RandomFloat64(100, float64(c.Width)-50),
-				RandomFloat64(100, float64(c.Height)-50),
+				RandomFloat64(100, float64(c.Bounds().Dx())-50),
+				RandomFloat64(100, float64(c.Bounds().Dy())-50),
 			),
 			radius:   RandomFloat64(20, 100),
 			colorMin: colorMin,
@@ -44,9 +47,9 @@ func PerlinPearls(c Canvas, lineWidth float64, alpha uint8, circleN, dotsN, colo
 	}
 
 	ds := make([][]dot, circleN)
-	for i := 0; i < circleN; i++ {
+	for i := range circleN {
 		dots := make([]dot, dotsN)
-		for j := 0; j < dotsN; j++ {
+		for j := range dotsN {
 			p := cs[i].pos + Polar(cs[i].radius, RandomFloat64(0, math.Pi*2))
 			dots[j] = dot{pos: p, prev: p, count: 0}
 		}
@@ -55,14 +58,14 @@ func PerlinPearls(c Canvas, lineWidth float64, alpha uint8, circleN, dotsN, colo
 
 	noise := NewPerlinNoiseDeprecated()
 
-	for i := 0; i < circleN; i++ {
-		ctex.SetLineWidth(0.5)
-		ctex.SetColor(Black)
-		ctex.DrawCircleV2(cs[i].pos, cs[i].radius)
-		ctex.Stroke()
+	for i := range circleN {
+		dc.SetLineWidth(0.5)
+		dc.SetColor(Black)
+		dc.DrawCircleV2(cs[i].pos, cs[i].radius)
+		dc.Stroke()
 
 		const factor = 0.008
-		for j := 0; j < iters; j++ {
+		for range iters {
 			for k := range ds[i] {
 				n := noise.NoiseV2(ds[i][k].pos * factor)
 				ds[i][k].prev = ds[i][k].pos
@@ -74,16 +77,16 @@ func PerlinPearls(c Canvas, lineWidth float64, alpha uint8, circleN, dotsN, colo
 
 				if Dist(cs[i].pos, ds[i][k].pos) < cs[i].radius &&
 					Dist(cs[i].pos, ds[i][k].prev) < cs[i].radius {
-					ctex.SetLineWidth(lineWidth)
+					dc.SetLineWidth(lineWidth)
 					rgb := HSV{
 						H: int(Remap(n, 0, 1, float64(cs[i].colorMin), float64(cs[i].colorMax))),
 						S: 100,
 						V: 20,
 					}.ToRGB(100, 100, 100)
 					rgb.A = alpha
-					ctex.SetColor(rgb)
-					ctex.DrawLine(ds[i][k].prev, ds[i][k].pos)
-					ctex.Stroke()
+					dc.SetColor(rgb)
+					dc.DrawLine(ds[i][k].prev, ds[i][k].pos)
+					dc.Stroke()
 				}
 			}
 		}

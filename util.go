@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"image"
 	"image/draw"
-	"image/jpeg"
-	"image/png"
 	"math"
 	"os"
 	"strings"
@@ -15,43 +13,18 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-func LoadImage(path string) image.Image {
-	file := must1(os.Open(path))
-	defer file.Close()
-
-	im, _, err := image.Decode(file)
-	must(err)
-	return im
+func must(err error) {
+	if err != nil {
+		panic(err.Error())
+	}
 }
 
-func LoadPNG(path string) (image.Image, error) {
-	file := must1(os.Open(path))
-	defer file.Close()
+func must1[T any](res T, err error) T {
+	if err != nil {
+		panic(err.Error())
+	}
 
-	return png.Decode(file)
-}
-
-func SavePNG(path string, im image.Image) {
-	file := must1(os.Create(path))
-	defer file.Close()
-
-	must(png.Encode(file, im))
-}
-
-func LoadJPG(path string) image.Image {
-	file := must1(os.Open(path))
-	defer file.Close()
-
-	return must1(jpeg.Decode(file))
-}
-
-func SaveJPG(path string, im image.Image, quality int) error {
-	file := must1(os.Create(path))
-	defer file.Close()
-
-	return jpeg.Encode(file, im, &jpeg.Options{
-		Quality: quality,
-	})
+	return res
 }
 
 func imageToRGBA(src image.Image) *image.RGBA {

@@ -12,7 +12,7 @@ func lines() {
 	dc := gena.NewContext(W, H)
 	dc.SetRGB(0, 0, 0)
 	dc.Clear()
-	for i := 0; i < 1000; i++ {
+	for range 1000 {
 		x1 := rand.Float64() * W
 		y1 := rand.Float64() * H
 		x2 := rand.Float64() * W
@@ -27,5 +27,5 @@ func lines() {
 		dc.DrawLine(complex(x1, y1), complex(x2, y2))
 		dc.Stroke()
 	}
-	dc.SavePNG("lines.png")
+	gena.SavePNG("lines.png", dc.Image())
 }

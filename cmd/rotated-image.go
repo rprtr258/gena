@@ -5,10 +5,7 @@ import "github.com/rprtr258/gena"
 func rotatedImage() {
 	const W = 400
 	const H = 500
-	im, err := gena.LoadPNG("cmd/gopher.png")
-	if err != nil {
-		panic(err)
-	}
+	im := gena.LoadPNG("cmd/gopher.png")
 	iw, ih := im.Bounds().Dx(), im.Bounds().Dy()
 	dc := gena.NewContext(W, H)
 	// draw outline
@@ -30,5 +27,5 @@ func rotatedImage() {
 	dc.StrokePreserve()
 	dc.Clip()
 	dc.DrawImageAnchored(im, 100, 0, 0.0, 0.0)
-	dc.SavePNG("rotatedImage.png")
+	gena.SavePNG("rotatedImage.png", dc.Image())
 }

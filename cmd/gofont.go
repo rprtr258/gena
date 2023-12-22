@@ -22,5 +22,5 @@ func gofont() {
 	dc.Clear()
 	dc.SetRGB(0, 0, 0)
 	dc.DrawStringAnchored("Hello, world!", 512, 512, 0.5, 0.5)
-	dc.SavePNG("gofont.png")
+	gena.SavePNG("gofont.png", dc.Image())
 }

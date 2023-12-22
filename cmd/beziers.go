@@ -59,8 +59,8 @@ func beziers() {
 	dc := gena.NewContext(S*W, S*H)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
-	for j := 0; j < H; j++ {
-		for i := 0; i < W; i++ {
+	for j := range H {
+		for i := range W {
 			v := gena.Plus(complex(float64(i), float64(j))*S, S/2)
 			dc.Stack(func(dc *gena.Context) {
 				dc.Translate(v)
@@ -73,5 +73,5 @@ func beziers() {
 			})
 		}
 	}
-	dc.SavePNG("beziers.png")
+	gena.SavePNG("beziers.png", dc.Image())
 }

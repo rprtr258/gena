@@ -1,21 +1,22 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"math/rand"
 )
 
 // Generative draws a color circle images.
-func ColorCircle(c Canvas, colorSchema []color.RGBA, circleNum int) {
-	dc := NewContextForRGBA(c.Img())
+func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
+	dc := NewContextForRGBA(c)
 
-	for i := 0; i < circleNum; i++ {
+	for range circleNum {
 		v := Mul2(complex(
 			RandomFloat64(-0.1, 1.1),
 			RandomFloat64(-0.1, 1.1),
-		), c.Size())
-		s := RandomFloat64(0, RandomFloat64(0, float64(c.Width/2))) + 10
+		), Size(c))
+		s := RandomFloat64(0, RandomFloat64(0, float64(c.Bounds().Dx()/2))) + 10
 
 		rnd := rand.Intn(3)
 		if rnd == 2 {
@@ -50,7 +51,7 @@ func ColorCircle(c Canvas, colorSchema []color.RGBA, circleNum int) {
 				cl.A = uint8(alpha)
 				dc.SetColor(cl)
 
-				for i := 0; i < 200; i++ {
+				for range 200 {
 					theta := RandomFloat64(0, math.Pi*2)
 					dc.DrawPoint(v+Polar(dd*0.3, theta), 0.6)
 					dc.Stroke()

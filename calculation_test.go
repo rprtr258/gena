@@ -7,31 +7,28 @@ import (
 )
 
 func TestConstrain(t *testing.T) {
-	tests := []struct {
-		name         string
+	for name, tt := range map[string]struct {
 		x, low, high float64
 		want         float64
 	}{
-		{name: "testcase1", x: 1.0, low: 0.5, high: 1.5, want: 1.0},
-		{name: "testcase2", x: 0.4, low: 0.5, high: 1.5, want: 0.5},
-		{name: "testcase3", x: -1.0, low: -3.5, high: 1.5, want: -1.0},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		"testcase1": {x: 1.0, low: 0.5, high: 1.5, want: 1.0},
+		"testcase2": {x: 0.4, low: 0.5, high: 1.5, want: 0.5},
+		"testcase3": {x: -1.0, low: -3.5, high: 1.5, want: -1.0},
+	} {
+		t.Run(name, func(t *testing.T) {
 			assert.Equal(t, tt.want, Constrain(tt.x, tt.low, tt.high))
 		})
 	}
 
-	for _, tt := range []struct {
-		name         string
+	for name, tt := range map[string]struct {
 		x, low, high int
 		want         int
 	}{
-		{name: "testcase1", x: 256, low: 0, high: 255, want: 255},
-		{name: "testcase2", x: -1, low: 0, high: 255, want: 0},
-		{name: "testcase3", x: 100, low: 0, high: 255, want: 100},
+		"testcase1": {x: 256, low: 0, high: 255, want: 255},
+		"testcase2": {x: -1, low: 0, high: 255, want: 0},
+		"testcase3": {x: 100, low: 0, high: 255, want: 100},
 	} {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			assert.Equal(t, tt.want, Constrain(tt.x, tt.low, tt.high))
 		})
 	}

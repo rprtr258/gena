@@ -1,21 +1,31 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math/rand"
 )
 
 // SilkSmoke draws a silk smoke image.
-func SilkSmoke(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, alpha int, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool) {
-	ctex := NewContextForRGBA(c.Img())
+func SilkSmoke(
+	c *image.RGBA,
+	colorSchema []color.RGBA,
+	lineWidth float64,
+	lineColor color.RGBA,
+	alpha int,
+	maxCircle, maxStepsPerCircle int,
+	minSteps, maxSteps, minRadius, maxRadius float64,
+	isRandColor bool,
+) {
+	dc := NewContextForRGBA(c)
 
 	cn := rand.Intn(maxCircle) + int(maxCircle/3)
-	circles := newCircleSlice(cn, c.Width, c.Height, minSteps, maxSteps, minRadius, maxRadius)
+	circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
-	for i := 0; i < maxStepsPerCircle; i++ {
-		ctex.SetRGBA255(color.RGBA{}, 5)
-		ctex.DrawRectangle(0, c.Size())
-		ctex.Fill()
+	for range maxStepsPerCircle {
+		dc.SetRGBA255(color.RGBA{}, 5)
+		dc.DrawRectangle(0, Size(c))
+		dc.Fill()
 
 		for _, c1 := range circles {
 			for _, c2 := range circles {
@@ -30,21 +40,19 @@ func SilkSmoke(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor 
 				}
 
 				if Dist(c1.pos, c2.pos) <= c1.radius+c2.radius {
-					cc := (c1.pos + c2.pos) / 2
+					dc.SetRGBA255(cl, alpha)
+					dc.SetLineWidth(lineWidth)
 
-					ctex.SetRGBA255(cl, alpha)
-					ctex.SetLineWidth(lineWidth)
+					dc.LineToV2(c1.pos)
+					dc.LineToV2(c2.pos)
+					dc.LineToV2((c1.pos + c2.pos) / 2)
+					dc.LineToV2(c1.pos)
 
-					ctex.LineToV2(c1.pos)
-					ctex.LineToV2(c2.pos)
-					ctex.LineToV2(cc)
-					ctex.LineToV2(c1.pos)
-
-					ctex.Stroke()
+					dc.Stroke()
 				}
 			}
 		}
 
-		circles = circleSliceUpdate(circles, c.Width, c.Height)
+		circles = circleSliceUpdate(circles, c.Bounds())
 	}
 }

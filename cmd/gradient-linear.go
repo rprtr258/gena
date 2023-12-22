@@ -35,5 +35,5 @@ func gradientLinear() {
 	dc.ClosePath()
 	dc.Fill()
 
-	dc.SavePNG("gradientLinear.png")
+	gena.SavePNG("gradientLinear.png", dc.Image())
 }

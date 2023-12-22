@@ -23,5 +23,5 @@ func spiral() {
 		dc.DrawCircle(x, y, r)
 	}
 	dc.Fill()
-	dc.SavePNG("spiral.png")
+	gena.SavePNG("spiral.png", dc.Image())
 }

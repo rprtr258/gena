@@ -22,7 +22,7 @@ type PerlinNoise struct {
 
 func NewPerlinNoiseDeprecated() PerlinNoise {
 	var p [4096]float64
-	for i := 0; i < len(p); i++ {
+	for i := range len(p) {
 		p[i] = rand.Float64()
 	}
 	return PerlinNoise{
@@ -51,6 +51,10 @@ func (p *PerlinNoise) NoiseV2(v V2) float64 {
 	return p.noise(X(v), Y(v), 0)
 }
 
+func (p *PerlinNoise) NoiseV2D2(x, y float64) V2 {
+	return complex(p.Noise1D(x), p.Noise1D(y))
+}
+
 func (p *PerlinNoise) NoiseV2x2(v, d V2) V2 {
 	return complex(p.NoiseV2(v), p.NoiseV2(v+d))
 }
@@ -72,7 +76,7 @@ func (p *PerlinNoise) noise(x, y, z float64) float64 {
 	var rxf, ryf, n1, n2, n3 float64
 	var r float64
 	var ampl float64 = 0.5
-	for o := 0; o < perlinOctaves; o++ {
+	for range perlinOctaves {
 		of := xi + (yi << perlinYwrapb) + (zi << perlinZwrapb)
 
 		rxf = scaledCosin(xf)

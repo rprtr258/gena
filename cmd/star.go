@@ -8,7 +8,7 @@ import (
 
 func PolygonAt(n int, p gena.V2, r float64) []gena.V2 {
 	result := make([]gena.V2, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		result[i] = p + gena.Polar(r, math.Pi*(float64(i)*2/float64(n)-0.5))
 	}
 	return result
@@ -19,7 +19,7 @@ func star(n int) {
 	dc := gena.NewContext(1024, 1024)
 	dc.SetHexColor("fff")
 	dc.Clear()
-	for i := 0; i < n+1; i++ {
+	for i := range n + 1 {
 		dc.LineToV2(points[(i*2)%n])
 	}
 	dc.SetRGBA(0, 0.5, 0, 1)
@@ -28,5 +28,5 @@ func star(n int) {
 	dc.SetRGBA(0, 1, 0, 0.5)
 	dc.SetLineWidth(16)
 	dc.Stroke()
-	dc.SavePNG("star.png")
+	gena.SavePNG("star.png", dc.Image())
 }

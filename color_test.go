@@ -8,23 +8,15 @@ import (
 )
 
 func TestParseHexColor(t *testing.T) {
-	tests := []struct {
-		name    string
-		s       string
-		wanterr error
-		want    color.RGBA
-	}{
-		{name: "testcase1", s: "#112233", wanterr: nil, want: color.RGBA{R: 17, G: 34, B: 51, A: 255}},
-		{name: "testcase2", s: "#123", wanterr: nil, want: color.RGBA{R: 17, G: 34, B: 51, A: 255}},
-		{name: "testcase3", s: "#000233", wanterr: nil, want: color.RGBA{R: 0, G: 2, B: 51, A: 255}},
-		{name: "testcase4", s: "#FFFFFFFF", wanterr: nil, want: color.RGBA{R: 255, G: 255, B: 255, A: 255}},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := ParseHexColor(tt.s)
-			assert.Equal(t, tt.wanterr, err)
-			assert.Equal(t, tt.want, got)
+	for color, want := range map[string]color.RGBA{
+		"#112233":   {0x11, 0x22, 0x33, 0xFF},
+		"#123":      {0x11, 0x22, 0x33, 0xFF},
+		"#000233":   {0x00, 0x02, 0x33, 0xFF},
+		"#FFFFFFFF": {0xFF, 0xFF, 0xFF, 0xFF},
+	} {
+		t.Run(color, func(t *testing.T) {
+			got := ParseHexColor(color)
+			assert.Equal(t, want, got)
 		})
 	}
 }

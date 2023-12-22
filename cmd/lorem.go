@@ -24,5 +24,5 @@ func lorem() {
 		y := H/2 - h*len(loremIpsumLines)/2 + i*h
 		dc.DrawStringAnchored(line, 400, float64(y), 0.5, 0.5)
 	}
-	dc.SavePNG("lorem.png")
+	gena.SavePNG("lorem.png", dc.Image())
 }

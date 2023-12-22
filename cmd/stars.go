@@ -9,8 +9,8 @@ import (
 
 func Polygon(n int) []gena.V2 {
 	result := make([]gena.V2, n)
-	for i := 0; i < n; i++ {
-		result[i] = gena.Rotation(math.Pi * (float64(i)*2/float64(n) - 1/2))
+	for i := range n {
+		result[i] = gena.Rotation(math.Pi * (float64(i)*2/float64(n) - 0.5))
 	}
 	return result
 }
@@ -30,7 +30,7 @@ func stars() {
 			dc.Translate(complex(float64(x), H/2))
 			dc.Rotate(rand.Float64() * 2 * math.Pi)
 			dc.Scale(complex(s, s))
-			for i := 0; i < n+1; i++ {
+			for i := range n + 1 {
 				dc.LineToV2(points[(i*2)%n])
 			}
 			dc.SetLineWidth(10)
@@ -40,5 +40,5 @@ func stars() {
 			dc.Fill()
 		})
 	}
-	dc.SavePNG("stars.png")
+	gena.SavePNG("stars.png", dc.Image())
 }

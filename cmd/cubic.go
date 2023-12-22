@@ -33,5 +33,5 @@ func cubic() {
 	dc.SetDash(4, 8, 1, 8)
 	dc.Stroke()
 
-	dc.SavePNG("cubic.png")
+	gena.SavePNG("cubic.png", dc.Image())
 }

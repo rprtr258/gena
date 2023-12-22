@@ -1,9 +1,12 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"math/rand"
+
+	"github.com/rprtr258/fun"
 )
 
 type circle1 struct {
@@ -13,26 +16,23 @@ type circle1 struct {
 }
 
 func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64) []circle1 {
-	var circles []circle1
-	for i := 0; i < cn; i++ {
+	circles := make([]circle1, 0, cn)
+	for range cn {
 		x := rand.Intn(w) + 1
 		y := rand.Intn(h) + 1
 		radius := float64(rand.Intn(int(minRadius))) + maxRadius - minRadius
-		angle := rand.Float64() * math.Pi * 2.0
-		step := minStep + rand.Float64()*(maxStep-minStep)
 		circles = append(circles, circle1{
 			pos:    complex(float64(x), float64(y)),
 			radius: radius,
-			d:      Polar(step, angle),
+			d:      Polar(RandomFloat64(minStep, maxStep), rand.Float64()*math.Pi*2.0),
 		})
 	}
 	return circles
 }
 
-func circleSliceUpdate(cs []circle1, w, h int) []circle1 {
-	var circles []circle1
-	for _, c := range cs {
-		c.pos = c.pos + c.d
+func circleSliceUpdate(cs []circle1, bounds image.Rectangle) []circle1 {
+	return fun.Map(cs, func(c circle1) circle1 {
+		c.pos += c.d
 
 		if X(c.pos) <= 0 {
 			c.pos = complex(0, imag(c.pos))
@@ -44,29 +44,28 @@ func circleSliceUpdate(cs []circle1, w, h int) []circle1 {
 			c.d = complex(X(c.d), -Y(c.d))
 		}
 
-		if X(c.pos) > float64(w) {
-			c.pos = complex(float64(w), imag(c.pos))
+		if X(c.pos) > float64(bounds.Dx()) {
+			c.pos = complex(float64(bounds.Dx()), imag(c.pos))
 			c.d = complex(-X(c.d), Y(c.d))
 		}
 
-		if Y(c.pos) > float64(h) {
-			c.pos = complex(real(c.pos), float64(h))
+		if Y(c.pos) > float64(bounds.Dy()) {
+			c.pos = complex(real(c.pos), float64(bounds.Dy()))
 			c.d = complex(X(c.d), -Y(c.d))
 		}
 
-		circles = append(circles, c)
-	}
-	return circles
+		return c
+	})
 }
 
 // Generative draws a random circles image.
-func RandCircle(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool, iters int) {
-	ctex := NewContextForRGBA(c.Img())
-	for j := 0; j < iters; j++ {
+func RandCircle(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool, iters int) {
+	dc := NewContextForRGBA(c)
+	for range iters {
 		cn := rand.Intn(maxCircle) + int(maxCircle/3)
-		circles := newCircleSlice(cn, c.Width, c.Height, minSteps, maxSteps, minRadius, maxRadius)
+		circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
-		for i := 0; i < maxStepsPerCircle; i++ {
+		for range maxStepsPerCircle {
 			for _, c1 := range circles {
 				for _, c2 := range circles {
 					cl := lineColor
@@ -82,15 +81,15 @@ func RandCircle(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor
 
 					if distance <= c1.radius+c2.radius {
 						cc := c1.pos + c2.pos/2
-						ctex.SetRGBA255(cl, 30)
-						ctex.SetLineWidth(lineWidth)
-						ctex.DrawCircleV2(cc, distance/2)
-						ctex.Stroke()
+						dc.SetRGBA255(cl, 30)
+						dc.SetLineWidth(lineWidth)
+						dc.DrawCircleV2(cc, distance/2)
+						dc.Stroke()
 					}
 				}
 			}
 
-			circles = circleSliceUpdate(circles, c.Width, c.Height)
+			circles = circleSliceUpdate(circles, c.Bounds())
 		}
 	}
 }

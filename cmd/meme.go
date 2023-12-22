@@ -24,5 +24,5 @@ func meme() {
 	}
 	dc.SetRGB(1, 1, 1)
 	dc.DrawStringAnchored(s, S/2, S/2, 0.5, 0.5)
-	dc.SavePNG("meme.png")
+	gena.SavePNG("meme.png", dc.Image())
 }

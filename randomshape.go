@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"math/rand"
@@ -9,20 +10,20 @@ import (
 // RandomShape would draw images with random shapes.
 // The whole image would rotate with some degree.
 //   - shapeNum: It indicates how many shapes you want to draw.
-func RandomShape(c Canvas, colorSchema []color.RGBA, shapeNum int) {
-	dc := NewContextForRGBA(c.Img())
+func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
+	dc := NewContextForRGBA(c)
 
-	dc.Translate(c.Size() / 2)
+	dc.Translate(Size(c) / 2)
 	dc.Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25)
-	dc.Translate(-c.Size() / 2)
+	dc.Translate(-Size(c) / 2)
 
-	for i := 0; i < shapeNum; i++ {
+	for range shapeNum {
 		v := Mul2(complex(
 			RandomGaussian(0.5, 0.2),
 			RandomGaussian(0.5, 0.2),
-		), c.Size())
+		), Size(c))
 
-		w := RandomFloat64(0, float64(c.Width)/3)*RandomFloat64(0, rand.Float64()) + 5.0
+		w := RandomFloat64(0, float64(c.Bounds().Dx())/3)*RandomFloat64(0, rand.Float64()) + 5.0
 		h := w + RandomFloat64(-1, 1)*3.0
 
 		rnd := rand.Intn(4)

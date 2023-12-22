@@ -15,5 +15,5 @@ func linewidth() {
 		dc.Stroke()
 		w += 0.1
 	}
-	dc.SavePNG("linewidth.png")
+	gena.SavePNG("linewidth.png", dc.Image())
 }
