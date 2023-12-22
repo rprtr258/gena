@@ -39,20 +39,20 @@ func ColorCanva(c Canvas, lineWidth float64, seg float64) {
 	}
 }
 
-func (cc *colorCanva) draw(c Canvas, ctex *Context, rect Rect) {
+func (cc *colorCanva) draw(c Canvas, dc *Context, rect Rect) {
 	wh := Mul2(rect.Size/5, Mul(RandomV2(), cc.seg*2)+1)
 	switch rand.Intn(4) {
 	case 0:
-		ctex.DrawRectangle(complex(X(rect.Pos)-X(wh)/2+X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2+Y(rect.Size)/2), wh)
+		dc.DrawRectangle(complex(X(rect.Pos)-X(wh)/2+X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2+Y(rect.Size)/2), wh)
 	case 1:
-		ctex.DrawRectangle(complex(X(rect.Pos)-X(wh)/2-X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2+Y(rect.Size)/2), wh)
+		dc.DrawRectangle(complex(X(rect.Pos)-X(wh)/2-X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2+Y(rect.Size)/2), wh)
 	case 2:
-		ctex.DrawRectangle(complex(X(rect.Pos)-X(wh)/2+X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2-Y(rect.Size)/2), wh)
+		dc.DrawRectangle(complex(X(rect.Pos)-X(wh)/2+X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2-Y(rect.Size)/2), wh)
 	case 3:
-		ctex.DrawRectangle(complex(X(rect.Pos)-X(wh)/2-X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2-Y(rect.Size)/2), wh)
+		dc.DrawRectangle(complex(X(rect.Pos)-X(wh)/2-X(rect.Size)/2, Y(rect.Pos)+Y(wh)/2-Y(rect.Size)/2), wh)
 	}
-	ctex.SetColor(Black)
-	ctex.StrokePreserve()
-	ctex.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
-	ctex.Fill()
+	dc.SetColor(Black)
+	dc.StrokePreserve()
+	dc.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
+	dc.Fill()
 }

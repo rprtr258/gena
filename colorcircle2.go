@@ -34,17 +34,17 @@ func ColorCircle2(c Canvas, circleNum int) {
 	}
 }
 
-func (cc *colorCircle2) circle(ctex *Context, c Canvas, v V2, d, dx float64) {
+func (cc *colorCircle2) circle(dc *Context, c Canvas, v V2, d, dx float64) {
 	col := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
 	for j := 0.0; j < dx; j += 1.0 {
 		dd := d + j*2.0
 		alpha := min(int((dx/j)*255.0), 255)
 		col.A = uint8(alpha)
-		ctex.SetColor(col)
+		dc.SetColor(col)
 		for i := 0; i < 150; i++ {
 			theta := RandomFloat64(0, math.Pi*2)
-			ctex.DrawPoint(v+Polar(dd/2, theta), 0.51)
-			ctex.Fill()
+			dc.DrawPoint(v+Polar(dd/2, theta), 0.51)
+			dc.Fill()
 		}
 	}
 }
