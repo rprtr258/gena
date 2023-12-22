@@ -23,7 +23,6 @@ func must1[T any](res T, err error) T {
 type Canvas struct {
 	Height, Width int
 	img           *image.RGBA
-	ColorSchema   []color.RGBA
 }
 
 // NewCanvas returns a Canvas
@@ -32,8 +31,6 @@ func NewCanvas(w, h int) Canvas {
 		Height: h,
 		Width:  w,
 		img:    image.NewRGBA(image.Rect(0, 0, w, h)),
-		// Set some defaults value
-		ColorSchema: Youthful,
 	}
 }
 
@@ -43,11 +40,6 @@ func (c Canvas) Img() *image.RGBA {
 
 func (c Canvas) Size() V2 {
 	return complex(float64(c.Width), float64(c.Height))
-}
-
-func (c Canvas) SetColorSchema(rgbas []color.RGBA) Canvas {
-	c.ColorSchema = rgbas
-	return c
 }
 
 // FillBackground fills the background of the Canvas

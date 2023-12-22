@@ -6,7 +6,7 @@ import (
 )
 
 // SilkSmoke draws a silk smoke image.
-func SilkSmoke(c Canvas, lineWidth float64, lineColor color.RGBA, alpha int, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool) {
+func SilkSmoke(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, alpha int, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool) {
 	ctex := NewContextForRGBA(c.Img())
 
 	cn := rand.Intn(maxCircle) + int(maxCircle/3)
@@ -22,7 +22,7 @@ func SilkSmoke(c Canvas, lineWidth float64, lineColor color.RGBA, alpha int, max
 
 				cl := lineColor
 				if isRandColor {
-					cl = c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+					cl = colorSchema[rand.Intn(len(colorSchema))]
 				}
 
 				if c1 == c2 {

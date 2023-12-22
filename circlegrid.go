@@ -28,7 +28,7 @@ func (cg *circleGrid) grid(dc *Context, c Canvas) {
 }
 
 // Generative draws a circle grid image.
-func CircleGrid(c Canvas, lineWidth float64, circleNumMin, circleNumMax int) {
+func CircleGrid(c Canvas, colorSchema []color.RGBA, lineWidth float64, circleNumMin, circleNumMax int) {
 	cg := &circleGrid{
 		circleNumMin: circleNumMin,
 		circleNumMax: circleNumMax,
@@ -46,14 +46,14 @@ func CircleGrid(c Canvas, lineWidth float64, circleNumMin, circleNumMax int) {
 	for i := 0; i < seg; i++ {
 		for j := 0; j < seg; j++ {
 			v := Plus(Mul(complex(float64(i), float64(j)), w), w/2)
-			dc.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
+			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			dc.DrawCircleV2(v, w/2*RandomFloat64(0.1, 0.5))
 			dc.Fill()
 
 			// draw
 			r := w / 2 * RandomFloat64(0.6, 0.95)
 			rnd := rand.Intn(4)
-			col := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+			col := colorSchema[rand.Intn(len(colorSchema))]
 			dc.Stack(func(dc *Context) {
 				dc.Translate(v)
 				dc.Rotate(float64(rand.Intn(10)))

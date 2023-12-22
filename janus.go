@@ -7,14 +7,14 @@ import (
 
 // Janus would draw an image with multiple circles split at its center with random noise in the horizontal direction.
 // TODO not finished.
-func Janus(c Canvas, fg color.RGBA, n int, decay float64) {
+func Janus(c Canvas, colorSchema []color.RGBA, fg color.RGBA, n int, decay float64) {
 	dc := NewContextForRGBA(c.Img())
 	dc.SetColor(fg)
 	s := 220.0
 	r := 0.3
 
 	for i := 0; i < n; i++ {
-		// k := rand.Intn(len(c.ColorSchema()))
+		// k := rand.Intn(len(colorSchema()))
 		k := i
 		dc.Stack(func(ctx *Context) {
 			dc.Translate(c.Size() / 2)
@@ -33,10 +33,10 @@ func Janus(c Canvas, fg color.RGBA, n int, decay float64) {
 			dc.Scale(complex(s, s))
 			// r *= 0.836
 			dc.DrawArc(complex(x1, y1), 1.0, math.Pi*3/2+theta, math.Pi*5/2+theta)
-			dc.SetColor(c.ColorSchema[k])
+			dc.SetColor(colorSchema[k])
 			dc.Fill()
 			dc.DrawArc(complex(x2, y2), 1.0, math.Pi/2+theta, math.Pi*3/2+theta)
-			dc.SetColor(c.ColorSchema[k])
+			dc.SetColor(colorSchema[k])
 			dc.Fill()
 		})
 	}

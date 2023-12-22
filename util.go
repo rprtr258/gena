@@ -82,7 +82,7 @@ func parseHexColor(x string) (r, g, b, a int) {
 }
 
 func fixp(x, y float64) fixed.Point26_6 {
-	return fixed.Point26_6{fix(x), fix(y)}
+	return fixed.Point26_6{X: fix(x), Y: fix(y)}
 }
 
 func Fixed(v V2) fixed.Point26_6 {

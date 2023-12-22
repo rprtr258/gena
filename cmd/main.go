@@ -23,10 +23,9 @@ func cmap(r, m1, m2 float64) color.RGBA {
 }
 
 func dotline() {
-	c := gena.NewCanvas(2080, 2080).
-		SetColorSchema(gena.DarkPink)
+	c := gena.NewCanvas(2080, 2080)
 	c.FillBackground(color.RGBA{230, 230, 230, 255})
-	gena.DotLine(c, 10, 100, 20, 50, false, 15000)
+	gena.DotLine(c, gena.DarkPink, 10, 100, 20, 50, false, 15000)
 	gena.ToPNG(c.Img(), "dotline.png")
 }
 
@@ -38,19 +37,15 @@ func dotswave() {
 		{0x83, 0x38, 0xEC, 0xFF},
 		{0x3A, 0x86, 0xFF, 0xFF},
 	}
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.Black)
-	gena.DotsWave(c, 300)
+	gena.DotsWave(c, colors, 300)
 	gena.ToPNG(c.Img(), "dotswave.png")
 }
 
 func gridsquare() {
-	c := gena.
-		NewCanvas(600, 600).
-		SetColorSchema(gena.DarkPink)
-	gena.GirdSquares(c, 24, 10, 0.2, 20)
+	c := gena.NewCanvas(600, 600)
+	gena.GirdSquares(c, gena.DarkPink, 24, 10, 0.2, 20)
 	gena.ToPNG(c.Img(), "gsquare.png")
 }
 
@@ -66,11 +61,9 @@ func _http() {
 			// Draw the image to bytes
 			b := func() []byte {
 				// Generate a new image
-				c := gena.
-					NewCanvas(500, 500).
-					SetColorSchema(gena.DarkRed)
+				c := gena.NewCanvas(500, 500)
 				c.FillBackground(gena.Black)
-				gena.Janus(c, gena.LightPink, 10, 0.2)
+				gena.Janus(c, gena.DarkRed, gena.LightPink, 10, 0.2)
 
 				// Return the image as []byte
 				return gena.ToBytes(c.Img())
@@ -88,20 +81,16 @@ func _http() {
 }
 
 func janus() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(gena.DarkRed)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.Black)
-	gena.Janus(c, gena.LightPink, 10, 0.2)
+	gena.Janus(c, gena.DarkRed, gena.LightPink, 10, 0.2)
 	gena.ToPNG(c.Img(), "janus.png")
 }
 
 func julia() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(gena.Viridis)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.Azure)
-	gena.Julia(c, func(z complex128) complex128 {
+	gena.Julia(c, gena.Viridis, func(z complex128) complex128 {
 		return z*z + complex(-0.1, 0.651)
 	}, 40, 1.5+1.5i, 800)
 	gena.ToPNG(c.Img(), "julia.png")
@@ -122,11 +111,9 @@ func noiseline() {
 		{0xF3, 0x77, 0x48, 0xFF},
 		{0xD5, 0x60, 0x62, 0xFF},
 	}
-	c := gena.
-		NewCanvas(1000, 1000).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(1000, 1000)
 	c.FillBackground(color.RGBA{0xF0, 0xFE, 0xFF, 0xFF})
-	gena.NoiseLine(c, 1000)
+	gena.NoiseLine(c, colors, 1000)
 	gena.ToPNG(c.Img(), "noiseline.png")
 }
 
@@ -145,10 +132,8 @@ func oceanfish() {
 		{0x19, 0x6E, 0x94, 0xFF},
 		{0x35, 0x3A, 0x57, 0xFF},
 	}
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(colors)
-	gena.OceanFish(c, 100, 8)
+	c := gena.NewCanvas(500, 500)
+	gena.OceanFish(c, colors, 100, 8)
 	gena.ToPNG(c.Img(), "oceanfish.png")
 }
 
@@ -168,10 +153,9 @@ func pixelhole() {
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}
-	c := gena.NewCanvas(800, 800).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(800, 800)
 	c.FillBackground(gena.Black)
-	gena.PixelHole(c, 60, 1200)
+	gena.PixelHole(c, colors, 60, 1200)
 	gena.ToPNG(c.Img(), "pixelhole.png")
 }
 
@@ -183,26 +167,22 @@ func pointribbon() {
 }
 
 func randcircle() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(gena.Plasma)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.MistyRose)
-	gena.RandCircle(c, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, true, 4)
+	gena.RandCircle(c, gena.Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, true, 4)
 	gena.ToPNG(c.Img(), "randcircle.png")
 }
 
 func randomshape() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema([]color.RGBA{
-			{0xCF, 0x2B, 0x34, 0xFF},
-			{0xF0, 0x8F, 0x46, 0xFF},
-			{0xF0, 0xC1, 0x29, 0xFF},
-			{0x19, 0x6E, 0x94, 0xFF},
-			{0x35, 0x3A, 0x57, 0xFF},
-		})
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.White)
-	gena.RandomShape(c, 150)
+	gena.RandomShape(c, []color.RGBA{
+		{0xCF, 0x2B, 0x34, 0xFF},
+		{0xF0, 0x8F, 0x46, 0xFF},
+		{0xF0, 0xC1, 0x29, 0xFF},
+		{0x19, 0x6E, 0x94, 0xFF},
+		{0x35, 0x3A, 0x57, 0xFF},
+	}, 150)
 	gena.ToPNG(c.Img(), "randomshape.png")
 }
 
@@ -213,11 +193,9 @@ func silksky() {
 }
 
 func silksmoke() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(gena.Plasma)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.Black)
-	gena.SilkSmoke(c, 1, gena.MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30, false)
+	gena.SilkSmoke(c, gena.Plasma, 1, gena.MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30, false)
 	gena.ToPNG(c.Img(), "silksmoke.png")
 }
 
@@ -229,11 +207,9 @@ func solarflare() {
 }
 
 func spiralsquare() {
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(gena.Plasma)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.MistyRose)
-	gena.SpiralSquare(c, 10, gena.Orange, 40, 400, 0.05, gena.Tomato, true)
+	gena.SpiralSquare(c, gena.Plasma, 10, gena.Orange, 40, 400, 0.05, gena.Tomato, true)
 	gena.ToPNG(c.Img(), "spiralsquare.png")
 }
 
@@ -274,11 +250,9 @@ func circlegrid() {
 		{0x00, 0x00, 0x00, 0xFF},
 		{0xFF, 0xFF, 0xFF, 0xFF},
 	}
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
-	gena.CircleGrid(c, 2, 4, 6)
+	gena.CircleGrid(c, colors, 2, 4, 6)
 	gena.ToPNG(c.Img(), "circlegrid.png")
 }
 
@@ -304,11 +278,9 @@ func circleloop2() {
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(color.RGBA{8, 10, 20, 255})
-	gena.CircleLoop2(c, 7)
+	gena.CircleLoop2(c, colors, 7)
 	gena.ToPNG(c.Img(), "colorloop2.png")
 }
 
@@ -334,11 +306,9 @@ func colorcanvas() {
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}
-	c := gena.
-		NewCanvas(500, 500).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(500, 500)
 	c.FillBackground(gena.Black)
-	gena.ColorCanva(c, 8, 5)
+	gena.ColorCanva(c, colors, 8, 5)
 	gena.ToPNG(c.Img(), "colorcanva.png")
 }
 
@@ -353,11 +323,9 @@ func colorcircle() {
 		{0x98, 0x19, 0xFA, 0xFF},
 		{0xFF, 0xFF, 0xFF, 0xFF},
 	}
-	c := gena.
-		NewCanvas(1000, 1000).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(1000, 1000)
 	c.FillBackground(gena.White)
-	gena.ColorCircle(c, 500)
+	gena.ColorCircle(c, colors, 500)
 	gena.ToPNG(c.Img(), "colorcircle.png")
 }
 
@@ -369,11 +337,9 @@ func colorcircle2() {
 		{0xEF, 0x13, 0x55, 0xFF},
 		{0xF4, 0x9F, 0x0A, 0xFF},
 	}
-	c := gena.
-		NewCanvas(800, 800).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(800, 800)
 	c.FillBackground(gena.White)
-	gena.ColorCircle2(c, 30)
+	gena.ColorCircle2(c, colors, 30)
 	gena.ToPNG(c.Img(), "colorcircle2.png")
 }
 
@@ -385,11 +351,9 @@ func contourline() {
 		{0xFF, 0x57, 0x33, 0xFF},
 		{0xFF, 0xC3, 0x0F, 0xFF},
 	}
-	c := gena.
-		NewCanvas(1600, 1600).
-		SetColorSchema(colors)
+	c := gena.NewCanvas(1600, 1600)
 	c.FillBackground(color.RGBA{0x1a, 0x06, 0x33, 0xFF})
-	gena.ContourLine(c, 500)
+	gena.ContourLine(c, colors, 500)
 	gena.ToPNG(c.Img(), "contourline.png")
 }
 

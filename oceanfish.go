@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image/color"
 	"math"
 	"math/rand"
 )
@@ -13,7 +14,7 @@ type oceanFish struct {
 // OceanFish draws an ocean and some fishes in the center.
 //   - lineNum: The number of the line used to simulate the ocean wave.
 //   - fishNum: The number of fish.
-func OceanFish(c Canvas, lineNum, fishNum int) {
+func OceanFish(c Canvas, colorSchema []color.RGBA, lineNum, fishNum int) {
 	o := &oceanFish{
 		lineNum: lineNum,
 		fishNum: fishNum,
@@ -21,7 +22,7 @@ func OceanFish(c Canvas, lineNum, fishNum int) {
 
 	dc := NewContextForRGBA(c.Img())
 
-	o.drawlines(dc, c)
+	o.drawlines(dc, c, colorSchema)
 
 	for i := 0; i < o.fishNum; i++ {
 		dc.Stack(func(ctx *Context) {
@@ -33,16 +34,16 @@ func OceanFish(c Canvas, lineNum, fishNum int) {
 				o.drawfish(dc, c, 0, float64(c.Width)/10)
 			})
 			dc.Clip()
-			o.drawlines(dc, c)
+			o.drawlines(dc, c, colorSchema)
 		})
 		dc.ClearPath()
 		dc.ResetClip()
 	}
 }
 
-func (o *oceanFish) drawlines(ctx *Context, c Canvas) {
+func (o *oceanFish) drawlines(ctx *Context, c Canvas, colorSchema []color.RGBA) {
 	for i := 0; i < o.lineNum; i++ {
-		cl := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+		cl := colorSchema[rand.Intn(len(colorSchema))]
 		ctx.SetColor(cl)
 		ctx.SetLineWidth(RandomFloat64(3, 20))
 		y := rand.Float64() * float64(c.Height)

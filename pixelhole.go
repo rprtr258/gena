@@ -1,13 +1,14 @@
 package gena
 
 import (
+	"image/color"
 	"math"
 	"math/rand"
 )
 
 // PixelHole draws a hole with colored dots.
 //   - dotN: The number of point in each iteration.
-func PixelHole(c Canvas, dotN, iters int) {
+func PixelHole(c Canvas, colorSchema []color.RGBA, dotN, iters int) {
 	dc := NewContextForRGBA(c.Img())
 	noise := NewPerlinNoiseDeprecated()
 	for i := 0; i < iters; i++ {
@@ -15,10 +16,10 @@ func PixelHole(c Canvas, dotN, iters int) {
 			dc.Translate(c.Size() / 2)
 			dc.SetLineWidth(2.0)
 			fc := float64(i)
-			c1 := int(fc/100.0) % len(c.ColorSchema)
-			c2 := (int(fc/100.0) + 1) % len(c.ColorSchema)
+			c1 := int(fc/100.0) % len(colorSchema)
+			c2 := (int(fc/100.0) + 1) % len(colorSchema)
 			ratio := fc/100 - math.Floor(fc/100)
-			cl := LerpColor(c.ColorSchema[c1], c.ColorSchema[c2], ratio)
+			cl := LerpColor(colorSchema[c1], colorSchema[c2], ratio)
 			for j := 0.0; j < float64(dotN); j += 1.0 {
 				dc.Stack(func(ctx *Context) {
 					dc.SetColor(cl)

@@ -1,14 +1,17 @@
 package gena
 
-import "math/rand"
+import (
+	"image/color"
+	"math/rand"
+)
 
 // Generative draws a grid squares image.
-func GirdSquares(c Canvas, step, rectSize int, decay float64, iters int) {
+func GirdSquares(c Canvas, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
 	dc := NewContextForRGBA(c.Img())
 
 	for x := 0; x < c.Width; x += step {
 		for y := 0; y < c.Height; y += step {
-			cl := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+			cl := colorSchema[rand.Intn(len(colorSchema))]
 
 			v0 := complex(float64(x), float64(y))
 			s := float64(rectSize)

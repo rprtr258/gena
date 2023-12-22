@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image/color"
 	"math"
 	"math/rand"
 )
@@ -8,11 +9,11 @@ import (
 // ContourLine  draws a contour line image.
 // It uses the perlin noise` to do some flow field.
 //   - lineNum: It indicates how many lines.
-func ContourLine(c Canvas, lineNum int) {
+func ContourLine(c Canvas, colorSchema []color.RGBA, lineNum int) {
 	ctex := NewContextForRGBA(c.Img())
 	noise := NewPerlinNoiseDeprecated()
 	for i := 0; i < lineNum; i++ {
-		cls := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+		cls := colorSchema[rand.Intn(len(colorSchema))]
 		v := Mul2(RandomV2(), c.Size())
 
 		for j := 0; j < 1500; j++ {

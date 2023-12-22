@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image/color"
 	"math"
 	"math/rand"
 )
@@ -8,7 +9,7 @@ import (
 // Generative draws a noise line image.
 // NoiseLine draws some random line and circles based on `perlin noise`.
 //   - n: The number of random line.
-func NoiseLine(c Canvas, n int) {
+func NoiseLine(c Canvas, colorSchema []color.RGBA, n int) {
 	ctex := NewContextForRGBA(c.Img())
 	noise := NewPerlinNoiseDeprecated()
 
@@ -27,7 +28,7 @@ func NoiseLine(c Canvas, n int) {
 	for i := 0; i < n; i++ {
 		x := RandomFloat64(-0.5, 1.5) * float64(c.Width)
 		y := RandomFloat64(-0.5, 1.5) * float64(c.Height)
-		cl := c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+		cl := colorSchema[rand.Intn(len(colorSchema))]
 		cl.A = 255
 
 		l := 400

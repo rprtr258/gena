@@ -7,7 +7,7 @@ import (
 
 // SpiralSquare draws a spiral square images.
 func SpiralSquare(
-	c Canvas,
+	c Canvas, colorSchema []color.RGBA,
 	lineWidth float64,
 	lineColor color.RGBA,
 	squareNum int,
@@ -36,7 +36,7 @@ func SpiralSquare(
 			dc.StrokePreserve()
 
 			if randColor {
-				dc.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
+				dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			} else {
 				dc.SetColor(fg)
 			}

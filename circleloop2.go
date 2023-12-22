@@ -1,21 +1,24 @@
 package gena
 
 import (
+	"image/color"
 	"math"
 	"math/rand"
 )
 
 type circleLoop2 struct {
-	noise PerlinNoise
+	noise       PerlinNoise
+	colorSchema []color.RGBA
 }
 
 // CircleLoop2 draws a circle composed by colored circles.
 //   - depth: Control the number of circles.
-func CircleLoop2(c Canvas, depth int) {
+func CircleLoop2(c Canvas, colorSchema []color.RGBA, depth int) {
 	ctex := NewContextForRGBA(c.Img())
 	ctex.Translate(c.Size() / 2)
 	cl := &circleLoop2{
-		noise: NewPerlinNoiseDeprecated(),
+		noise:       NewPerlinNoiseDeprecated(),
+		colorSchema: colorSchema,
 	}
 	cl.recursionDraw(ctex, c, float64(c.Width), depth)
 }
@@ -25,13 +28,6 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c Canvas, x float64, depth int
 		return
 	}
 
-	cl.draw(dc, c, x)
-	cl.recursionDraw(dc, c, 1*x/4.0, depth-1)
-	cl.recursionDraw(dc, c, 2*x/4.0, depth-1)
-	cl.recursionDraw(dc, c, 3*x/4.0, depth-1)
-}
-
-func (cl *circleLoop2) draw(dc *Context, c Canvas, x float64) {
 	var lw float64
 	if rand.Float64() < 0.8 {
 		lw = 1
@@ -48,7 +44,7 @@ func (cl *circleLoop2) draw(dc *Context, c Canvas, x float64) {
 	py := float64(c.Height) * (math.Pow(1-x/float64(c.Height), a2) -
 		RandomFloat64(0, RandomFloat64(0.18, RandomFloat64(0.18, 0.7))))
 
-	dc.SetColor(c.ColorSchema[rand.Intn(len(c.ColorSchema))])
+	dc.SetColor(cl.colorSchema[rand.Intn(len(cl.colorSchema))])
 
 	nCircles := RandomRangeInt(1, 6)
 	if rand.Float64() < 0.03 {
@@ -70,4 +66,8 @@ func (cl *circleLoop2) draw(dc *Context, c Canvas, x float64) {
 	}
 
 	dc.Rotate(x / float64(c.Height) * 0.2)
+
+	cl.recursionDraw(dc, c, 1*x/4.0, depth-1)
+	cl.recursionDraw(dc, c, 2*x/4.0, depth-1)
+	cl.recursionDraw(dc, c, 3*x/4.0, depth-1)
 }

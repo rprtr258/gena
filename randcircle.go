@@ -60,7 +60,7 @@ func circleSliceUpdate(cs []circle1, w, h int) []circle1 {
 }
 
 // Generative draws a random circles image.
-func RandCircle(c Canvas, lineWidth float64, lineColor color.RGBA, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool, iters int) {
+func RandCircle(c Canvas, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool, iters int) {
 	ctex := NewContextForRGBA(c.Img())
 	for j := 0; j < iters; j++ {
 		cn := rand.Intn(maxCircle) + int(maxCircle/3)
@@ -71,7 +71,7 @@ func RandCircle(c Canvas, lineWidth float64, lineColor color.RGBA, maxCircle, ma
 				for _, c2 := range circles {
 					cl := lineColor
 					if isRandColor {
-						cl = c.ColorSchema[rand.Intn(len(c.ColorSchema))]
+						cl = colorSchema[rand.Intn(len(colorSchema))]
 					}
 
 					if c1 == c2 {
