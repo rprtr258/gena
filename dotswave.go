@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"math/rand"
@@ -8,17 +9,17 @@ import (
 
 // Generative draws a dots wave images.
 //   - dotsN: The number of dots wave in the image.
-func DotsWave(c Canvas, colorSchema []color.RGBA, dotsN int) {
-	dc := NewContextForRGBA(c.Img())
+func DotsWave(c *image.RGBA, colorSchema []color.RGBA, dotsN int) {
+	dc := NewContextForRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
-	for i := 0; i < dotsN; i++ {
+	for range dotsN {
 		v := Mul2(complex(
 			RandomFloat64(-0.1, 1.1),
 			RandomFloat64(-0.1, 1.1),
-		), c.Size())
+		), Size(c))
 
 		num := RandomFloat64(100, 1000)
-		r := rand.Float64() * float64(c.Width) * 0.15 * rand.Float64()
+		r := rand.Float64() * float64(c.Bounds().Dx()) * 0.15 * rand.Float64()
 		ind := RandomFloat64(1, 8)
 
 		dc.Stack(func(ctx *Context) {
@@ -28,7 +29,7 @@ func DotsWave(c Canvas, colorSchema []color.RGBA, dotsN int) {
 				colorSchema[i], colorSchema[j] = colorSchema[j], colorSchema[i]
 			})
 			for j := 0.0; j < num; j += ind {
-				s := float64(c.Width) * 0.15 * RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, rand.Float64()))))))
+				s := float64(c.Bounds().Dx()) * 0.15 * RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, rand.Float64()))))))
 				ci := int(float64(len(colorSchema)) * noise.Noise3D(j*0.01, X(v), Y(v)))
 				dc.SetColor(colorSchema[ci])
 				dc.DrawCircle(j, r*math.Sin(j*0.05), s*2/3)

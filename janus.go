@@ -1,23 +1,24 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 )
 
 // Janus would draw an image with multiple circles split at its center with random noise in the horizontal direction.
 // TODO not finished.
-func Janus(c Canvas, colorSchema []color.RGBA, fg color.RGBA, n int, decay float64) {
-	dc := NewContextForRGBA(c.Img())
+func Janus(c *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, n int, decay float64) {
+	dc := NewContextForRGBA(c)
 	dc.SetColor(fg)
 	s := 220.0
 	r := 0.3
 
-	for i := 0; i < n; i++ {
+	for i := range n {
 		// k := rand.Intn(len(colorSchema()))
 		k := i
 		dc.Stack(func(ctx *Context) {
-			dc.Translate(c.Size() / 2)
+			dc.Translate(Size(c) / 2)
 
 			// theta += rand.Float64()*math.Pi/2
 			theta := RandomFloat64(math.Pi/4, 3*math.Pi/4)

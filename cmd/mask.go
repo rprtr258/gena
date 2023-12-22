@@ -7,5 +7,5 @@ func mask() {
 	dc.DrawRoundedRectangle(0, complex(512, 512), 64)
 	dc.Clip()
 	dc.DrawImage(gena.LoadImage("cmd/baboon.png"), 0, 0)
-	dc.SavePNG("mask.png")
+	gena.SavePNG("mask.png", dc.Image())
 }

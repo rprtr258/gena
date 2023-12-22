@@ -45,5 +45,5 @@ func crisp() {
 	dc.SetRGBA(0, 0, 0, 1)
 	dc.Stroke()
 
-	dc.SavePNG("crisp.png")
+	gena.SavePNG("crisp.png", dc.Image())
 }

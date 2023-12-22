@@ -49,5 +49,5 @@ func quadratic() {
 	dc.DrawStringAnchored("g", -5, 5, 0.5, 0.5)
 	dc.DrawStringAnchored("G", 5, -5, 0.5, 0.5)
 
-	dc.SavePNG("quadratic.png")
+	gena.SavePNG("quadratic.png", dc.Image())
 }

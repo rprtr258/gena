@@ -55,9 +55,7 @@ func (p *surfacePattern) ColorAt(x, y int) color.Color {
 			return color.Transparent
 		}
 	}
-	x = x%b.Dx() + b.Min.X
-	y = y%b.Dy() + b.Min.Y
-	return p.im.At(x, y)
+	return p.im.At(x%b.Dx()+b.Min.X, y%b.Dy()+b.Min.Y)
 }
 
 func NewSurfacePattern(im image.Image, op RepeatOp) Pattern {

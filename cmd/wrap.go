@@ -32,5 +32,5 @@ func wrap() {
 	dc.DrawStringWrapped(TEXT, W/2+P, H/2-P, 0, 1, W/3, 2, gena.AlignLeft)
 	dc.DrawStringWrapped(TEXT, W/2-P, H/2+P, 1, 0, W/3, 2.25, gena.AlignLeft)
 	dc.DrawStringWrapped(TEXT, W/2+P, H/2+P, 0, 0, W/3, 2.5, gena.AlignLeft)
-	dc.SavePNG("wrap.png")
+	gena.SavePNG("wrap.png", dc.Image())
 }

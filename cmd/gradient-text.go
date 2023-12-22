@@ -37,5 +37,5 @@ func gradientText() {
 	dc.DrawRectangle(0, complex(W, H))
 	dc.Fill()
 
-	dc.SavePNG("gradientText.png")
+	gena.SavePNG("gradientText.png", dc.Image())
 }

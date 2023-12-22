@@ -11,5 +11,5 @@ func clip() {
 	dc.DrawRectangle(0, 1000+1000i)
 	dc.SetRGB(0, 0, 0)
 	dc.Fill()
-	dc.SavePNG("clip.png")
+	gena.SavePNG("clip.png", dc.Image())
 }

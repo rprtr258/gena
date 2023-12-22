@@ -1,23 +1,24 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math/rand"
 )
 
 // Generative draws a grid squares image.
-func GirdSquares(c Canvas, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
-	dc := NewContextForRGBA(c.Img())
+func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
+	dc := NewContextForRGBA(c)
 
-	for x := 0; x < c.Width; x += step {
-		for y := 0; y < c.Height; y += step {
+	for x := 0; x < c.Bounds().Dx(); x += step {
+		for y := 0; y < c.Bounds().Dy(); y += step {
 			cl := colorSchema[rand.Intn(len(colorSchema))]
 
 			v0 := complex(float64(x), float64(y))
 			s := float64(rectSize)
 
 			theta := rand.Intn(360) + 1
-			for i := 0; i < iters; i++ {
+			for i := range iters {
 				dc.Stack(func(ctx *Context) {
 					dc.Translate(Plus(v0, float64(step)/2))
 					dc.Rotate(Radians(float64(theta * i)))

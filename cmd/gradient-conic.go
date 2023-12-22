@@ -5,6 +5,8 @@ package main
 
 import (
 	"image/color"
+
+	"github.com/rprtr258/gena"
 )
 
 func main() {
@@ -33,5 +35,5 @@ func main() {
 	dc.DrawCircle(200, 200, 150)
 	dc.Fill()
 
-	dc.SavePNG("gradient-conic.png")
+	gena.SavePNG("gradient-conic.png", dc.Image())
 }

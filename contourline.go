@@ -1,6 +1,7 @@
 package gena
 
 import (
+	"image"
 	"image/color"
 	"math"
 	"math/rand"
@@ -9,25 +10,25 @@ import (
 // ContourLine  draws a contour line image.
 // It uses the perlin noise` to do some flow field.
 //   - lineNum: It indicates how many lines.
-func ContourLine(c Canvas, colorSchema []color.RGBA, lineNum int) {
-	ctex := NewContextForRGBA(c.Img())
+func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
+	dc := NewContextForRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
-	for i := 0; i < lineNum; i++ {
+	for range lineNum {
 		cls := colorSchema[rand.Intn(len(colorSchema))]
-		v := Mul2(RandomV2(), c.Size())
+		v := Mul2(RandomV2(), Size(c))
 
-		for j := 0; j < 1500; j++ {
+		for range 1500 {
 			theta := noise.NoiseV2(v/800) * math.Pi * 2 * 800
 			v += Polar(0.4, theta)
 
-			ctex.SetColor(cls)
-			ctex.DrawEllipse(v, complex(2, 2))
-			ctex.Fill()
+			dc.SetColor(cls)
+			dc.DrawEllipse(v, complex(2, 2))
+			dc.Fill()
 
-			if X(v) > float64(c.Width) || X(v) < 0 ||
-				Y(v) > float64(c.Height) || Y(v) < 0 ||
+			if X(v) > float64(c.Bounds().Dx()) || X(v) < 0 ||
+				Y(v) > float64(c.Bounds().Dy()) || Y(v) < 0 ||
 				rand.Float64() < 0.001 {
-				v = Mul2(RandomV2(), c.Size())
+				v = Mul2(RandomV2(), Size(c))
 			}
 		}
 	}

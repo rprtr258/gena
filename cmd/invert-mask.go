@@ -10,5 +10,5 @@ func invertMask() {
 	dc.DrawRectangle(0, complex(1024, 1024))
 	dc.SetRGB(0, 0, 0)
 	dc.Fill()
-	dc.SavePNG("invertMask.png")
+	gena.SavePNG("invertMask.png", dc.Image())
 }

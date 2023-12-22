@@ -14,7 +14,7 @@ func QuadraticBezier(p0, p1, p2 V2) []V2 {
 	d := float64(n) - 1
 
 	result := make([]V2, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		result[i] = quadratic(p0, p1, p2, float64(i)/d)
 	}
 	return result
@@ -35,7 +35,7 @@ func CubicBezier(p0, p1, p2, p3 V2) []V2 {
 	d := float64(n) - 1
 
 	result := make([]V2, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		result[i] = cubic(p0, p1, p2, p3, float64(i)/d)
 	}
 	return result

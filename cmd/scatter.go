@@ -8,7 +8,7 @@ import (
 
 func CreatePoints(n int) []gena.V2 {
 	points := make([]gena.V2, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		x := 0.5 + rand.NormFloat64()*0.1
 		y := x + rand.NormFloat64()*0.1
 		points[i] = complex(x, y)
@@ -55,10 +55,10 @@ func scatter() {
 	dc.Identity()
 	dc.SetRGB(0, 0, 0)
 	if false { // TODO: fix font loading
-		// dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 24)
-		// dc.DrawStringAnchored("Chart Title", S/2, P/2, 0.5, 0.5)
-		// dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18)
-		// dc.DrawStringAnchored("X Axis Title", S/2, S-P/2, 0.5, 0.5)
+		dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 24)
+		dc.DrawStringAnchored("Chart Title", S/2, P/2, 0.5, 0.5)
+		dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18)
+		dc.DrawStringAnchored("X Axis Title", S/2, S-P/2, 0.5, 0.5)
 	}
-	dc.SavePNG("scatter.png")
+	gena.SavePNG("scatter.png", dc.Image())
 }

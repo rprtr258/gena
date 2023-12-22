@@ -7,6 +7,8 @@ import (
 	"image/color"
 	"math/rand"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var save bool
@@ -20,11 +22,8 @@ func hash(dc *Context) string {
 	return fmt.Sprintf("%x", md5.Sum(dc.im.Pix))
 }
 
-func checkHash(t *testing.T, dc *Context, expected string) {
-	actual := hash(dc)
-	if actual != expected {
-		t.Fatalf("expected hash: %s != actual hash: %s", expected, actual)
-	}
+func assertHash(t *testing.T, dc *Context, expectedHash string) {
+	assert.Equal(t, expectedHash, hash(dc))
 }
 
 func saveImage(dc *Context, name string) {
@@ -36,7 +35,7 @@ func saveImage(dc *Context, name string) {
 func TestBlank(t *testing.T) {
 	dc := NewContext(100, 100)
 	saveImage(dc, "TestBlank")
-	checkHash(t, dc, "4e0a293a5b638f0aba2c4fe2c3418d0e")
+	assertHash(t, dc, "4e0a293a5b638f0aba2c4fe2c3418d0e")
 }
 
 func TestGrid(t *testing.T) {
@@ -51,7 +50,7 @@ func TestGrid(t *testing.T) {
 	dc.SetRGB(0, 0, 0)
 	dc.Stroke()
 	saveImage(dc, "TestGrid")
-	checkHash(t, dc, "78606adda71d8abfbd8bb271087e4d69")
+	assertHash(t, dc, "78606adda71d8abfbd8bb271087e4d69")
 }
 
 func TestLines(t *testing.T) {
@@ -59,7 +58,7 @@ func TestLines(t *testing.T) {
 	dc.SetRGB(0.5, 0.5, 0.5)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		dc.DrawLine(p1, p2)
@@ -68,7 +67,7 @@ func TestLines(t *testing.T) {
 		dc.Stroke()
 	}
 	saveImage(dc, "TestLines")
-	checkHash(t, dc, "036bd220e2529955cc48425dd72bb686")
+	assertHash(t, dc, "036bd220e2529955cc48425dd72bb686")
 }
 
 func TestCircles(t *testing.T) {
@@ -76,11 +75,9 @@ func TestCircles(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 10; i++ {
-		x := rnd.Float64() * 100
-		y := rnd.Float64() * 100
+	for range 10 {
 		r := rnd.Float64()*10 + 5
-		dc.DrawCircle(x, y, r)
+		dc.DrawCircleV2(RandomV2()*100, r)
 		dc.SetRGB(rnd.Float64(), rnd.Float64(), rnd.Float64())
 		dc.FillPreserve()
 		dc.SetRGB(rnd.Float64(), rnd.Float64(), rnd.Float64())
@@ -88,7 +85,7 @@ func TestCircles(t *testing.T) {
 		dc.Stroke()
 	}
 	saveImage(dc, "TestCircles")
-	checkHash(t, dc, "c52698000df96fabafe7863701afe922")
+	assertHash(t, dc, "c52698000df96fabafe7863701afe922")
 }
 
 func TestQuadratic(t *testing.T) {
@@ -96,7 +93,7 @@ func TestQuadratic(t *testing.T) {
 	dc.SetRGB(0.25, 0.25, 0.25)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
@@ -107,7 +104,7 @@ func TestQuadratic(t *testing.T) {
 		dc.Stroke()
 	}
 	saveImage(dc, "TestQuadratic")
-	checkHash(t, dc, "56b842d814aee94b52495addae764a77")
+	assertHash(t, dc, "56b842d814aee94b52495addae764a77")
 }
 
 func TestCubic(t *testing.T) {
@@ -115,7 +112,7 @@ func TestCubic(t *testing.T) {
 	dc.SetRGB(0.75, 0.75, 0.75)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
@@ -127,7 +124,7 @@ func TestCubic(t *testing.T) {
 		dc.Stroke()
 	}
 	saveImage(dc, "TestCubic")
-	checkHash(t, dc, "4a7960fc4eaaa33ce74131c5ce0afca8")
+	assertHash(t, dc, "4a7960fc4eaaa33ce74131c5ce0afca8")
 }
 
 func TestFill(t *testing.T) {
@@ -135,19 +132,17 @@ func TestFill(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		dc.NewSubPath()
-		for j := 0; j < 10; j++ {
-			x := rnd.Float64() * 100
-			y := rnd.Float64() * 100
-			dc.LineTo(x, y)
+		for range 10 {
+			dc.LineToV2(RandomV2() * 100)
 		}
 		dc.ClosePath()
 		dc.SetRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64())
 		dc.Fill()
 	}
 	saveImage(dc, "TestFill")
-	checkHash(t, dc, "7ccb3a2443906a825e57ab94db785467")
+	assertHash(t, dc, "7ccb3a2443906a825e57ab94db785467")
 }
 
 func TestClip(t *testing.T) {
@@ -157,16 +152,14 @@ func TestClip(t *testing.T) {
 	dc.DrawCircle(50, 50, 40)
 	dc.Clip()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 1000; i++ {
-		x := rnd.Float64() * 100
-		y := rnd.Float64() * 100
+	for range 1000 {
 		r := rnd.Float64()*10 + 5
-		dc.DrawCircle(x, y, r)
+		dc.DrawCircleV2(RandomV2()*100, r)
 		dc.SetRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64())
 		dc.Fill()
 	}
 	saveImage(dc, "TestClip")
-	checkHash(t, dc, "762c32374d529fd45ffa038b05be7865")
+	assertHash(t, dc, "762c32374d529fd45ffa038b05be7865")
 }
 
 func TestPushPop(t *testing.T) {
@@ -183,7 +176,7 @@ func TestPushPop(t *testing.T) {
 		})
 	}
 	saveImage(dc, "TestPushPop")
-	checkHash(t, dc, "31e908ee1c2ea180da98fd5681a89d05")
+	assertHash(t, dc, "31e908ee1c2ea180da98fd5681a89d05")
 }
 
 func TestDrawStringWrapped(t *testing.T) {
@@ -193,7 +186,7 @@ func TestDrawStringWrapped(t *testing.T) {
 	dc.SetRGB(0, 0, 0)
 	dc.DrawStringWrapped("Hello, world! How are you?", 50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
 	saveImage(dc, "TestDrawStringWrapped")
-	checkHash(t, dc, "8d92f6aae9e8b38563f171abd00893f8")
+	assertHash(t, dc, "8d92f6aae9e8b38563f171abd00893f8")
 }
 
 func TestDrawImage(t *testing.T) {
@@ -213,7 +206,7 @@ func TestDrawImage(t *testing.T) {
 	dc.Clear()
 	dc.DrawImage(src.Image(), 50, 50)
 	saveImage(dc, "TestDrawImage")
-	checkHash(t, dc, "282afbc134676722960b6bec21305b15")
+	assertHash(t, dc, "282afbc134676722960b6bec21305b15")
 }
 
 func TestSetPixel(t *testing.T) {
@@ -222,8 +215,8 @@ func TestSetPixel(t *testing.T) {
 	dc.Clear()
 	dc.SetRGB(0, 1, 0)
 	i := 0
-	for y := 0; y < 100; y++ {
-		for x := 0; x < 100; x++ {
+	for y := range 100 {
+		for x := range 100 {
 			if i%31 == 0 {
 				dc.SetPixel(x, y)
 			}
@@ -231,7 +224,7 @@ func TestSetPixel(t *testing.T) {
 		}
 	}
 	saveImage(dc, "TestSetPixel")
-	checkHash(t, dc, "27dda6b4b1d94f061018825b11982793")
+	assertHash(t, dc, "27dda6b4b1d94f061018825b11982793")
 }
 
 func TestDrawPoint(t *testing.T) {
@@ -247,7 +240,7 @@ func TestDrawPoint(t *testing.T) {
 		}
 	}
 	saveImage(dc, "TestDrawPoint")
-	checkHash(t, dc, "55af8874531947ea6eeb62222fb33e0e")
+	assertHash(t, dc, "55af8874531947ea6eeb62222fb33e0e")
 }
 
 func TestLinearGradient(t *testing.T) {
@@ -260,7 +253,7 @@ func TestLinearGradient(t *testing.T) {
 	dc.DrawRectangle(0, complex(100, 100))
 	dc.Fill()
 	saveImage(dc, "TestLinearGradient")
-	checkHash(t, dc, "75eb9385c1219b1d5bb6f4c961802c7a")
+	assertHash(t, dc, "75eb9385c1219b1d5bb6f4c961802c7a")
 }
 
 func TestRadialGradient(t *testing.T) {
@@ -273,7 +266,7 @@ func TestRadialGradient(t *testing.T) {
 	dc.DrawRectangle(0, complex(100, 100))
 	dc.Fill()
 	saveImage(dc, "TestRadialGradient")
-	checkHash(t, dc, "f170f39c3f35c29de11e00428532489d")
+	assertHash(t, dc, "f170f39c3f35c29de11e00428532489d")
 }
 
 func TestDashes(t *testing.T) {
@@ -281,7 +274,7 @@ func TestDashes(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		dc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
@@ -291,7 +284,7 @@ func TestDashes(t *testing.T) {
 		dc.Stroke()
 	}
 	saveImage(dc, "TestDashes")
-	checkHash(t, dc, "d188069c69dcc3970edfac80f552b53c")
+	assertHash(t, dc, "d188069c69dcc3970edfac80f552b53c")
 }
 
 func BenchmarkCircles(b *testing.B) {
@@ -299,15 +292,10 @@ func BenchmarkCircles(b *testing.B) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < b.N; i++ {
-		x := rnd.Float64() * 1000
-		y := rnd.Float64() * 1000
-		dc.DrawCircle(x, y, 10)
-		if i%2 == 0 {
-			dc.SetRGB(0, 0, 0)
-		} else {
-			dc.SetRGB(1, 1, 1)
-		}
+	for i := range b.N {
+		dc.DrawCircle(rnd.Float64()*1000, rnd.Float64()*1000, 10)
+		m := float64(i % 2)
+		dc.SetRGB(m, m, m)
 		dc.Fill()
 	}
 }

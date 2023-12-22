@@ -9,8 +9,8 @@ import (
 
 func openfill() {
 	dc := gena.NewContext(1000, 1000)
-	for j := 0; j < 10; j++ {
-		for i := 0; i < 10; i++ {
+	for j := range 10 {
+		for i := range 10 {
 			v := complex(float64(i), float64(j))*100 + 50
 			a1 := rand.Float64() * 2 * math.Pi
 			a2 := a1 + rand.Float64()*math.Pi + math.Pi/2
@@ -26,5 +26,5 @@ func openfill() {
 	dc.SetRGB(1, 0, 0)
 	dc.SetLineWidth(4)
 	dc.StrokePreserve()
-	dc.SavePNG("openfill.png")
+	gena.SavePNG("openfill.png", dc.Image())
 }

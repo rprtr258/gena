@@ -10,5 +10,5 @@ func text() {
 	dc.SetRGB(0, 0, 0)
 	dc.LoadFontFace("/Library/Fonts/Arial.ttf", 96)
 	dc.DrawStringAnchored("Hello, world!", S/2, S/2, 0.5, 0.5)
-	dc.SavePNG("text.png")
+	gena.SavePNG("text.png", dc.Image())
 }

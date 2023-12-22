@@ -16,12 +16,12 @@ func mystar() {
 	dc.Clear()
 
 	points := PolygonAt(n, 250+250i, 100)
-	for j := 0; j < 10; j++ {
+	for range 10 {
 		dc.RelativeTo(250+250i, func(dc *gena.Context) {
 			dc.Rotate(math.Pi / 9)
 		})
 
-		for i := 0; i < n; i++ {
+		for i := range n {
 			dc.LineToV2(points[i])
 		}
 		dc.LineToV2(points[0])
@@ -31,5 +31,5 @@ func mystar() {
 		dc.Stroke()
 	}
 
-	dc.SavePNG("mystar.png")
+	gena.SavePNG("mystar.png", dc.Image())
 }

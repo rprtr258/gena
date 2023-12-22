@@ -149,11 +149,11 @@ func main() {
  rand.Seed(time.Now().Unix())
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(Black)
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(DarkRed)
  c.SetForeground(LightPink)
  c.Draw(arts.NewJanus(10, 0.2))
- c.ToPNG("janus.png")
+ c.ToPNG("janus.png", dc.Image())
 }
 ```
 
@@ -166,7 +166,7 @@ func main() {
  rand.Seed(time.Now().Unix())
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(White)
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema([]color.RGBA{
   {0xCF, 0x2B, 0x34, 0xFF},
   {0xF0, 0x8F, 0x46, 0xFF},
@@ -175,7 +175,7 @@ func main() {
   {0x35, 0x3A, 0x57, 0xFF},
  })
  c.Draw(arts.NewRandomShape(150))
- c.ToPNG("randomshape.png")
+ c.ToPNG("randomshape.png", dc.Image())
 }
 ```
 
@@ -195,10 +195,10 @@ func main() {
  }
  c := generativeart.NewCanva(800, 800)
  c.SetBackground(White)
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.Draw(arts.NewColorCircle2(30))
- c.ToPNG("colorcircle2.png")
+ c.ToPNG("colorcircle2.png", dc.Image())
 }
 ```
 
@@ -219,11 +219,11 @@ func main() {
  }
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.SetLineWidth(2.0)
  c.Draw(arts.NewCircleGrid(4, 6))
- c.ToPNG("circlegrid.png")
+ c.ToPNG("circlegrid.png", dc.Image())
 }
 ```
 
@@ -243,10 +243,10 @@ func main() {
  }
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(color.RGBA{8, 10, 20, 255})
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.Draw(arts.NewCircleLoop2(7))
- c.ToPNG("colorloop2.png")
+ c.ToPNG("colorloop2.png", dc.Image())
 }
 ```
 
@@ -266,11 +266,11 @@ func main() {
  }
  c := generativeart.NewCanva(800, 800)
  c.SetBackground(Black)
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.SetIterations(1200)
  c.Draw(arts.NewPixelHole(60))
- c.ToPNG("pixelhole.png")
+ c.ToPNG("pixelhole.png", dc.Image())
 }
 ```
 
@@ -290,10 +290,10 @@ func main() {
  }
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(Black)
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.Draw(arts.NewDotsWave(300))
- c.ToPNG("dotswave.png")
+ c.ToPNG("dotswave.png", dc.Image())
 }
 ```
 
@@ -313,10 +313,10 @@ func main() {
  }
  c := generativeart.NewCanva(1600, 1600)
  c.SetBackground(color.RGBA{0x1a, 0x06, 0x33, 0xFF})
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.Draw(arts.NewContourLine(500))
- c.ToPNG("contourline.png")
+ c.ToPNG("contourline.png", dc.Image())
 }
 ```
 
@@ -336,10 +336,10 @@ func main() {
  }
  c := generativeart.NewCanva(1000, 1000)
  c.SetBackground(color.RGBA{0xF0, 0xFE, 0xFF, 0xFF})
- c.FillBackground()
+ FillBackground(c,)
  c.SetColorSchema(colors)
  c.Draw(arts.NewNoiseLine(1000))
- c.ToPNG("noiseline.png")
+ c.ToPNG("noiseline.png", dc.Image())
 }
 ```
 
@@ -355,9 +355,9 @@ func main() {
  c.SetLineWidth(10)
  c.SetIterations(15000)
  c.SetColorSchema(Plasma)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewDotLine(100, 20, 50, false))
- c.ToPNG("dotline.png")
+ c.ToPNG("dotline.png", dc.Image())
 }
 ```
 
@@ -378,7 +378,7 @@ func main() {
  c := generativeart.NewCanva(500, 500)
  c.SetColorSchema(colors)
  c.Draw(arts.NewOceanFish(100, 8))
- c.ToPNG("oceanfish.png")
+ c.ToPNG("oceanfish.png", dc.Image())
 }
 ```
 
@@ -395,9 +395,9 @@ func main() {
  c.SetLineColor(Orange)
  c.SetAlpha(30)
  c.SetIterations(1000)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewCircleLoop(100))
- c.ToPNG("circleloop.png")
+ c.ToPNG("circleloop.png", dc.Image())
 }
 ```
 
@@ -420,9 +420,9 @@ func main() {
  rand.Seed(time.Now().Unix())
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(Black)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewDomainWarp(0.01, 4,4, 20, cmap))
- c.ToPNG("domainwarp.png")
+ c.ToPNG("domainwarp.png", dc.Image())
 }
 ```
 
@@ -437,10 +437,10 @@ func main() {
  c.SetBackground(White)
  c.SetAlpha(80)
  c.SetLineWidth(0.3)
- c.FillBackground()
+ FillBackground(c,)
  c.SetIterations(400)
  c.Draw(arts.NewCircleNoise(2000, 60, 80))
- c.ToPNG("circlenoise.png")
+ c.ToPNG("circlenoise.png", dc.Image())
 }
 ```
 
@@ -455,10 +455,10 @@ func main() {
  c.SetBackground(White)
  c.SetAlpha(120)
  c.SetLineWidth(0.3)
- c.FillBackground()
+ FillBackground(c,)
  c.SetIterations(200)
  c.Draw(arts.NewPerlinPerls(10, 200, 40, 80))
- c.ToPNG("perlinperls.png")
+ c.ToPNG("perlinperls.png", dc.Image())
 }
 ```
 
@@ -478,11 +478,11 @@ func main() {
  }
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(Black)
- c.FillBackground()
+ FillBackground(c,)
  c.SetLineWidth(8)
  c.SetColorSchema(colors)
  c.Draw(arts.NewColorCanve(5))
- c.ToPNG("colorcanva.png")
+ c.ToPNG("colorcanva.png", dc.Image())
 }
 ```
 
@@ -504,9 +504,9 @@ func main() {
  c := generativeart.NewCanva(500, 500)
  c.SetIterations(800)
  c.SetColorSchema(Viridis)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewJulia(julia1, 40, 1.5, 1.5))
- c.ToPNG("julia.png")
+ c.ToPNG("julia.png", dc.Image())
 }
 ```
 
@@ -519,11 +519,11 @@ func main() {
  rand.Seed(time.Now().Unix())
  c := generativeart.NewCanva(500, 500)
  c.SetBackground(color.RGBA{R: 30, G: 30, B: 30, A: 255})
- c.FillBackground()
+ FillBackground(c,)
  c.SetLineWidth(1.0)
  c.SetLineColor(Tomato)
  c.Draw(arts.NewBlackHole(200, 400, 0.01))
- c.ToPNG("blackhole.png")
+ c.ToPNG("blackhole.png", dc.Image())
 }
 ```
 
@@ -537,7 +537,7 @@ func main() {
  c := generativeart.NewCanva(600, 600)
  c.SetAlpha(10)
  c.Draw(arts.NewSilkSky(15, 5))
- c.ToPNG("silksky.png")
+ c.ToPNG("silksky.png", dc.Image())
 }
 ```
 
@@ -550,9 +550,9 @@ func main() {
  rand.Seed(time.Now().Unix())
  c := generativeart.NewCanva(1200, 500)
  c.SetBackground(White)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewCircleMove(1000))
- c.ToPNG("circlemove.png")
+ c.ToPNG("circlemove.png", dc.Image())
 }
 ```
 
@@ -574,9 +574,9 @@ func main() {
  })
  c.SetColorSchema(Plasma)
  c.SetIterations(4)
- c.FillBackground()
+ FillBackground(c,)
  c.Draw(arts.NewRandCicle(30, 80, 0.2, 2, 10, 30, true))
- c.ToPNG("randcircle.png")
+ c.ToPNG("randcircle.png", dc.Image())
 }
 ```
 
@@ -626,7 +626,7 @@ func main() {
     dc.DrawCircle(500, 500, 400)
     dc.SetRGB(0, 0, 0)
     dc.Fill()
-    dc.SavePNG("out.png")
+    gena.SavePNG("out.png", dc.Image())
 }
 ```
 
@@ -802,7 +802,7 @@ func main() {
       dc.Fill()
     })
 	}
-	dc.SavePNG("out.png")
+	gena.SavePNG("out.png", dc.Image())
 }
 ```
 

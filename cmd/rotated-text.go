@@ -25,5 +25,5 @@ func rotatedText() {
 	dc.DrawRectangle(complex(100, 180), wh)
 	dc.Stroke()
 	dc.DrawStringAnchored(text, 100, 180, 0.0, 0.0)
-	dc.SavePNG("rotatedText.png")
+	gena.SavePNG("rotatedText.png", dc.Image())
 }

@@ -71,8 +71,8 @@ const (
 
 func Blend(src, dest *image.RGBA, mode BlendMode) *image.RGBA {
 	img := image.NewRGBA(src.Bounds())
-	for i := 0; i < src.Bounds().Max.X; i++ {
-		for j := 0; j < src.Bounds().Max.Y; j++ {
+	for i := range src.Bounds().Max.X {
+		for j := range src.Bounds().Max.Y {
 			switch mode {
 			case Add:
 				if src.RGBAAt(i, j) == Black {

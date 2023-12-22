@@ -15,7 +15,7 @@ func sine() {
 	dc.RelativeTo(complex(0.95, 0.75), func(dc *gena.Context) {
 		dc.Scale(complex(W, H) / 2)
 	})
-	for i := 0; i < W; i++ {
+	for i := range W {
 		a := float64(i) * 2 * math.Pi / W * 8
 		x := float64(i)
 		y := (math.Sin(a) + 1) / 2 * H
@@ -27,5 +27,5 @@ func sine() {
 	dc.SetHexColor("#19344180")
 	dc.SetLineWidth(8)
 	dc.Stroke()
-	dc.SavePNG("sine.png")
+	gena.SavePNG("sine.png", dc.Image())
 }

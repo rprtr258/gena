@@ -637,18 +637,14 @@ var (
 )
 
 // ParseHexColor parses color string likes #FFFFFF or #2398EFFF
-func ParseHexColor(s string) (color.RGBA, error) {
-	s = strings.TrimSpace(strings.ToLower(s))
-
-	if !strings.HasPrefix(s, "#") {
-		return Black, fmt.Errorf("invalid hex color string %v", s)
+func ParseHexColor(s string) color.RGBA {
+	if strings.HasPrefix(s, "#") {
+		if c, ok := parseHex(s[1:]); ok {
+			return c
+		}
 	}
 
-	if c, ok := parseHex(s[1:]); ok {
-		return c, nil
-	}
-
-	return Black, fmt.Errorf("invalid hex color string %v", s)
+	panic(fmt.Sprintf("invalid hex color string %v", s))
 }
 
 // parseHex returns a color.RGBA by parsing a hex string
