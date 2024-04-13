@@ -296,7 +296,7 @@ func circlenoise() {
 	const _iters = 1 // 000
 	noise := gena.NewPerlinNoiseDeprecated()
 	bar := progressbar.Default(_iters)
-	for i := range _iters {
+	for i := range gena.Range(_iters) {
 		_ = bar.Add(1)
 
 		ralpha := float64(i) * 2 * math.Pi / _iters
@@ -395,7 +395,7 @@ func test() {
 		dc.Translate(complex(500/2, 500/2))
 		dc.Rotate(40)
 		dc.SetColor(color.RGBA{0xFF, 0x00, 0x00, 255})
-		for i := range 361 {
+		for i := range gena.Range(361) {
 			theta := gena.Radians(float64(i))
 			p := complex(
 				math.Cos(theta)-math.Pow(math.Sin(theta), 2)/math.Sqrt(2),

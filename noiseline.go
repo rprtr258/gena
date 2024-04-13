@@ -15,7 +15,7 @@ func NoiseLine(c *image.RGBA, colorSchema []color.RGBA, n int) {
 	noise := NewPerlinNoiseDeprecated()
 
 	dc.SetColor(Black)
-	for range 80 {
+	for range Range(80) {
 		x := rand.Float64() * float64(c.Bounds().Dx())
 		y := rand.Float64() * float64(c.Bounds().Dy())
 
@@ -26,14 +26,14 @@ func NoiseLine(c *image.RGBA, colorSchema []color.RGBA, n int) {
 	}
 
 	t := rand.Float64() * 10
-	for range n {
+	for range Range(n) {
 		x := RandomFloat64(-0.5, 1.5) * float64(c.Bounds().Dx())
 		y := RandomFloat64(-0.5, 1.5) * float64(c.Bounds().Dy())
 		cl := colorSchema[rand.Intn(len(colorSchema))]
 		cl.A = 255
 
 		l := 400
-		for j := range l {
+		for j := range Range(l) {
 			ns := 0.0005
 			w := math.Sin(math.Pi*float64(j)/float64(l-1)) * 5
 			theta := noise.Noise3D(x*ns, y*ns, t) * 100

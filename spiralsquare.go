@@ -19,7 +19,7 @@ func SpiralSquare(
 
 	sl := rectSide
 	theta := rand.Intn(360) + 1
-	for i := range squareNum {
+	for i := range Range(squareNum) {
 		dc.Stack(func(ctx *Context) {
 			dc.Translate(Size(c) / 2)
 			dc.Rotate(Radians(float64(theta * (i + 1))))

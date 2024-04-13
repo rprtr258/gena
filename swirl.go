@@ -83,7 +83,7 @@ func Swirl(img *image.RGBA, fg, bg color.RGBA, a, b, c, d float64, axis V2, iter
 	dc.SetLineWidth(3)
 	start := complex(1.0, 1.0)
 
-	for range s.iters {
+	for range Range(s.iters) {
 		next := s.swirlTransform(start)
 		xy := ToPixel(next, s.axis, Size(img))
 		img.Set(int(X(xy)), int(Y(xy)), s.fg)

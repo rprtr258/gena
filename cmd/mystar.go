@@ -16,12 +16,12 @@ func mystar() {
 	dc.Clear()
 
 	points := PolygonAt(n, 250+250i, 100)
-	for range 10 {
+	for range gena.Range(10) {
 		dc.RelativeTo(250+250i, func(dc *gena.Context) {
 			dc.Rotate(math.Pi / 9)
 		})
 
-		for i := range n {
+		for i := range gena.Range(n) {
 			dc.LineToV2(points[i])
 		}
 		dc.LineToV2(points[0])

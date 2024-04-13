@@ -59,8 +59,8 @@ func beziers() {
 	dc := gena.NewContext(S*W, S*H)
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
-	for j := range H {
-		for i := range W {
+	for j := range gena.Range(H) {
+		for i := range gena.Range(W) {
 			v := gena.Plus(complex(float64(i), float64(j))*S, S/2)
 			dc.Stack(func(dc *gena.Context) {
 				dc.Translate(v)

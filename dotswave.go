@@ -12,7 +12,7 @@ import (
 func DotsWave(c *image.RGBA, colorSchema []color.RGBA, dotsN int) {
 	dc := NewContextForRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
-	for range dotsN {
+	for range Range(dotsN) {
 		v := Mul2(complex(
 			RandomFloat64(-0.1, 1.1),
 			RandomFloat64(-0.1, 1.1),

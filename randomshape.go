@@ -17,7 +17,7 @@ func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
 	dc.Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25)
 	dc.Translate(-Size(c) / 2)
 
-	for range shapeNum {
+	for range Range(shapeNum) {
 		v := Mul2(complex(
 			RandomGaussian(0.5, 0.2),
 			RandomGaussian(0.5, 0.2),

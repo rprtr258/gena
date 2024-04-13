@@ -1,6 +1,6 @@
 module github.com/rprtr258/gena
 
-go 1.22rc1
+go 1.21.6
 
 require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0

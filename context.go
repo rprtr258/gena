@@ -598,7 +598,7 @@ func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
 
 func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 	const n = 16
-	for i := range n {
+	for i := range Range(n) {
 		a1 := Lerp(angle1, angle2, float64(i+0)/n)
 		a2 := Lerp(angle1, angle2, float64(i+1)/n)
 		v0 := center + Mul2(Rotation(a1), r)
@@ -644,7 +644,7 @@ func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 	}
 
 	dc.NewSubPath()
-	for i := range n {
+	for i := range Range(n) {
 		a := rotation + angle*float64(i)
 		dc.LineToV2(Polar(r, a) + complex(x, y))
 	}

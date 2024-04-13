@@ -58,7 +58,7 @@ func TestLines(t *testing.T) {
 	dc.SetRGB(0.5, 0.5, 0.5)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 100 {
+	for range Range(100) {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		dc.DrawLine(p1, p2)
@@ -75,7 +75,7 @@ func TestCircles(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 10 {
+	for range Range(10) {
 		r := rnd.Float64()*10 + 5
 		dc.DrawCircleV2(RandomV2()*100, r)
 		dc.SetRGB(rnd.Float64(), rnd.Float64(), rnd.Float64())
@@ -93,7 +93,7 @@ func TestQuadratic(t *testing.T) {
 	dc.SetRGB(0.25, 0.25, 0.25)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 100 {
+	for range Range(100) {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
@@ -112,7 +112,7 @@ func TestCubic(t *testing.T) {
 	dc.SetRGB(0.75, 0.75, 0.75)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 100 {
+	for range Range(100) {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
@@ -132,9 +132,9 @@ func TestFill(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 10 {
+	for range Range(10) {
 		dc.NewSubPath()
-		for range 10 {
+		for range Range(10) {
 			dc.LineToV2(RandomV2() * 100)
 		}
 		dc.ClosePath()
@@ -152,7 +152,7 @@ func TestClip(t *testing.T) {
 	dc.DrawCircle(50, 50, 40)
 	dc.Clip()
 	rnd := rand.New(rand.NewSource(99))
-	for range 1000 {
+	for range Range(1000) {
 		r := rnd.Float64()*10 + 5
 		dc.DrawCircleV2(RandomV2()*100, r)
 		dc.SetRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64())
@@ -215,8 +215,8 @@ func TestSetPixel(t *testing.T) {
 	dc.Clear()
 	dc.SetRGB(0, 1, 0)
 	i := 0
-	for y := range 100 {
-		for x := range 100 {
+	for y := range Range(100) {
+		for x := range Range(100) {
 			if i%31 == 0 {
 				dc.SetPixel(x, y)
 			}
@@ -274,7 +274,7 @@ func TestDashes(t *testing.T) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for range 100 {
+	for range Range(100) {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		dc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
@@ -292,7 +292,7 @@ func BenchmarkCircles(b *testing.B) {
 	dc.SetRGB(1, 1, 1)
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := range b.N {
+	for i := range Range(b.N) {
 		dc.DrawCircle(rnd.Float64()*1000, rnd.Float64()*1000, 10)
 		m := float64(i % 2)
 		dc.SetRGB(m, m, m)

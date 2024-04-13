@@ -18,7 +18,7 @@ func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, de
 			s := float64(rectSize)
 
 			theta := rand.Intn(360) + 1
-			for i := range iters {
+			for i := range Range(iters) {
 				dc.Stack(func(ctx *Context) {
 					dc.Translate(Plus(v0, float64(step)/2))
 					dc.Rotate(Radians(float64(theta * i)))

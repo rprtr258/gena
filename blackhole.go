@@ -25,7 +25,7 @@ func BlackHole(
 	dc.SetLineWidth(0.4)
 	dc.SetColor(lineColor)
 
-	for i := range circleN {
+	for i := range Range(circleN) {
 		radius := float64(c.Bounds().Dx()/10) + float64(i)*0.05
 		k := kMax * math.Sqrt(float64(i)/float64(circleN))
 		noisiness := density * math.Pow(float64(i)/float64(circleN), 2)

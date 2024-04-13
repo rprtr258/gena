@@ -55,12 +55,12 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, dept
 	r := math.Pow(rand.Float64(), 2) * 50
 
 	if rand.Float64() < 0.7 {
-		for i := range nCircles {
+		for i := range Range(nCircles) {
 			dc.DrawCircleV2(complex(px, py)*0.39, rand.Float64()*float64(i)*r/float64(nCircles))
 			dc.Stroke()
 		}
 	} else {
-		for i := range nCircles {
+		for i := range Range(nCircles) {
 			dc.DrawCircleV2(complex(px, py)*0.39, float64(i)*r/float64(nCircles))
 			dc.Stroke()
 		}

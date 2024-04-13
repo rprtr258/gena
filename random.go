@@ -1,14 +1,14 @@
 package gena
 
 import (
-	"math/rand/v2"
+	"math/rand"
 
 	"golang.org/x/exp/constraints"
 )
 
 // rand()*(max-min) + min
 func RandomRangeInt[I constraints.Integer](min, max I) I {
-	return I(rand.IntN(int(max)-int(min)) + int(min))
+	return I(rand.Intn(int(max)-int(min)) + int(min))
 }
 
 // rand()*(max-min) + min

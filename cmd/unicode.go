@@ -11,8 +11,8 @@ func unicode() {
 	dc.Clear()
 	dc.SetRGB(0, 0, 0)
 	dc.LoadFontFace("Xolonium-Regular.ttf", F)
-	for r := range 256 {
-		for c := range 256 {
+	for r := range gena.Range(256) {
+		for c := range gena.Range(256) {
 			i := r*256 + c
 			x := float64(c*T) + T/2
 			y := float64(r*T) + T/2

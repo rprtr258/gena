@@ -12,7 +12,7 @@ import (
 func PixelHole(c *image.RGBA, colorSchema []color.RGBA, dotN, iters int) {
 	dc := NewContextForRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
-	for i := range iters {
+	for i := range Range(iters) {
 		dc.Stack(func(ctx *Context) {
 			dc.Translate(Size(c) / 2)
 			dc.SetLineWidth(2.0)

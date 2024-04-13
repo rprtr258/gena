@@ -13,7 +13,7 @@ func CircleMove(c *image.RGBA, circleNum int) {
 	dc.SetLineWidth(0.3)
 	noise := NewPerlinNoiseDeprecated()
 	cl := rand.Intn(255)
-	for i := range circleNum {
+	for i := range Range(circleNum) {
 		// var sx, sy float64
 		var cxx float64
 		np := 300.0

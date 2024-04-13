@@ -9,8 +9,8 @@ func tiling() {
 	w := im.Bounds().Size().X
 	h := im.Bounds().Size().Y
 	dc := gena.NewContext(w*NX, h*NY)
-	for y := range NY {
-		for x := range NX {
+	for y := range gena.Range(NY) {
+		for x := range gena.Range(NX) {
 			dc.DrawImage(im, x*w, y*h)
 		}
 	}

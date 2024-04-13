@@ -15,7 +15,7 @@ func sine() {
 	dc.RelativeTo(complex(0.95, 0.75), func(dc *gena.Context) {
 		dc.Scale(complex(W, H) / 2)
 	})
-	for i := range W {
+	for i := range gena.Range(W) {
 		a := float64(i) * 2 * math.Pi / W * 8
 		x := float64(i)
 		y := (math.Sin(a) + 1) / 2 * H

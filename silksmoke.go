@@ -22,7 +22,7 @@ func SilkSmoke(
 	cn := rand.Intn(maxCircle) + int(maxCircle/3)
 	circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
-	for range maxStepsPerCircle {
+	for range Range(maxStepsPerCircle) {
 		dc.SetRGBA255(color.RGBA{}, 5)
 		dc.DrawRectangle(0, Size(c))
 		dc.Fill()

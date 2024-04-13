@@ -9,8 +9,8 @@ import (
 
 func openfill() {
 	dc := gena.NewContext(1000, 1000)
-	for j := range 10 {
-		for i := range 10 {
+	for j := range gena.Range(10) {
+		for i := range gena.Range(10) {
 			v := complex(float64(i), float64(j))*100 + 50
 			a1 := rand.Float64() * 2 * math.Pi
 			a2 := a1 + rand.Float64()*math.Pi + math.Pi/2

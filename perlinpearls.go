@@ -47,9 +47,9 @@ func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN,
 	}
 
 	ds := make([][]dot, circleN)
-	for i := range circleN {
+	for i := range Range(circleN) {
 		dots := make([]dot, dotsN)
-		for j := range dotsN {
+		for j := range Range(dotsN) {
 			p := cs[i].pos + Polar(cs[i].radius, RandomFloat64(0, math.Pi*2))
 			dots[j] = dot{pos: p, prev: p, count: 0}
 		}
@@ -58,14 +58,14 @@ func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN,
 
 	noise := NewPerlinNoiseDeprecated()
 
-	for i := range circleN {
+	for i := range Range(circleN) {
 		dc.SetLineWidth(0.5)
 		dc.SetColor(Black)
 		dc.DrawCircleV2(cs[i].pos, cs[i].radius)
 		dc.Stroke()
 
 		const factor = 0.008
-		for range iters {
+		for range Range(iters) {
 			for k := range ds[i] {
 				n := noise.NoiseV2(ds[i][k].pos * factor)
 				ds[i][k].prev = ds[i][k].pos

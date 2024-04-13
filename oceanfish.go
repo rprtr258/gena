@@ -25,14 +25,14 @@ func OceanFish(c *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 
 	o.drawlines(dc, c, colorSchema)
 
-	for i := range o.fishNum {
+	for i := range Range(o.fishNum) {
 		dc.Stack(func(ctx *Context) {
 			dc.Stack(func(ctx *Context) {
 				theta := float64(360*i) / float64(o.fishNum)
 				r := float64(c.Bounds().Dx()) / 4.0
 				dc.Translate(Mul2(Size(c)/2, Polar(r, Radians(theta))))
 				dc.Rotate(Radians(theta + 90))
-				o.drawfish(dc, c, 0, float64(c.Bounds().Dx())/10)
+				o.drawfish(dc, 0, float64(c.Bounds().Dx())/10)
 			})
 			dc.Clip()
 			o.drawlines(dc, c, colorSchema)
@@ -43,7 +43,7 @@ func OceanFish(c *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 }
 
 func (o *oceanFish) drawlines(ctx *Context, c *image.RGBA, colorSchema []color.RGBA) {
-	for range o.lineNum {
+	for range Range(o.lineNum) {
 		cl := colorSchema[rand.Intn(len(colorSchema))]
 		ctx.SetColor(cl)
 		ctx.SetLineWidth(RandomFloat64(3, 20))
@@ -63,7 +63,7 @@ func fishPt(r, theta float64) V2 {
 	)
 }
 
-func (o *oceanFish) drawfish(dc *Context, c *image.RGBA, v V2, r float64) {
+func (o *oceanFish) drawfish(dc *Context, v V2, r float64) {
 	dc.Stack(func(ctx *Context) {
 		dc.Translate(v)
 		dc.Rotate(Radians(180))

@@ -14,7 +14,7 @@ func Janus(c *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, n int, decay 
 	s := 220.0
 	r := 0.3
 
-	for i := range n {
+	for i := range Range(n) {
 		// k := rand.Intn(len(colorSchema()))
 		k := i
 		dc.Stack(func(ctx *Context) {

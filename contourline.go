@@ -13,11 +13,11 @@ import (
 func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
 	dc := NewContextForRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
-	for range lineNum {
+	for range Range(lineNum) {
 		cls := colorSchema[rand.Intn(len(colorSchema))]
 		v := Mul2(RandomV2(), Size(c))
 
-		for range 1500 {
+		for range Range(1500) {
 			theta := noise.NoiseV2(v/800) * math.Pi * 2 * 800
 			v += Polar(0.4, theta)
 

@@ -15,7 +15,7 @@ func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, 
 	dc := NewContextForRGBA(c)
 	dc.SetLineWidth(lineWidth)
 	dir := []int{-1, 1}
-	for range iters {
+	for range Range(iters) {
 		old := complex(
 			float64(rand.Intn(n-1)),
 			float64(rand.Intn(n-1)),
@@ -32,7 +32,7 @@ func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, 
 				0,
 			}, 255)
 		}
-		for range k {
+		for range Range(k) {
 			new := old + complex(float64(dir[rand.Intn(2)]), float64(dir[rand.Intn(2)]))
 			if Dist(new, complex(float64(n/2), float64(n/2))) > float64(n/2-10) {
 				new = old

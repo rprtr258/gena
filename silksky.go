@@ -13,8 +13,8 @@ func SilkSky(c *image.RGBA, alpha int, circleNum int, sunRadius float64) {
 	ms := circleNum*2 + 50
 	mv := 100
 
-	for i := range circleNum {
-		for j := range circleNum {
+	for i := range Range(circleNum) {
+		for j := range Range(circleNum) {
 			hsv := HSV{
 				H: circleNum + j,
 				S: i + 50,

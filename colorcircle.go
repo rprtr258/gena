@@ -11,7 +11,7 @@ import (
 func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 	dc := NewContextForRGBA(c)
 
-	for range circleNum {
+	for range Range(circleNum) {
 		v := Mul2(complex(
 			RandomFloat64(-0.1, 1.1),
 			RandomFloat64(-0.1, 1.1),
@@ -51,7 +51,7 @@ func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 				cl.A = uint8(alpha)
 				dc.SetColor(cl)
 
-				for range 200 {
+				for range Range(200) {
 					theta := RandomFloat64(0, math.Pi*2)
 					dc.DrawPoint(v+Polar(dd*0.3, theta), 0.6)
 					dc.Stroke()

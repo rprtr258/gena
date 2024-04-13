@@ -93,3 +93,7 @@ func LoadFontFace(path string, points float64) font.Face {
 		// Hinting: font.HintingFull,
 	})
 }
+
+func Range(n int) []struct{} {
+	return make([]struct{}, n)
+}

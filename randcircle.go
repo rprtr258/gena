@@ -5,8 +5,6 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
-
-	"github.com/rprtr258/fun"
 )
 
 type circle1 struct {
@@ -17,7 +15,7 @@ type circle1 struct {
 
 func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64) []circle1 {
 	circles := make([]circle1, 0, cn)
-	for range cn {
+	for range Range(cn) {
 		x := rand.Intn(w) + 1
 		y := rand.Intn(h) + 1
 		radius := float64(rand.Intn(int(minRadius))) + maxRadius - minRadius
@@ -31,7 +29,8 @@ func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64
 }
 
 func circleSliceUpdate(cs []circle1, bounds image.Rectangle) []circle1 {
-	return fun.Map(cs, func(c circle1) circle1 {
+	res := make([]circle1, len(cs))
+	for i, c := range cs {
 		c.pos += c.d
 
 		if X(c.pos) <= 0 {
@@ -54,18 +53,28 @@ func circleSliceUpdate(cs []circle1, bounds image.Rectangle) []circle1 {
 			c.d = complex(X(c.d), -Y(c.d))
 		}
 
-		return c
-	})
+		res[i] = c
+	}
+	return res
 }
 
 // Generative draws a random circles image.
-func RandCircle(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, lineColor color.RGBA, maxCircle, maxStepsPerCircle int, minSteps, maxSteps, minRadius, maxRadius float64, isRandColor bool, iters int) {
+func RandCircle(
+	c *image.RGBA,
+	colorSchema []color.RGBA,
+	lineWidth float64,
+	lineColor color.RGBA,
+	maxCircle, maxStepsPerCircle int,
+	minSteps, maxSteps, minRadius, maxRadius float64,
+	isRandColor bool,
+	iters int,
+) {
 	dc := NewContextForRGBA(c)
-	for range iters {
+	for range Range(iters) {
 		cn := rand.Intn(maxCircle) + int(maxCircle/3)
 		circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
-		for range maxStepsPerCircle {
+		for range Range(maxStepsPerCircle) {
 			for _, c1 := range circles {
 				for _, c2 := range circles {
 					cl := lineColor

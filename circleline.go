@@ -17,7 +17,7 @@ func CircleLine(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step flo
 		points = append(points, ToPixel(Polar(radius, theta), axis, Size(c)))
 	}
 
-	for range lineNum {
+	for range Range(lineNum) {
 		p1 := points[rand.Intn(len(points))]
 		dc.MoveToV2(p1)
 		p2 := points[rand.Intn(len(points))]

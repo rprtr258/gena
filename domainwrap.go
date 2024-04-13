@@ -61,7 +61,7 @@ func DomainWarp(
 		log.Fatal("Missing the parameters numImages or imgPath")
 	}
 
-	for i := range numImages {
+	for i := range Range(numImages) {
 		imgfile := fmt.Sprintf("%v/domainwrap%03d.PNG", imgPath, i)
 		offset += Mul(offsetStep, float64(i))
 		domainWarp(c, noise, scale, scale2, offset, cmap)

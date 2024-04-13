@@ -16,7 +16,7 @@ func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
 	noise := NewPerlinNoiseDeprecated()
 
 	for r := 1.0; r < 200; {
-		for range 10 {
+		for range Range(10) {
 			nPoints := int(2 * math.Pi * r)
 			nPoints = min(nPoints, 500)
 

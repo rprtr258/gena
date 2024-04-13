@@ -10,7 +10,7 @@ import (
 func CircleLoop(c *image.RGBA, lineWidth float64, lineColor color.RGBA, alpha int, radius float64, iters int) {
 	FillBackground(c, Black)
 	dc := NewContextForRGBA(c)
-	for i := range iters {
+	for i := range Range(iters) {
 		theta := math.Pi / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
 			dc.Translate(Size(c) / 2)
