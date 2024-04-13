@@ -21,7 +21,7 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, seg 
 	for i := 0.; i < seg; i += 1. {
 		for j := 0.; j < seg; j += 1. {
 			rects = append(rects, Rect{
-				Pos:  Plus(Mul(complex(i, j), w), w/2),
+				Pos:  Plus(complex(i, j)*Coeff(w), w/2),
 				Size: complex(w, w),
 			})
 		}
@@ -42,7 +42,7 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, seg 
 }
 
 func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rect) {
-	wh := Mul2(rect.Size/5, Mul(RandomV2(), seg*2)+1)
+	wh := Mul2(rect.Size/5, RandomV2()*Coeff(seg*2)+1)
 
 	var delta V2
 	switch rand.Intn(4) {

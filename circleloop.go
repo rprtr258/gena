@@ -14,10 +14,10 @@ func CircleLoop(c *image.RGBA, lineWidth float64, lineColor color.RGBA, alpha in
 		theta := math.Pi / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
 			dc.Translate(Size(c) / 2)
-			v := Mul(complex(
+			v := complex(
 				math.Cos(Radians(theta)),
 				math.Sin(Radians(theta*2)),
-			), radius)
+			) * Coeff(radius)
 
 			dc.SetLineWidth(lineWidth)
 			dc.SetColor(lineColor)

@@ -26,16 +26,12 @@ func Magnitude(v V2) float64 {
 	return cmplx.Abs(v)
 }
 
-func Mul(v V2, z float64) V2 {
-	return v * complex(z, 0)
+func Coeff(x float64) V2 {
+	return complex(x, 0)
 }
 
 func Mul2(v, w V2) V2 {
 	return complex(X(v)*X(w), Y(v)*Y(w))
-}
-
-func Div(v V2, z float64) V2 {
-	return v / complex(z, 0)
 }
 
 func Div2(v, w V2) V2 {
@@ -43,7 +39,7 @@ func Div2(v, w V2) V2 {
 }
 
 func SetMag(v V2, m float64) V2 {
-	return Mul(v, m/Magnitude(v))
+	return v * Coeff(m/Magnitude(v))
 }
 
 func Normalized(v V2) V2 {
@@ -65,12 +61,12 @@ func ToPolar(v V2) V2 {
 
 // ToCartesian converts points from polar coordinates to cartesian coordinates
 func ToCartesian(v V2) V2 {
-	return Mul(cmplx.Exp(complex(0, imag(v))), real(v))
+	return cmplx.Exp(complex(0, imag(v))) * Coeff(X(v))
 }
 
 // ToPixel converts cartesian coordinates to actual pixels coordinates in an image
 func ToPixel(v, axis, size V2) V2 {
-	return Mul2(Div(size, 2), Plus(Div2(v, axis), 1))
+	return Mul2(size/Coeff(2), Plus(Div2(v, axis), 1))
 }
 
 // Dist returns the Euclidean distance between two point on 2D dimension.

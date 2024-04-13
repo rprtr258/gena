@@ -21,7 +21,7 @@ func SilkSky(c *image.RGBA, alpha int, circleNum int, sunRadius float64) {
 				V: 70,
 			}
 			rgba := hsv.ToRGB(mh, ms, mv)
-			n := Div(Mul2(Plus(complex(float64(i), float64(j)), 0.5), Size(c)), float64(circleNum))
+			n := Mul2(Plus(complex(float64(i), float64(j)), 0.5), Size(c)) / Coeff(float64(circleNum))
 			dc.SetRGBA255(rgba, alpha)
 			r := Dist(n, m)
 			dc.DrawCircleV2(n, r-sunRadius/2)

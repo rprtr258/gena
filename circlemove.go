@@ -26,7 +26,7 @@ func CircleMove(c *image.RGBA, circleNum int) {
 			p := complex(xx, yy)
 			xx = (xx + cx) / 150
 			yy = (yy + cy) / 150
-			p = Mul(p, 1+1.5*noise.Noise2D(xx, yy))
+			p *= Coeff(1 + 1.5*noise.Noise2D(xx, yy))
 			dc.LineToV2(p + complex(cx, cy))
 			cxx = cx
 		}

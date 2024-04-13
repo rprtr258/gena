@@ -87,7 +87,7 @@ func Blend(src, dest *image.RGBA, mode BlendMode) *image.RGBA {
 }
 
 func LerpV2(a, b V2, t float64) V2 {
-	return a + Mul(b-a, t)
+	return a + (b-a)*Coeff(t)
 }
 
 func Lerp(c1, c2, coeff float64) float64 {

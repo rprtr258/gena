@@ -20,10 +20,10 @@ func domainWarp(
 ) {
 	for h := 0.0; h < float64(c.Bounds().Dy()); h += 1.0 {
 		for w := 0.0; w < float64(c.Bounds().Dx()); w += 1.0 {
-			v := Mul(complex(w, h), scale)
+			v := complex(w, h) * Coeff(scale)
 			q := noise.NoiseV2x2(v+offset, complex(5.2, 1.3))
-			r := noise.NoiseV2x2(v+Mul(q, scale2)+complex(1.7, 9.2), complex(6.4, -6.4))
-			r1, m1, m2 := noise.NoiseV2(q+Mul(r, scale2)), Magnitude(q), Magnitude(r)
+			r := noise.NoiseV2x2(v+q*Coeff(scale2)+complex(1.7, 9.2), complex(6.4, -6.4))
+			r1, m1, m2 := noise.NoiseV2(q+r*Coeff(scale2)), Magnitude(q), Magnitude(r)
 			color := fn(r1, m1, m2)
 			c.Set(int(w), int(h), color)
 		}
@@ -63,7 +63,7 @@ func DomainWarp(
 
 	for i := range Range(numImages) {
 		imgfile := fmt.Sprintf("%v/domainwrap%03d.PNG", imgPath, i)
-		offset += Mul(offsetStep, float64(i))
+		offset += offsetStep * Coeff(float64(i))
 		domainWarp(c, noise, scale, scale2, offset, cmap)
 		SavePNG(imgfile, c)
 	}

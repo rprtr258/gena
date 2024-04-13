@@ -5,7 +5,7 @@ func quadratic(p0, p1, p2 V2, t float64) V2 {
 	a := u * u
 	b := 2 * u * t
 	c := t * t
-	return Mul(p0, a) + Mul(p1, b) + Mul(p2, c)
+	return p0*Coeff(a) + p1*Coeff(b) + p2*Coeff(c)
 }
 
 func QuadraticBezier(p0, p1, p2 V2) []V2 {
@@ -26,7 +26,7 @@ func cubic(p0, p1, p2, p3 V2, t float64) V2 {
 	b := 3 * u * u * t
 	c := 3 * u * t * t
 	d := t * t * t
-	return Mul(p0, a) + Mul(p1, b) + Mul(p2, c) + Mul(p3, d)
+	return p0*Coeff(a) + p1*Coeff(b) + p2*Coeff(c) + p3*Coeff(d)
 }
 
 func CubicBezier(p0, p1, p2, p3 V2) []V2 {

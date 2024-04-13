@@ -23,10 +23,10 @@ func PointRibbon(c *image.RGBA, lineWidth float64, r float64, iters int) {
 			0},
 			10,
 		)
-		dc.DrawPoint(Mul(complex(
+		dc.DrawPoint(complex(
 			2*math.Sin(2*t*dt)+math.Cos(t*dt),
 			2*math.Sin(t*dt)-math.Sin(5*t),
-		), r)+Size(c)/2, 1.0)
+		)*Coeff(r)+Size(c)/2, 1.0)
 		dc.Stroke()
 		t += 0.01
 		dt += 0.1
