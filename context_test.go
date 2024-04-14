@@ -245,7 +245,7 @@ func TestDrawPoint(t *testing.T) {
 
 func TestLinearGradient(t *testing.T) {
 	dc := NewContext(100, 100)
-	g := NewLinearGradient(0, 0, 100, 100, Stops{
+	g := NewLinearGradient(0, complex(100, 100), Stops{
 		0:   color.RGBA{0, 255, 0, 255},
 		0.5: color.RGBA{255, 0, 0, 255},
 		1:   color.RGBA{0, 0, 255, 255},

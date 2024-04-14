@@ -28,7 +28,7 @@ func sortStops(stops Stops) []stop {
 
 // Linear Gradient
 func NewLinearGradient(
-	x0, y0, x1, y1 float64,
+	v0, v1 V2,
 	stopss Stops,
 ) Pattern {
 	stops := sortStops(stopss)
@@ -38,31 +38,28 @@ func NewLinearGradient(
 			return color.Transparent
 		}
 
-		fx, fy := float64(x), float64(y)
-		dx, dy := x1-x0, y1-y0
+		f := complex(float64(x), float64(y))
+		d := v1 - v0
 
 		// Horizontal
-		if dy == 0 && dx != 0 {
-			return getColor((fx-x0)/dx, stops...)
+		if Y(d) == 0 && X(d) != 0 {
+			return getColor((X(f)-X(v0))/X(d), stops...)
 		}
 
 		// Vertical
-		if dx == 0 && dy != 0 {
-			return getColor((fy-y0)/dy, stops...)
+		if X(d) == 0 && Y(d) != 0 {
+			return getColor((Y(f)-Y(v0))/Y(d), stops...)
 		}
 
-		// Dot product
-		s0 := dx*(fx-x0) + dy*(fy-y0)
-		if s0 < 0 {
+		if s0 := Dot(d, f-v0); s0 < 0 {
 			return stops[0].color
 		}
 
 		// Calculate distance to (x0,y0) alone (x0,y0)->(x1,y1)
-		mag := math.Hypot(dx, dy)
-		u := ((fx-x0)*-dy + (fy-y0)*dx) / (mag * mag)
-		x2, y2 := x0+u*-dy, y0+u*dx
-		d := math.Hypot(fx-x2, fy-y2) / mag
-		return getColor(d, stops...)
+		mag := Magnitude(d)
+		u := math.Pow(Magnitude((f-v0)*complex(0, 1)*d)/mag, 2)
+		v2 := v0 + d*complex(0, 1)*Coeff(u)
+		return getColor(Magnitude(f-v2)/mag, stops...)
 	}
 }
 

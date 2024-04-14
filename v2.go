@@ -73,3 +73,7 @@ func ToPixel(v, axis, size V2) V2 {
 func Dist(p1, p2 V2) float64 {
 	return Magnitude(p1 - p2)
 }
+
+func Dot(p1, p2 V2) float64 {
+	return real(p1 * cmplx.Conj(p2))
+}
