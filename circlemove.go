@@ -14,7 +14,6 @@ func CircleMove(c *image.RGBA, circleNum int) {
 	noise := NewPerlinNoiseDeprecated()
 	cl := rand.Intn(255)
 	for i := range Range(circleNum) {
-		// var sx, sy float64
 		var cxx float64
 		np := 300.0
 		for j := 0.0; j < np; j += 1.0 {
@@ -30,18 +29,13 @@ func CircleMove(c *image.RGBA, circleNum int) {
 			dc.LineToV2(p + complex(cx, cy))
 			cxx = cx
 		}
+
 		hue := int(cxx/4) - cl
 		if hue < 0 {
 			hue += 255
 		}
 
-		h := HSV{
-			H: hue,
-			S: 180,
-			V: 120,
-		}
-
-		rgba := h.ToRGB(255, 255, 255)
+		rgba := HSV{hue, 180, 120}.ToRGB(255, 255, 255)
 		rgba.A = 255
 		dc.SetColor(rgba)
 		dc.Stroke()

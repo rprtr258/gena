@@ -8,7 +8,7 @@ import (
 )
 
 // ColorMapping maps some parameters to color space.
-type ColorMapping func(float64, float64, float64) color.RGBA
+type ColorMapping = func(float64, float64, float64) color.RGBA
 
 func domainWarp(
 	c *image.RGBA,
@@ -18,14 +18,14 @@ func domainWarp(
 	offset V2,
 	fn ColorMapping,
 ) {
-	for h := 0.0; h < float64(c.Bounds().Dy()); h += 1.0 {
-		for w := 0.0; w < float64(c.Bounds().Dx()); w += 1.0 {
-			v := complex(w, h) * Coeff(scale)
+	for h := 0; h < c.Bounds().Dy(); h++ {
+		for w := 0; w < c.Bounds().Dx(); w++ {
+			v := complex(float64(w), float64(h)) * Coeff(scale)
 			q := noise.NoiseV2x2(v+offset, complex(5.2, 1.3))
 			r := noise.NoiseV2x2(v+q*Coeff(scale2)+complex(1.7, 9.2), complex(6.4, -6.4))
 			r1, m1, m2 := noise.NoiseV2(q+r*Coeff(scale2)), Magnitude(q), Magnitude(r)
 			color := fn(r1, m1, m2)
-			c.Set(int(w), int(h), color)
+			c.Set(w, h, color)
 		}
 	}
 }

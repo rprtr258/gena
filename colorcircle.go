@@ -47,7 +47,6 @@ func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 				dd := s + j*2.0
 				alpha := Constrain(int(255*sx/j), 0, 255)
 
-				// alpha := RandomRangeInt(30, 150)
 				cl.A = uint8(alpha)
 				dc.SetColor(cl)
 

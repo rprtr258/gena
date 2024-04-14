@@ -8,7 +8,7 @@ import (
 
 // Generative draws a point ribbon image.
 // TODO: make the point as parameters.
-func PointRibbon(c *image.RGBA, lineWidth float64, r float64, iters int) {
+func PointRibbon(c *image.RGBA, lineWidth, r float64, iters int) {
 	dc := NewContextForRGBA(c)
 	dc.SetLineWidth(lineWidth)
 

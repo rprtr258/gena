@@ -8,6 +8,15 @@ import (
 	"os"
 )
 
+func Load(path string) image.Image {
+	file := must1(os.Open(path))
+	defer file.Close()
+
+	im, _, err := image.Decode(file)
+	must(err)
+	return im
+}
+
 func LoadPNG(path string) image.Image {
 	file := must1(os.Open(path))
 	defer file.Close()
@@ -46,13 +55,4 @@ func ToBytes(img image.Image) []byte {
 	must(jpeg.Encode(&buffer, img, nil))
 
 	return buffer.Bytes()
-}
-
-func LoadImage(path string) image.Image {
-	file := must1(os.Open(path))
-	defer file.Close()
-
-	im, _, err := image.Decode(file)
-	must(err)
-	return im
 }

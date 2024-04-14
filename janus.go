@@ -15,12 +15,10 @@ func Janus(c *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, n int, decay 
 	r := 0.3
 
 	for i := range Range(n) {
-		// k := rand.Intn(len(colorSchema()))
 		k := i
 		dc.Stack(func(ctx *Context) {
 			dc.Translate(Size(c) / 2)
 
-			// theta += rand.Float64()*math.Pi/2
 			theta := RandomFloat64(math.Pi/4, 3*math.Pi/4)
 			x1, y1 := math.Cos(theta)*r, math.Sin(theta)*r
 			x2, y2 := -x1, -y1
@@ -29,10 +27,8 @@ func Janus(c *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, n int, decay 
 			y1 += noise
 			y2 += noise
 
-			// r -= r*j.decay
 			s *= 0.836
 			dc.Scale(complex(s, s))
-			// r *= 0.836
 			dc.DrawArc(complex(x1, y1), 1.0, math.Pi*3/2+theta, math.Pi*5/2+theta)
 			dc.SetColor(colorSchema[k])
 			dc.Fill()
