@@ -7,7 +7,7 @@ import (
 )
 
 func gradientRadial() {
-	dc := gena.NewContext(400, 200)
+	dc := gena.NewContext(complex(400, 200))
 
 	grad := gena.PatternGradientRadial(100+100i, 10, 100+120i, 80, gena.Stops{
 		0: color.RGBA{0, 255, 0, 255},

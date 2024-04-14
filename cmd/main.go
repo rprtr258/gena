@@ -417,7 +417,7 @@ func test() {
 }
 
 func out() {
-	dc := gena.NewContext(1000, 1000)
+	dc := gena.NewContext(complex(1000, 1000))
 	dc.DrawCircle(complex(350, 500), 300)
 	dc.Clip()
 	dc.DrawCircle(complex(650, 500), 300)

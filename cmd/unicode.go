@@ -6,7 +6,7 @@ func unicode() {
 	const S = 4096 * 2
 	const T = 16 * 2
 	const F = 28
-	dc := gena.NewContext(S, S)
+	dc := gena.NewContext(complex(S, S))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(gena.ColorRGB(0, 0, 0))

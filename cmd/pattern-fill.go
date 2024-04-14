@@ -3,7 +3,7 @@ package main
 import "github.com/rprtr258/gena"
 
 func patternFill() {
-	dc := gena.NewContext(600, 600)
+	dc := gena.NewContext(complex(600, 600))
 	dc.MoveTo(complex(20, 20))
 	dc.LineTo(complex(590, 20))
 	dc.LineTo(complex(590, 590))

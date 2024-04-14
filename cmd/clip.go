@@ -3,7 +3,7 @@ package main
 import "github.com/rprtr258/gena"
 
 func clip() {
-	dc := gena.NewContext(1000, 1000)
+	dc := gena.NewContext(complex(1000, 1000))
 	dc.DrawCircle(350+500i, 300)
 	dc.Clip()
 	dc.DrawCircle(650+500i, 300)

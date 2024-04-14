@@ -12,7 +12,7 @@ const (
 )
 
 func gradientText() {
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 
 	// draw text
 	dc.SetColor(gena.ColorRGB(0, 0, 0))

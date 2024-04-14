@@ -16,7 +16,7 @@ func PolygonAt(n int, p gena.V2, r float64) []gena.V2 {
 
 func star(n int) {
 	points := PolygonAt(n, 512+512i, 400)
-	dc := gena.NewContext(1024, 1024)
+	dc := gena.NewContext(complex(1024, 1024))
 	dc.SetColor(gena.ColorHex("#fff"))
 	dc.Clear()
 	for i := range gena.Range(n + 1) {

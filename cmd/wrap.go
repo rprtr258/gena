@@ -8,7 +8,7 @@ func wrap() {
 	const W = 1024
 	const H = 1024
 	const P = 16
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.DrawLine(complex(W/2, 0), complex(W/2, H))

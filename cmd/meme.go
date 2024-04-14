@@ -4,7 +4,7 @@ import "github.com/rprtr258/gena"
 
 func meme() {
 	const S = 1024
-	dc := gena.NewContext(S, S)
+	dc := gena.NewContext(complex(S, S))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 96)

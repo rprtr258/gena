@@ -9,7 +9,7 @@ import (
 func lines() {
 	const W = 1024
 	const H = 1024
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Clear()
 	for range gena.Range(1000) {

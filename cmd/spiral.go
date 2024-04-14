@@ -9,7 +9,7 @@ import (
 func spiral() {
 	const S = 1024
 	const N = 2048
-	dc := gena.NewContext(S, S)
+	dc := gena.NewContext(complex(S, S))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(gena.ColorRGB(0, 0, 0))

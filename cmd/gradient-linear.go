@@ -7,7 +7,7 @@ import (
 )
 
 func gradientLinear() {
-	dc := gena.NewContext(500, 400)
+	dc := gena.NewContext(complex(500, 400))
 
 	grad := gena.PatternGradientLinear(
 		complex(20, 320),

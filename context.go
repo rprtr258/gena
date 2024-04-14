@@ -20,7 +20,7 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-func Size(img *image.RGBA) V2 {
+func Size(img image.Image) V2 {
 	return complex(float64(img.Bounds().Dx()), float64(img.Bounds().Dy()))
 }
 
@@ -90,8 +90,8 @@ type Context struct {
 
 // NewContext creates a new image.RGBA with the specified width and height
 // and prepares a context for rendering onto that image.
-func NewContext(width, height int) *Context {
-	return NewContextForRGBA(image.NewRGBA(image.Rect(0, 0, width, height)))
+func NewContext(size V2) *Context {
+	return NewContextForRGBA(image.NewRGBA(image.Rect(0, 0, int(X(size)), int(Y(size)))))
 }
 
 // NewContextForRGBA prepares a context for rendering onto the specified image.
@@ -693,7 +693,7 @@ func (dc *Context) DrawCircle(c V2, r float64) {
 	dc.ClosePath()
 }
 
-func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
+func (dc *Context) DrawRegularPolygon(n int, c V2, r, rotation float64) {
 	angle := 2 * math.Pi / float64(n)
 
 	rotation -= math.Pi / 2
@@ -704,25 +704,24 @@ func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 	dc.NewSubPath()
 	for i := range Range(n) {
 		a := rotation + angle*float64(i)
-		dc.LineTo(Polar(r, a) + complex(x, y))
+		dc.LineTo(Polar(r, a) + c)
 	}
 	dc.ClosePath()
 }
 
 // DrawImage draws the specified image at the specified point.
-func (dc *Context) DrawImage(im image.Image, x, y int) {
-	dc.DrawImageAnchored(im, x, y, 0, 0)
+func (dc *Context) DrawImage(im image.Image, v V2) {
+	dc.DrawImageAnchored(im, v, 0)
 }
 
 // DrawImageAnchored draws the specified image at the specified anchor point.
 // The anchor point is x - w * ax, y - h * ay, where w, h is the size of the
 // image. Use ax=0.5, ay=0.5 to center the image at the specified point.
-func (dc *Context) DrawImageAnchored(im image.Image, x, y int, ax, ay float64) {
-	s := im.Bounds().Size()
-	x -= int(ax * float64(s.X))
-	y -= int(ay * float64(s.Y))
+func (dc *Context) DrawImageAnchored(im image.Image, pos, a V2) {
+	s := Size(im)
+	pos -= Mul2(a, s)
 	transformer := draw.BiLinear
-	m := dc.matrix.Translate(complex(float64(x), float64(y)))
+	m := dc.matrix.Translate(pos)
 	s2d := f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
 	if dc.mask == nil {
 		transformer.Transform(dc.im, s2d, im, im.Bounds(), draw.Over, nil)

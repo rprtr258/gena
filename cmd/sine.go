@@ -9,7 +9,7 @@ import (
 func sine() {
 	const W = 1200
 	const H = 60
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	// dc.SetHexColor("#FFFFFF")
 	// dc.Clear()
 	dc.RelativeTo(complex(0.95, 0.75), func(dc *gena.Context) {

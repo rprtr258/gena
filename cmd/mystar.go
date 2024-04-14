@@ -10,7 +10,7 @@ import (
 func mystar() {
 	const n = 4
 
-	dc := gena.NewContext(500, 500)
+	dc := gena.NewContext(complex(500, 500))
 
 	dc.SetColor(color.Black)
 	dc.Clear()

@@ -8,7 +8,7 @@ func crisp() {
 	const Minor = 10
 	const Major = 100
 
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 

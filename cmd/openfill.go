@@ -8,7 +8,7 @@ import (
 )
 
 func openfill() {
-	dc := gena.NewContext(1000, 1000)
+	dc := gena.NewContext(complex(1000, 1000))
 	for j := range gena.Range(10) {
 		for i := range gena.Range(10) {
 			v := complex(float64(i), float64(j))*100 + 50

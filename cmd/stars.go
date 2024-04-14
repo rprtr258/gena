@@ -19,7 +19,7 @@ func stars() {
 	const W = 1200
 	const H = 120
 	const S = 100
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	dc.SetColor(gena.ColorHex("#FFFFFF"))
 	dc.Clear()
 	n := 5

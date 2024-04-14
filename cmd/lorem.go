@@ -14,7 +14,7 @@ var loremIpsumLines = []string{
 func lorem() {
 	const W = 800
 	const H = 400
-	dc := gena.NewContext(W, H)
+	dc := gena.NewContext(complex(W, H))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(gena.ColorRGB(0, 0, 0))

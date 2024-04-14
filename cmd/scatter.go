@@ -19,7 +19,7 @@ func CreatePoints(n int) []gena.V2 {
 func scatter() {
 	const S = 1024
 	const P = 64
-	dc := gena.NewContext(S, S)
+	dc := gena.NewContext(complex(S, S))
 	dc.InvertY()
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()

@@ -30,6 +30,10 @@ func Coeff(x float64) V2 {
 	return complex(x, 0)
 }
 
+func Diag(x float64) V2 {
+	return complex(x, x)
+}
+
 func Mul2(v, w V2) V2 {
 	return complex(X(v)*X(w), Y(v)*Y(w))
 }
@@ -47,11 +51,11 @@ func Normalized(v V2) V2 {
 }
 
 func Plus(v V2, z float64) V2 {
-	return v + complex(z, z) // v + z(1+i)
+	return v + Diag(z)
 }
 
 func Sub(v V2, z float64) V2 {
-	return v - complex(z, z) // v - z(1+i)
+	return v - Diag(z)
 }
 
 // ToPolar converts points from cartesian coordinates to polar coordinates

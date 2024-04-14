@@ -56,7 +56,7 @@ func beziers() {
 	const S = 256
 	const W = 8
 	const H = 8
-	dc := gena.NewContext(S*W, S*H)
+	dc := gena.NewContext(complex(W, H) * gena.Coeff(S))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	for j := range gena.Range(H) {

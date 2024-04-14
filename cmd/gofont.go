@@ -16,7 +16,7 @@ func gofont() {
 
 	face := truetype.NewFace(font, &truetype.Options{Size: 48})
 
-	dc := gena.NewContext(1024, 1024)
+	dc := gena.NewContext(complex(1024, 1024))
 	dc.SetFontFace(face)
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()

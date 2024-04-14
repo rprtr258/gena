@@ -4,7 +4,7 @@ import "github.com/rprtr258/gena"
 
 func cubic() {
 	const S = 1000
-	dc := gena.NewContext(S, S)
+	dc := gena.NewContext(complex(S, S))
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.Translate(complex(S/2, S/2))
