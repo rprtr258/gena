@@ -780,7 +780,7 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 		Dst:  im,
 		Src:  image.NewUniform(dc.color),
 		Face: dc.fontFace,
-		Dot:  fixp(x, y),
+		Dot:  Fixed(complex(x, y)),
 	}
 	// based on Drawer.DrawString() in golang.org/x/image/font/font.go
 	prevC := rune(-1)
