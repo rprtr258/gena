@@ -12,7 +12,7 @@ func sine() {
 	dc := NewContext(complex(W, H))
 	// dc.SetHexColor("#FFFFFF")
 	// dc.Clear()
-	dc.RelativeTo(complex(0.95, 0.75), func(dc *Context) {
+	dc.WithTransform(Translate(complex(0.95, 0.75)), func(dc *Context) {
 		dc.TransformAdd(Scale(complex(W, H) / 2))
 	})
 	for i := range Range(W) {

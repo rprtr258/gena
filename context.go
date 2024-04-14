@@ -921,12 +921,6 @@ func (dc *Context) TransformAdd(m Matrix) {
 	dc.matrix = dc.matrix.Multiply(m)
 }
 
-func (dc *Context) RelativeTo(v V2, fn func(*Context)) {
-	dc.TransformAdd(Translate(v))
-	fn(dc)
-	dc.TransformAdd(Translate(-v))
-}
-
 // transformPoint multiplies the specified point by the current matrix, returning a transformed position.
 func (dc *Context) transformPoint(v V2) V2 {
 	return dc.matrix.TransformPoint(v)
@@ -938,10 +932,14 @@ func (dc *Context) InvertY() {
 	dc.TransformAdd(Scale(complex(1, -1)))
 }
 
+func (dc *Context) WithTransform(m Matrix, fn func(*Context)) {
+	dc.TransformAdd(m)
+	fn(dc)
+	dc.TransformAdd(m.Inverse())
+}
+
 // Stack
 func (dc *Context) Stack(fn func(*Context)) {
-	// Push saves the current state of the context for later retrieval. These
-	// can be nested.
 	old := func(dc Context) *Context { return &dc }(*dc) // you cannot just &*x to copy pointer&value
 
 	fn(dc)

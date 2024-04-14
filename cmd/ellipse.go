@@ -8,7 +8,7 @@ func ellipse() {
 	dc.SetColor(ColorRGBA(0, 0, 0, 0.1))
 	for i := 0; i < 360; i += 15 {
 		dc.Stack(func(dc *Context) {
-			dc.RelativeTo(complex(S/2, S/2), func(dc *Context) {
+			dc.WithTransform(Translate(complex(S/2, S/2)), func(dc *Context) {
 				dc.TransformAdd(Rotate(Radians(float64(i))))
 			})
 			dc.DrawEllipse(complex(S/2, S/2), complex(S*7/16, S/8))
