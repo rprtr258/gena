@@ -4,7 +4,7 @@ import "github.com/rprtr258/gena"
 
 func circle() {
 	dc := gena.NewContext(1000, 1000)
-	dc.DrawCircleV2(500+500i, 400)
+	dc.DrawCircle(500+500i, 400)
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Fill()
 	gena.SavePNG("circle.png", dc.Image())

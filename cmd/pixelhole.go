@@ -33,7 +33,7 @@ func PixelHole(c *image.RGBA, colorSchema []color.RGBA, dotN, iters int) {
 					y := noise.Noise2_1(fc/50+j/50, 10000)*float64(c.Bounds().Dy())/10 + rand.Float64()*float64(c.Bounds().Dy())/20
 
 					rr := gena.RandomFloat64(1.0, 6-math.Log(fc+1)/10)
-					dc.DrawCircleV2(complex(x, y), rr)
+					dc.DrawCircle(complex(x, y), rr)
 					dc.Fill()
 				})
 			}

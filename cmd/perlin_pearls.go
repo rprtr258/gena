@@ -63,7 +63,7 @@ func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN,
 	for i := range Range(circleN) {
 		dc.SetLineWidth(0.5)
 		dc.SetColor(Black)
-		dc.DrawCircleV2(cs[i].pos, cs[i].radius)
+		dc.DrawCircle(cs[i].pos, cs[i].radius)
 		dc.Stroke()
 
 		const factor = 0.008

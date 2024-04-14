@@ -40,7 +40,7 @@ func NoiseLine(c *image.RGBA, colorSchema []color.RGBA, n int) {
 			w := math.Sin(math.Pi*float64(j)/float64(l-1)) * 5
 			theta := noise.Noise3_1(x*ns, y*ns, t) * 100
 			dc.SetColor(cl)
-			dc.DrawCircle(x, y, w)
+			dc.DrawCircle(complex(x, y), w)
 			dc.Fill()
 			x += math.Cos(theta)
 			y += math.Sin(theta)

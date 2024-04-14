@@ -77,7 +77,7 @@ func TestCircles(t *testing.T) {
 	rnd := rand.New(rand.NewSource(99))
 	for range Range(10) {
 		r := rnd.Float64()*10 + 5
-		dc.DrawCircleV2(RandomV2()*100, r)
+		dc.DrawCircle(RandomV2()*100, r)
 		dc.SetColor(ColorRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
 		dc.FillPreserve()
 		dc.SetColor(ColorRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
@@ -149,12 +149,12 @@ func TestClip(t *testing.T) {
 	dc := NewContext(100, 100)
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.DrawCircle(50, 50, 40)
+	dc.DrawCircle(complex(50, 50), 40)
 	dc.Clip()
 	rnd := rand.New(rand.NewSource(99))
 	for range Range(1000) {
 		r := rnd.Float64()*10 + 5
-		dc.DrawCircleV2(RandomV2()*100, r)
+		dc.DrawCircle(RandomV2()*100, r)
 		dc.SetColor(ColorRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()))
 		dc.Fill()
 	}
@@ -218,7 +218,7 @@ func TestSetPixel(t *testing.T) {
 	for y := range Range(100) {
 		for x := range Range(100) {
 			if i%31 == 0 {
-				dc.SetPixel(x, y)
+				dc.SetPixel(complex(float64(x), float64(y)))
 			}
 			i++
 		}
@@ -295,7 +295,7 @@ func BenchmarkCircles(b *testing.B) {
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	for i := range Range(b.N) {
-		dc.DrawCircle(rnd.Float64()*1000, rnd.Float64()*1000, 10)
+		dc.DrawCircle(complex(rnd.Float64()*1000, rnd.Float64()*1000), 10)
 		m := float64(i % 2)
 		dc.SetColor(ColorRGB(m, m, m))
 		dc.Fill()

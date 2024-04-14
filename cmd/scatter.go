@@ -48,7 +48,7 @@ func scatter() {
 	// draw points
 	dc.SetColor(gena.ColorRGBA(0, 0, 1, 0.5))
 	for _, p := range points {
-		dc.DrawCircleV2(p, 3.0/S)
+		dc.DrawCircle(p, 3.0/S)
 		dc.Fill()
 	}
 	// draw text

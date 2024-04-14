@@ -37,7 +37,7 @@ func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			switch rnd {
 			case 0:
-				dc.DrawCircle(0, 0, w/2)
+				dc.DrawCircle(0, w/2)
 			case 1:
 				dc.DrawRectangle(0, complex(w/2, w/2))
 			case 2:

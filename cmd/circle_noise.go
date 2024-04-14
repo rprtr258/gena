@@ -30,7 +30,7 @@ func CircleNoise(
 	dc.SetLineWidth(2.0)
 	dc.SetColor(Black)
 	radius := float64(c.Bounds().Dx()) * 0.8 / 2
-	dc.DrawCircleV2(Size(c)/2, radius)
+	dc.DrawCircle(Size(c)/2, radius)
 	dc.Stroke()
 	// ctex.Clip()
 

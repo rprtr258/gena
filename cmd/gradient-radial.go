@@ -19,9 +19,9 @@ func gradientRadial() {
 	dc.Fill()
 
 	dc.SetColor(color.White)
-	dc.DrawCircleV2(complex(100, 100), 10)
+	dc.DrawCircle(complex(100, 100), 10)
 	dc.Stroke()
-	dc.DrawCircleV2(complex(100, 120), 80)
+	dc.DrawCircle(complex(100, 120), 80)
 	dc.Stroke()
 
 	gena.SavePNG("gradientRadial.png", dc.Image())

@@ -258,8 +258,7 @@ func (dc *Context) LineTo(v V2) {
 }
 
 // QuadraticTo adds a quadratic bezier curve to the current path starting at
-// the current point. If there is no current point, it first performs
-// MoveTo(x1, y1)
+// the current point. If there is no current point, it first performs MoveTo(a)
 func (dc *Context) QuadraticTo(a, b V2) {
 	if !dc.hasCurrent {
 		dc.MoveTo(a)
@@ -613,8 +612,8 @@ func (dc *Context) Clear() {
 }
 
 // SetPixel sets the color of the specified pixel using the current color.
-func (dc *Context) SetPixel(x, y int) {
-	dc.im.Set(x, y, dc.color)
+func (dc *Context) SetPixel(v V2) {
+	dc.im.Set(int(X(v)), int(Y(v)), dc.color)
 }
 
 // DrawPoint is like DrawCircle but ensures that a circle of the specified
@@ -624,7 +623,7 @@ func (dc *Context) DrawPoint(v V2, r float64) {
 	dc.Stack(func(dc *Context) {
 		t := dc.TransformPoint(v)
 		dc.Identity()
-		dc.DrawCircleV2(t, r)
+		dc.DrawCircle(t, r)
 	})
 }
 
@@ -688,11 +687,7 @@ func (dc *Context) DrawArc(v V2, r, angle1, angle2 float64) {
 	dc.DrawEllipticalArc(v, complex(r, r), angle1, angle2)
 }
 
-func (dc *Context) DrawCircle(x, y, r float64) {
-	dc.DrawCircleV2(complex(x, y), r)
-}
-
-func (dc *Context) DrawCircleV2(c V2, r float64) {
+func (dc *Context) DrawCircle(c V2, r float64) {
 	dc.NewSubPath()
 	dc.DrawEllipticalArc(c, complex(r, r), 0, 2*math.Pi)
 	dc.ClosePath()

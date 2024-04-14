@@ -94,7 +94,7 @@ func RandCircle(
 						cc := c1.pos + c2.pos/2
 						dc.SetColor(ColorRGBA255(cl, 30))
 						dc.SetLineWidth(lineWidth)
-						dc.DrawCircleV2(cc, distance/2)
+						dc.DrawCircle(cc, distance/2)
 						dc.Stroke()
 					}
 				}

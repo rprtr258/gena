@@ -39,7 +39,7 @@ func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 		case 1:
 			dc.SetLineWidth(RandomFloat64(0, 1))
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
-			dc.DrawCircleV2(v, RandomFloat64(0, s)/2)
+			dc.DrawCircle(v, RandomFloat64(0, s)/2)
 			dc.Stroke()
 		case 2:
 			cl := colorSchema[rand.Intn(len(colorSchema))]

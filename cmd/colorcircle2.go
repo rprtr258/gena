@@ -32,7 +32,7 @@ func ColorCircle2(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 		if rand.Float64() < 0.3 {
 			col := colorSchema[rand.Intn(len(colorSchema))]
 			dc.SetColor(col)
-			dc.DrawCircleV2(v, r1/2.0)
+			dc.DrawCircle(v, r1/2.0)
 			dc.Fill()
 		}
 	}
