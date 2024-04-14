@@ -151,136 +151,105 @@ SavePNG(path string, im image.Image)
 SaveJPG(path string, im image.Image, quality uint8)
 ```
 
+
 ## Examples
-
 ![](./images/examples.png)
-
-- [Janus](#janus)
-- [Random Shapes](#random-shapes)
-- [Color Circle2](#color-circle2)
-- [Circle Grid](#circle-grid)
-- [Circle Composes Circle](#circle-composes-circle)
-- [Pixel Hole](#pixel-hole)
-- [Dots Wave](#dots-wave)
-- [Contour Line](#contour-line)
-- [Noise Line](#noise-line)
-- [Dot Line](#dot-line)
-- [Ocean Fish](#ocean-fish)
-- [Circle Loop](#circle-loop)
-- [Domain Warp](#domain-warp)
-- [Circle Noise](#circle-noise)
-- [Perlin Perls](#perlin-perls)
-- [Color Canva](#color-canva)
-- [Julia Set](#julia-set)
-- [Black Hole](#black-hole)
-- [Silk Sky](#silk-sky)
-- [Circle Move](#circle-move)
-- [Random Circle](#random-circle)
-
----
-
-- Maze
-- Random Circle Trails
-- Silk Smoke
-- Spiral Square
-- Square Grid
-- Circle Line
-- Circle Loop
-- Silk Sky
-- Dot Line
-- Swirl
-- Point Ribbon
-- Color Circle
-- Circle Loop2
-
-### Yarn
-![](images/yarn.png)
-
-### Janus
-![](images/janus.png)
-
-### Random Shapes
-![](images/randomshape.png)
-
-### Color Circle2
-![](images/colorcircle2.png)
-
-### Circle Grid
-![](images/circlegrid.png)
-
-### Circle Composes Circle
-![](images/colorloop2.png)
-
-### Pixel Hole
-![](images/pixelhole.png)
-
-### Dots Wave
-![](images/dotswave.png)
-
-### Contour Line
-![](images/contourline.png)
-
-### Noise Line
-![](images/noiseline.png)
-
-### Dot Line
-![](images/dotline.png)
-
-### Ocean Fish
-![](images/oceanfish.png)
-
-### Circle Loop
-![](images/circleloop.png)
-
-### Domain Warp
-![](images/domainwarp.png)
-
-### Circle Noise
-![](images/circlenoise.png)
-
-### Perlin Perls
-![](images/perlinperls.png)
-
-### Color Canva
-![](images/colorcanva.png)
-
-### Julia Set
-![](images/julia.png)
 
 ### Black Hole
 ![](images/blackhole.png)
 
-### Silk Sky
-![](images/silksky.png)
+### Circle Composes Circle
+![](images/colorloop2.png)
+
+### Circle Grid
+![](images/circlegrid.png)
+
+### Circle Line
+![](images/circleline.png)
+
+### Circle Loop
+![](images/circleloop.png)
+
+### Circle Loop2
+![](images/circleloop2.png)
 
 ### Circle Move
 ![](images/circlemove.png)
 
+### Circle Noise
+![](images/circlenoise.png)
+
+### Color Canva
+![](images/colorcanva.png)
+
+### Color Circle
+![](images/colorcircle.png)
+
+### Color Circle2
+![](images/colorcircle2.png)
+
+### Contour Line
+![](images/contourline.png)
+
+### Domain Warp
+![](images/domainwarp.png)
+
+### Dot Line
+![](images/dotline.png)
+
+### Dots Wave
+![](images/dotswave.png)
+
+### Noise Line
+![](images/noiseline.png)
+
+### Janus
+![](images/janus.png)
+
+### Julia Set
+![](images/julia.png)
+
+### Maze
+![](images/maze.png)
+
+### Ocean Fish
+![](images/oceanfish.png)
+
+### Perlin Perls
+![](images/perlinperls.png)
+
+### Pixel Hole
+![](images/pixelhole.png)
+
+### Point Ribbon
+![](images/pointribbon.png)
+
 ### Random Circle
 ![](images/randcircle.png)
 
-### Contribution
+### Random Circle Trails
+![](images/random_circle_trails.png)
 
-Thanks for the following sites and repos, I got lots of ideas, inspiration, code, and tricks from them. The list would be very long; sorry for forgetting some of them.
+### Random Shapes
+![](images/randomshape.png)
 
-- <https://inconvergent.net/>
-- <https://fronkonstin.com/>
-- <https://github.com/aschinchon/cyclic-cellular-automata>
-- <https://github.com/armdz/ProcessingSketchs>
-- <https://github.com/Mr-Slesser/Generative-Art-And-Fractals>
-- <https://github.com/cdr6934/Generative-Processing-Experiments>
-- <https://github.com/pkd2512/inktober2017>
-- <http://blog.dragonlab.de/2015/03/generative-art-week-1>
-- <https://editor.p5js.org/kenekk1/sketches/Ly-5XYvKX>
-- <http://paulbourke.net/fractals/peterdejong/>
-- <https://editor.p5js.org/kenekk1/sketches/O44Dln5oo>
-- <https://openprocessing.org/sketch/1071233>
-- <https://twitter.com/okazz_>
-- <https://openprocessing.org/sketch/738638>
-- <https://openprocessing.org/sketch/1102157>
-- <https://openprocessing.org/sketch/1071233>
-- <https://openprocessing.org/user/139364>
-- <https://openprocessing.org/sketch/792407>
-- <https://www.iquilezles.org/www/articles/warp/warp.htm>
+### Silk Sky
+![](images/silksky.png)
 
-![Stars](images/stars.png)
+### Silk Smoke
+![](images/silksmoke.png)
+
+### Spiral Square
+![](images/spiralsquare.png)
+
+### Square Grid
+![](images/squaregrid.png)
+
+### Stars
+![](images/stars.png)
+
+### Swirl
+![](images/swirl.png)
+
+### Yarn
+![](images/yarn.png)
