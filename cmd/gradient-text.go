@@ -17,7 +17,7 @@ func gradientText() {
 	// draw text
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 128)
-	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
+	dc.DrawStringAnchored("Gradient Text", complex(W/2, H/2), complex(0.5, 0.5))
 
 	// get the context as an alpha mask
 	mask := dc.AsMask()

@@ -37,7 +37,7 @@ func CircleMove(c *image.RGBA, circleNum int) {
 			hue += 255
 		}
 
-		rgba := HSV{hue, 180, 120}.ToRGB(255, 255, 255)
+		rgba := HSV{H: hue, S: 180, V: 120}.ToRGB(255, 255, 255)
 		rgba.A = 255
 		dc.SetColor(rgba)
 		dc.Stroke()

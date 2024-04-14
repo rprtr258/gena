@@ -17,12 +17,10 @@ func meme() {
 				// give it rounded corners
 				continue
 			}
-			x := S/2 + float64(dx)
-			y := S/2 + float64(dy)
-			dc.DrawStringAnchored(s, x, y, 0.5, 0.5)
+			dc.DrawStringAnchored(s, gena.Plus(complex(float64(dx), float64(dy)), S/2), complex(0.5, 0.5))
 		}
 	}
 	dc.SetColor(gena.ColorRGB(1, 1, 1))
-	dc.DrawStringAnchored(s, S/2, S/2, 0.5, 0.5)
+	dc.DrawStringAnchored(s, complex(S/2, S/2), complex(0.5, 0.5))
 	gena.SavePNG("meme.png", dc.Image())
 }

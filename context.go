@@ -775,12 +775,12 @@ func (dc *Context) FontHeight() float64 {
 	return dc.fontHeight
 }
 
-func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
+func (dc *Context) drawString(im *image.RGBA, s string, pos V2) {
 	d := &font.Drawer{
 		Dst:  im,
 		Src:  image.NewUniform(dc.color),
 		Face: dc.fontFace,
-		Dot:  Fixed(complex(x, y)),
+		Dot:  Fixed(pos),
 	}
 	// based on Drawer.DrawString() in golang.org/x/image/font/font.go
 	prevC := rune(-1)
@@ -809,22 +809,21 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 }
 
 // DrawString draws the specified text at the specified point.
-func (dc *Context) DrawString(s string, x, y float64) {
-	dc.DrawStringAnchored(s, x, y, 0, 0)
+func (dc *Context) DrawString(s string, pos V2) {
+	dc.DrawStringAnchored(s, pos, 0)
 }
 
 // DrawStringAnchored draws the specified text at the specified anchor point.
 // The anchor point is x - w * ax, y - h * ay, where w, h is the size of the
 // text. Use ax=0.5, ay=0.5 to center the text at the specified point.
-func (dc *Context) DrawStringAnchored(s string, x, y, ax, ay float64) {
+func (dc *Context) DrawStringAnchored(s string, pos, a V2) {
 	wh := dc.MeasureString(s)
-	x -= ax * X(wh)
-	y += ay * Y(wh)
+	pos -= Mul2(a, wh)
 	if dc.mask == nil {
-		dc.drawString(dc.im, s, x, y)
+		dc.drawString(dc.im, s, pos)
 	} else {
 		im := image.NewRGBA(image.Rect(0, 0, dc.width, dc.height))
-		dc.drawString(im, s, x, y)
+		dc.drawString(im, s, pos)
 		draw.DrawMask(dc.im, dc.im.Bounds(), im, image.Point{}, dc.mask, image.Point{}, draw.Over)
 	}
 }
@@ -832,29 +831,28 @@ func (dc *Context) DrawStringAnchored(s string, x, y, ax, ay float64) {
 // DrawStringWrapped word-wraps the specified string to the given max width
 // and then draws it at the specified anchor point using the given line
 // spacing and text alignment.
-func (dc *Context) DrawStringWrapped(s string, x, y, ax, ay, width, lineSpacing float64, align Align) {
+func (dc *Context) DrawStringWrapped(s string, pos, a V2, width, lineSpacing float64, align Align) {
 	lines := dc.WordWrap(s, width)
 
 	// sync h formula with MeasureMultilineString
 	h := float64(len(lines)) * dc.fontHeight * lineSpacing
 	h -= (lineSpacing - 1) * dc.fontHeight
 
-	x -= ax * width
-	y -= ay * h
+	pos -= Mul2(a, complex(width, h))
 	switch align {
 	case AlignLeft:
-		ax = 0
+		a = complex(0, imag(a))
 	case AlignCenter:
-		ax = 0.5
-		x += width / 2
+		a = complex(0.5, imag(a))
+		pos += complex(width/2, 0)
 	case AlignRight:
-		ax = 1
-		x += width
+		a = complex(1, imag(a))
+		pos += complex(width, 0)
 	}
-	ay = 1
+	a = complex(real(a), 1)
 	for _, line := range lines {
-		dc.DrawStringAnchored(line, x, y, ax, ay)
-		y += dc.fontHeight * lineSpacing
+		dc.DrawStringAnchored(line, pos, a)
+		pos += complex(0, dc.fontHeight*lineSpacing)
 	}
 }
 

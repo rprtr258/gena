@@ -184,7 +184,7 @@ func TestDrawStringWrapped(t *testing.T) {
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 0, 0))
-	dc.DrawStringWrapped("Hello, world! How are you?", 50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
+	dc.DrawStringWrapped("Hello, world! How are you?", complex(50, 50), complex(0.5, 0.5), 90, 1.5, AlignCenter)
 	saveImage(dc, "TestDrawStringWrapped")
 	assertHash(t, dc, "8d92f6aae9e8b38563f171abd00893f8")
 }

@@ -22,7 +22,7 @@ func lorem() {
 	const h = 24
 	for i, line := range loremIpsumLines {
 		y := H/2 - h*len(loremIpsumLines)/2 + i*h
-		dc.DrawStringAnchored(line, 400, float64(y), 0.5, 0.5)
+		dc.DrawStringAnchored(line, complex(400, float64(y)), complex(0.5, 0.5))
 	}
 	gena.SavePNG("lorem.png", dc.Image())
 }

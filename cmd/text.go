@@ -9,6 +9,6 @@ func text() {
 	dc.Clear()
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.LoadFontFace("/Library/Fonts/Arial.ttf", 96)
-	dc.DrawStringAnchored("Hello, world!", S/2, S/2, 0.5, 0.5)
+	dc.DrawStringAnchored("Hello, world!", complex(S, S)/gena.Coeff(2), complex(0.5, 0.5))
 	gena.SavePNG("text.png", dc.Image())
 }

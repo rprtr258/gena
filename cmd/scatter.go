@@ -56,9 +56,9 @@ func scatter() {
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	if false { // TODO: fix font loading
 		dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 24)
-		dc.DrawStringAnchored("Chart Title", S/2, P/2, 0.5, 0.5)
+		dc.DrawStringAnchored("Chart Title", complex(S, P)/gena.Coeff(2), complex(0.5, 0.5))
 		dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18)
-		dc.DrawStringAnchored("X Axis Title", S/2, S-P/2, 0.5, 0.5)
+		dc.DrawStringAnchored("X Axis Title", complex(S/2, S-P/2), complex(0.5, 0.5))
 	}
 	gena.SavePNG("scatter.png", dc.Image())
 }

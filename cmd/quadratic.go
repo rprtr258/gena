@@ -46,8 +46,8 @@ func quadratic() {
 	dc.Stroke()
 
 	dc.LoadFontFace("/Library/Fonts/Arial.ttf", 200)
-	dc.DrawStringAnchored("g", -5, 5, 0.5, 0.5)
-	dc.DrawStringAnchored("G", 5, -5, 0.5, 0.5)
+	dc.DrawStringAnchored("g", complex(-5, 5), complex(0.5, 0.5))
+	dc.DrawStringAnchored("G", complex(5, -5), complex(0.5, 0.5))
 
 	gena.SavePNG("quadratic.png", dc.Image())
 }
