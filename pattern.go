@@ -7,10 +7,10 @@ import (
 	"github.com/golang/freetype/raster"
 )
 
-type Pattern func(x, y int) color.Color
+type Pattern func(f V2) color.Color
 
 func PatternSolid(c color.Color) Pattern {
-	return func(x, y int) color.Color {
+	return func(V2) color.Color {
 		return c
 	}
 }
@@ -25,8 +25,9 @@ const (
 )
 
 func PatternSurface(im image.Image, op RepeatOp) Pattern {
-	return func(x, y int) color.Color {
+	return func(f V2) color.Color {
 		b := im.Bounds()
+		x, y := int(X(f)), int(Y(f))
 		switch op {
 		case RepeatX:
 			if y >= b.Dy() {
@@ -78,7 +79,7 @@ func newPatternPainter(im *image.RGBA, mask *image.Alpha, pattern Pattern) raste
 						continue
 					}
 				}
-				c := pattern(x, y)
+				c := pattern(complex(float64(x), float64(y)))
 				cr, cg, cb, ca := c.RGBA()
 				dr := uint32(im.Pix[i+0])
 				dg := uint32(im.Pix[i+1])

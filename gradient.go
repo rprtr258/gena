@@ -29,12 +29,11 @@ func sortStops(stops Stops) []stop {
 func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
 	stops := sortStops(stopss)
 
-	return func(x, y int) color.Color {
+	return func(f V2) color.Color {
 		if len(stops) == 0 {
 			return color.Transparent
 		}
 
-		f := complex(float64(x), float64(y))
 		d := v1 - v0
 
 		// Horizontal
@@ -91,14 +90,14 @@ func PatternGradientRadial(
 
 	mindr := -c0.r
 
-	return func(x, y int) color.Color {
+	return func(f V2) color.Color {
 		if len(stops) == 0 {
 			return color.Transparent
 		}
 
 		// copy from pixman's pixman-radial-gradient.c
 
-		d := Plus(complex(float64(x), float64(y)), 0.5) - c0.p
+		d := Plus(f, 0.5) - c0.p
 		b := dot3(X(d), Y(d), c0.r, X(cd.p), Y(cd.p), cd.r)
 		c := dot3(X(d), Y(d), -c0.r, X(d), Y(d), c0.r)
 
@@ -134,12 +133,13 @@ func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 	stops := sortStops(stopss)
 
 	rotation := normalizeAngle(deg) / 360
-	return func(x, y int) color.Color {
+	return func(f V2) color.Color {
 		if len(stops) == 0 {
 			return color.Transparent
 		}
 
-		a := math.Atan2(float64(y)-Y(c), float64(x)-X(c))
+		d := f - c
+		a := math.Atan2(Y(d), X(d))
 
 		t := Remap(a, -math.Pi, math.Pi, 0, 1) - rotation
 		if t < 0 {
