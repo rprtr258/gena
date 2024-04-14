@@ -14,12 +14,12 @@ type Rect struct {
 }
 
 // ColorCanva returns a color canva image.
-func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
-	dc := NewContextFromRGBA(c)
+func ColorCanva(im *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(lineWidth)
 
 	rects := make([]Rect, 0)
-	w := float64(c.Bounds().Dx()) / seg
+	w := float64(im.Bounds().Dx()) / seg
 	for i := 0.; i < seg; i += 1. {
 		for j := 0.; j < seg; j += 1. {
 			rects = append(rects, Rect{
@@ -33,9 +33,9 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64)
 		rects[i], rects[j] = rects[j], rects[i]
 	})
 
-	dc.TransformAdd(Translate(Size(c) / 2))
+	dc.TransformAdd(Translate(Size(im) / 2))
 	dc.TransformAdd(Scale(complex(0.6, 0.6)))
-	dc.TransformAdd(Translate(-Size(c) / 2))
+	dc.TransformAdd(Translate(-Size(im) / 2))
 
 	for i := range rects {
 		drawColorCanva(dc, seg, colorSchema, rects[i])

@@ -11,13 +11,13 @@ import (
 
 // ContourLine  draws a contour line image.
 // It uses the perlin noise` to do some flow field.
-//   - lineNum: It indicates how many lines.
-func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
-	dc := NewContextFromRGBA(c)
+//   - n: indicates how many lines
+func ContourLine(im *image.RGBA, colorSchema []color.RGBA, n int) {
+	dc := NewContextFromRGBA(im)
 	noise := NewPerlinNoiseDeprecated()
-	for range Range(lineNum) {
+	for range Range(n) {
 		cls := colorSchema[rand.Intn(len(colorSchema))]
-		v := Mul2(RandomV2(), Size(c))
+		v := Mul2(RandomV2(), Size(im))
 
 		for range Range(1500) {
 			theta := noise.NoiseV2_1(v/800) * math.Pi * 2 * 800
@@ -27,10 +27,10 @@ func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
 			dc.DrawEllipse(v, complex(2, 2))
 			dc.Fill()
 
-			if X(v) > float64(c.Bounds().Dx()) || X(v) < 0 ||
-				Y(v) > float64(c.Bounds().Dy()) || Y(v) < 0 ||
+			if X(v) > float64(im.Bounds().Dx()) || X(v) < 0 ||
+				Y(v) > float64(im.Bounds().Dy()) || Y(v) < 0 ||
 				rand.Float64() < 0.001 {
-				v = Mul2(RandomV2(), Size(c))
+				v = Mul2(RandomV2(), Size(im))
 			}
 		}
 	}

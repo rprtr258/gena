@@ -13,8 +13,8 @@ import (
 //   - n: The number of elements in this image.
 //   - ras, canv: Control the appearance of this image.
 //   - randColor: Use the specified color or random colors.
-func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, ras, canv float64, randColor bool, iters int) {
-	dc := NewContextFromRGBA(c)
+func DotLine(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, ras, canv float64, randColor bool, iters int) {
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(lineWidth)
 	dir := []int{-1, 1}
 	for range Range(iters) {

@@ -12,25 +12,25 @@ import (
 // Generative draws a noise line image.
 // NoiseLine draws some random line and circles based on `perlin noise`.
 //   - n: The number of random line.
-func NoiseLine(c *image.RGBA, colorSchema []color.RGBA, n int) {
-	dc := NewContextFromRGBA(c)
+func NoiseLine(im *image.RGBA, colorSchema []color.RGBA, iters int) {
+	dc := NewContextFromRGBA(im)
 	noise := NewPerlinNoiseDeprecated()
 
 	dc.SetColor(Black)
 	for range Range(80) {
-		x := rand.Float64() * float64(c.Bounds().Dx())
-		y := rand.Float64() * float64(c.Bounds().Dy())
+		x := rand.Float64() * float64(im.Bounds().Dx())
+		y := rand.Float64() * float64(im.Bounds().Dy())
 
-		s := rand.Float64() * float64(c.Bounds().Dx()) / 8
+		s := rand.Float64() * float64(im.Bounds().Dx()) / 8
 		dc.SetLineWidth(0.5)
 		dc.DrawEllipse(complex(x, y), complex(s, s))
 		dc.Stroke()
 	}
 
 	t := rand.Float64() * 10
-	for range Range(n) {
-		x := RandomFloat64(-0.5, 1.5) * float64(c.Bounds().Dx())
-		y := RandomFloat64(-0.5, 1.5) * float64(c.Bounds().Dy())
+	for range Range(iters) {
+		x := RandomFloat64(-0.5, 1.5) * float64(im.Bounds().Dx())
+		y := RandomFloat64(-0.5, 1.5) * float64(im.Bounds().Dy())
 		cl := colorSchema[rand.Intn(len(colorSchema))]
 		cl.A = 255
 

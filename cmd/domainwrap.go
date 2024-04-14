@@ -13,21 +13,21 @@ import (
 type ColorMapping = func(float64, float64, float64) color.RGBA
 
 func domainWarp(
-	c *image.RGBA,
+	im *image.RGBA,
 	noise PerlinNoise,
 	scale float64,
 	scale2 float64,
 	offset V2,
 	fn ColorMapping,
 ) {
-	for h := 0; h < c.Bounds().Dy(); h++ {
-		for w := 0; w < c.Bounds().Dx(); w++ {
+	for h := 0; h < im.Bounds().Dy(); h++ {
+		for w := 0; w < im.Bounds().Dx(); w++ {
 			v := complex(float64(w), float64(h)) * Coeff(scale)
 			q := noise.Noise2V2_V2(v+offset, complex(5.2, 1.3))
 			r := noise.Noise2V2_V2(v+q*Coeff(scale2)+complex(1.7, 9.2), complex(6.4, -6.4))
 			r1, m1, m2 := noise.NoiseV2_1(q+r*Coeff(scale2)), Magnitude(q), Magnitude(r)
 			color := fn(r1, m1, m2)
-			c.Set(w, h, color)
+			im.Set(w, h, color)
 		}
 	}
 }
@@ -41,7 +41,7 @@ func domainWarp(
 //   - offset: Control the noise generator.
 //   - cmap: A function to mapping the `noise` to color.
 func DomainWarp(
-	c *image.RGBA,
+	im *image.RGBA,
 	scale, scale2 float64,
 	offset V2,
 	cmap ColorMapping,
@@ -55,7 +55,7 @@ func DomainWarp(
 	noise := NewPerlinNoiseDeprecated()
 
 	if numImages == 0 && imgPath == "" {
-		domainWarp(c, noise, scale, scale2, offset, cmap)
+		domainWarp(im, noise, scale, scale2, offset, cmap)
 		return
 	}
 
@@ -66,7 +66,7 @@ func DomainWarp(
 	for i := range Range(numImages) {
 		imgfile := fmt.Sprintf("%v/domainwrap%03d.PNG", imgPath, i)
 		offset += offsetStep * Coeff(float64(i))
-		domainWarp(c, noise, scale, scale2, offset, cmap)
-		SavePNG(imgfile, c)
+		domainWarp(im, noise, scale, scale2, offset, cmap)
+		SavePNG(imgfile, im)
 	}
 }

@@ -10,15 +10,15 @@ import (
 )
 
 // Generative draws a color circle images.
-func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
-	dc := NewContextFromRGBA(c)
+func ColorCircle(im *image.RGBA, colorSchema []color.RGBA, n int) {
+	dc := NewContextFromRGBA(im)
 
-	for range Range(circleNum) {
+	for range Range(n) {
 		v := Mul2(complex(
 			RandomFloat64(-0.1, 1.1),
 			RandomFloat64(-0.1, 1.1),
-		), Size(c))
-		s := RandomFloat64(0, RandomFloat64(0, float64(c.Bounds().Dx()/2))) + 10
+		), Size(im))
+		s := RandomFloat64(0, RandomFloat64(0, float64(im.Bounds().Dx()/2))) + 10
 
 		rnd := rand.Intn(3)
 		if rnd == 2 {

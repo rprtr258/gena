@@ -5,7 +5,7 @@ import . "github.com/rprtr258/gena"
 func tiling() {
 	const NX = 4
 	const NY = 3
-	im := LoadPNG("cmd/gopher.png")
+	im := Load("cmd/gopher.png")
 	sz := Size(im)
 	dc := NewContext(Mul2(sz, complex(NX, NY)))
 	for y := range Range(NY) {

@@ -24,46 +24,46 @@ func (s *swirlOpts) swirlTransform(p V2) V2 {
 	)
 }
 
-func (s *swirlOpts) removeNoisy(c *image.RGBA) {
-	for i := 1; i < c.Bounds().Dx()-1; i++ {
-		for j := 1; j < c.Bounds().Dy()-1; j++ {
-			if c.At(i, j) == s.bg {
+func (s *swirlOpts) removeNoisy(im *image.RGBA) {
+	for i := 1; i < im.Bounds().Dx()-1; i++ {
+		for j := 1; j < im.Bounds().Dy()-1; j++ {
+			if im.At(i, j) == s.bg {
 				continue
 			}
 
 			var n int
-			if c.At(i+1, j) == s.bg {
+			if im.At(i+1, j) == s.bg {
 				n += 1
 			}
-			if c.At(i+1, j+1) == s.bg {
+			if im.At(i+1, j+1) == s.bg {
 				n += 1
 			}
-			if c.At(i, j+1) == s.bg {
-				n += 1
-			}
-
-			if c.At(i-1, j) == s.bg {
+			if im.At(i, j+1) == s.bg {
 				n += 1
 			}
 
-			if c.At(i-1, j+1) == s.bg {
+			if im.At(i-1, j) == s.bg {
 				n += 1
 			}
 
-			if c.At(i-1, j-1) == s.bg {
+			if im.At(i-1, j+1) == s.bg {
 				n += 1
 			}
 
-			if c.At(i+1, j-1) == s.bg {
+			if im.At(i-1, j-1) == s.bg {
 				n += 1
 			}
 
-			if c.At(i, j-1) == s.bg {
+			if im.At(i+1, j-1) == s.bg {
+				n += 1
+			}
+
+			if im.At(i, j-1) == s.bg {
 				n += 1
 			}
 
 			if n > 5 {
-				c.Set(i, j, s.bg)
+				im.Set(i, j, s.bg)
 			}
 		}
 	}

@@ -9,11 +9,11 @@ import (
 )
 
 // Generative draws a grid squares image.
-func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
-	dc := NewContextFromRGBA(c)
+func GirdSquares(im *image.RGBA, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
+	dc := NewContextFromRGBA(im)
 
-	for x := 0; x < c.Bounds().Dx(); x += step {
-		for y := 0; y < c.Bounds().Dy(); y += step {
+	for x := 0; x < im.Bounds().Dx(); x += step {
+		for y := 0; y < im.Bounds().Dy(); y += step {
 			cl := colorSchema[rand.Intn(len(colorSchema))]
 
 			v0 := complex(float64(x), float64(y))

@@ -9,7 +9,7 @@ func patternFill() {
 	dc.LineTo(complex(590, 590))
 	dc.LineTo(complex(20, 590))
 	dc.ClosePath()
-	dc.SetFillStyle(PatternSurface(LoadPNG("cmd/baboon.png"), RepeatBoth))
+	dc.SetFillStyle(PatternSurface(Load("cmd/baboon.png"), RepeatBoth))
 	dc.Fill()
 	SavePNG("patternFill.png", dc.Image())
 }

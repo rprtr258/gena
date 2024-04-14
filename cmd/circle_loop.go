@@ -9,13 +9,20 @@ import (
 )
 
 // CircleLoop draws a Circle Loop images.
-func CircleLoop(c *image.RGBA, lineWidth float64, lineColor color.RGBA, alpha int, radius float64, iters int) {
-	FillBackground(c, Black)
-	dc := NewContextFromRGBA(c)
+func CircleLoop(
+	im *image.RGBA,
+	lineWidth float64,
+	lineColor color.RGBA,
+	alpha int,
+	radius float64,
+	iters int,
+) {
+	FillBackground(im, Black)
+	dc := NewContextFromRGBA(im)
 	for i := range Range(iters) {
 		theta := math.Pi / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
-			dc.TransformAdd(Translate(Size(c) / 2))
+			dc.TransformAdd(Translate(Size(im) / 2))
 			v := complex(
 				math.Cos(Radians(theta)),
 				math.Sin(Radians(theta*2)),

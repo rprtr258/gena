@@ -10,7 +10,7 @@ import (
 
 // SilkSmoke draws a silk smoke image.
 func SilkSmoke(
-	c *image.RGBA,
+	im *image.RGBA,
 	colorSchema []color.RGBA,
 	lineWidth float64,
 	lineColor color.RGBA,
@@ -19,14 +19,14 @@ func SilkSmoke(
 	minSteps, maxSteps, minRadius, maxRadius float64,
 	isRandColor bool,
 ) {
-	dc := NewContextFromRGBA(c)
+	dc := NewContextFromRGBA(im)
 
 	cn := rand.Intn(maxCircle) + int(maxCircle/3)
-	circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
+	circles := newCircleSlice(cn, im.Bounds().Dx(), im.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
 	for range Range(maxStepsPerCircle) {
 		dc.SetColor(ColorRGBA255(color.RGBA{}, 5))
-		dc.DrawRectangle(0, Size(c))
+		dc.DrawRectangle(0, Size(im))
 		dc.Fill()
 
 		for _, c1 := range circles {
@@ -55,6 +55,6 @@ func SilkSmoke(
 			}
 		}
 
-		circles = circleSliceUpdate(circles, c.Bounds())
+		circles = circleSliceUpdate(circles, im.Bounds())
 	}
 }

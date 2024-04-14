@@ -13,38 +13,38 @@ type circleGrid struct {
 	circleNumMin, circleNumMax int
 }
 
-func (cg *circleGrid) grid(dc *Context, c *image.RGBA) {
+func (cg *circleGrid) grid(dc *Context, im *image.RGBA) {
 	var segment int = 100
-	w := float64(c.Bounds().Dx()) / float64(segment)
+	w := float64(im.Bounds().Dx()) / float64(segment)
 
 	dc.SetColor(color.RGBA{255, 255, 255, 255})
 	dc.SetLineWidth(0.6)
 	for i := range Range(segment) {
-		dc.DrawLine(complex(0, float64(i)*w), complex(float64(c.Bounds().Dx()), float64(i)*w))
+		dc.DrawLine(complex(0, float64(i)*w), complex(float64(im.Bounds().Dx()), float64(i)*w))
 		dc.Stroke()
 	}
 
 	for j := range Range(segment) {
-		dc.DrawLine(complex(float64(j)*w, 0), complex(float64(j)*w, float64(c.Bounds().Dy())))
+		dc.DrawLine(complex(float64(j)*w, 0), complex(float64(j)*w, float64(im.Bounds().Dy())))
 		dc.Stroke()
 	}
 }
 
 // Generative draws a circle grid image.
-func CircleGrid(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, circleNumMin, circleNumMax int) {
+func CircleGrid(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, circleNumMin, circleNumMax int) {
 	cg := &circleGrid{
 		circleNumMin: circleNumMin,
 		circleNumMax: circleNumMax,
 	}
 
-	dc := NewContextFromRGBA(c)
-	cg.grid(dc, c)
-	dc.TransformAdd(Translate(Size(c) / 2))
+	dc := NewContextFromRGBA(im)
+	cg.grid(dc, im)
+	dc.TransformAdd(Translate(Size(im) / 2))
 	dc.TransformAdd(Scale(complex(0.9, 0.9)))
-	dc.TransformAdd(Translate(-Size(c) / 2))
+	dc.TransformAdd(Translate(-Size(im) / 2))
 
 	seg := RandomRangeInt(cg.circleNumMin, cg.circleNumMax)
-	w := float64(c.Bounds().Dx()) / float64(seg)
+	w := float64(im.Bounds().Dx()) / float64(seg)
 
 	for i := range Range(seg) {
 		for j := range Range(seg) {

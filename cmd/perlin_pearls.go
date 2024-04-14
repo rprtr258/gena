@@ -18,8 +18,8 @@ type circles struct {
 //   - dotsN: The number of dots in each circle.
 //   - colorMin: The minimum color.
 //   - colorMax: The maximum color.
-func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN, colorMin, colorMax, iters int) {
-	dc := NewContextFromRGBA(c)
+func PerlinPearls(im *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN, colorMin, colorMax, iters int) {
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(0.5)
 	dc.SetColor(Black)
 
@@ -27,8 +27,8 @@ func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN,
 	for len(cs) < circleN {
 		c := circles{
 			pos: complex(
-				RandomFloat64(100, float64(c.Bounds().Dx())-50),
-				RandomFloat64(100, float64(c.Bounds().Dy())-50),
+				RandomFloat64(100, float64(im.Bounds().Dx())-50),
+				RandomFloat64(100, float64(im.Bounds().Dy())-50),
 			),
 			radius:   RandomFloat64(20, 100),
 			colorMin: colorMin,

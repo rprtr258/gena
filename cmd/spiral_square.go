@@ -10,20 +10,22 @@ import (
 
 // SpiralSquare draws a spiral square images.
 func SpiralSquare(
-	c *image.RGBA, colorSchema []color.RGBA,
+	im *image.RGBA,
+	colorSchema []color.RGBA,
 	lineWidth float64,
 	lineColor color.RGBA,
 	squareNum int,
 	rectSide, decay float64,
-	fg color.RGBA, randColor bool,
+	fg color.RGBA,
+	randColor bool,
 ) {
-	dc := NewContextFromRGBA(c)
+	dc := NewContextFromRGBA(im)
 
 	sl := rectSide
 	theta := rand.Intn(360) + 1
 	for i := range Range(squareNum) {
 		dc.Stack(func(ctx *Context) {
-			dc.TransformAdd(Translate(Size(c) / 2))
+			dc.TransformAdd(Translate(Size(im) / 2))
 			dc.TransformAdd(Rotate(Radians(float64(theta * (i + 1)))))
 
 			dc.TransformAdd(Scale(complex(sl, sl)))

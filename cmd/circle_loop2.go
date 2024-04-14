@@ -16,17 +16,17 @@ type circleLoop2 struct {
 
 // CircleLoop2 draws a circle composed by colored circles.
 //   - depth: Control the number of circles.
-func CircleLoop2(c *image.RGBA, colorSchema []color.RGBA, depth int) {
-	dc := NewContextFromRGBA(c)
-	dc.TransformAdd(Translate(Size(c) / 2))
+func CircleLoop2(im *image.RGBA, colorSchema []color.RGBA, depth int) {
+	dc := NewContextFromRGBA(im)
+	dc.TransformAdd(Translate(Size(im) / 2))
 	cl := &circleLoop2{
 		noise:       NewPerlinNoiseDeprecated(),
 		colorSchema: colorSchema,
 	}
-	cl.recursionDraw(dc, c, float64(c.Bounds().Dx()), depth)
+	cl.recursionDraw(dc, im, float64(im.Bounds().Dx()), depth)
 }
 
-func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, depth int) {
+func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, depth int) {
 	if depth <= 0 {
 		return
 	}
@@ -43,8 +43,8 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, dept
 	noise = math.Pow(noise, 0.5)
 	a2 := Remap(noise, 0.15, 0.85, 0.1, 0.6)
 
-	px := float64(c.Bounds().Dy()) * math.Pow(x/float64(c.Bounds().Dy()), a2)
-	py := float64(c.Bounds().Dy()) * (math.Pow(1-x/float64(c.Bounds().Dy()), a2) -
+	px := float64(im.Bounds().Dy()) * math.Pow(x/float64(im.Bounds().Dy()), a2)
+	py := float64(im.Bounds().Dy()) * (math.Pow(1-x/float64(im.Bounds().Dy()), a2) -
 		RandomFloat64(0, RandomFloat64(0.18, RandomFloat64(0.18, 0.7))))
 
 	dc.SetColor(cl.colorSchema[rand.Intn(len(cl.colorSchema))])
@@ -68,9 +68,9 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, dept
 		}
 	}
 
-	dc.TransformAdd(Rotate(x / float64(c.Bounds().Dy()) * 0.2))
+	dc.TransformAdd(Rotate(x / float64(im.Bounds().Dy()) * 0.2))
 
-	cl.recursionDraw(dc, c, 1*x/4.0, depth-1)
-	cl.recursionDraw(dc, c, 2*x/4.0, depth-1)
-	cl.recursionDraw(dc, c, 3*x/4.0, depth-1)
+	cl.recursionDraw(dc, im, 1*x/4.0, depth-1)
+	cl.recursionDraw(dc, im, 2*x/4.0, depth-1)
+	cl.recursionDraw(dc, im, 3*x/4.0, depth-1)
 }

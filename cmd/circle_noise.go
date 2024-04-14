@@ -18,7 +18,7 @@ type dot struct {
 //   - colorMin: minimum color
 //   - colorMax: maximum color
 func CircleNoise(
-	c *image.RGBA,
+	im *image.RGBA,
 	lineWidth float64,
 	aalpha uint8,
 	angles []float64,
@@ -26,17 +26,17 @@ func CircleNoise(
 	iters int,
 	noise PerlinNoise,
 ) {
-	dc := NewContextFromRGBA(c)
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(2.0)
 	dc.SetColor(Black)
-	radius := float64(c.Bounds().Dx()) * 0.8 / 2
-	dc.DrawCircle(Size(c)/2, radius)
+	radius := float64(im.Bounds().Dx()) * 0.8 / 2
+	dc.DrawCircle(Size(im)/2, radius)
 	dc.Stroke()
 	// ctex.Clip()
 
 	dots := make([]dot, len(angles))
 	for i, angle := range angles {
-		v := Size(c)/2 + Polar(radius, angle*math.Pi*2)
+		v := Size(im)/2 + Polar(radius, angle*math.Pi*2)
 		dots[i] = dot{pos: v, prev: v, count: 0}
 	}
 
@@ -47,12 +47,12 @@ func CircleNoise(
 			alpha := math.Pi * (n*2 + float64(dots[i].count))
 			nn := Polar(2, alpha)
 			dots[i].prev, dots[i].pos = dots[i].pos, dots[i].pos+nn
-			if Dist(Size(c)/2, dots[i].pos) > radius+2 {
+			if Dist(Size(im)/2, dots[i].pos) > radius+2 {
 				dots[i].count += 1
 			}
 
-			if Dist(Size(c)/2, dots[i].pos) < radius &&
-				Dist(Size(c)/2, dots[i].prev) < radius {
+			if Dist(Size(im)/2, dots[i].pos) < radius &&
+				Dist(Size(im)/2, dots[i].prev) < radius {
 				dc.SetLineWidth(lineWidth)
 				rgb := HSV{
 					H: int(Remap(n, 0, 1, colorMin, colorMax)),
