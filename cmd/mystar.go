@@ -17,12 +17,11 @@ func mystar() {
 
 	points := PolygonAt(n, 250+250i, 100)
 	for range Range(10) {
-		dc.WithTransform(Translate(complex(250, 250)), func(dc *Context) {
-			dc.TransformAdd(Rotate(math.Pi / 9))
-		})
+		dc.TransformAdd(Translate(complex(250, 250)))
+		dc.TransformAdd(Rotate(math.Pi / 9))
 
-		for i := range Range(n) {
-			dc.LineTo(points[i])
+		for _, point := range points {
+			dc.LineTo(point)
 		}
 		dc.LineTo(points[0])
 

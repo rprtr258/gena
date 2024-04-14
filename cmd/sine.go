@@ -12,9 +12,8 @@ func sine() {
 	dc := NewContext(complex(W, H))
 	// dc.SetHexColor("#FFFFFF")
 	// dc.Clear()
-	dc.WithTransform(Translate(complex(0.95, 0.75)), func(dc *Context) {
-		dc.TransformAdd(Scale(complex(W, H) / 2))
-	})
+	dc.TransformAdd(Translate(complex(0.95, 0.75)))
+	dc.TransformAdd(Scale(complex(W, H) / 2))
 	for i := range Range(W) {
 		a := float64(i) * 2 * math.Pi / W * 8
 		dc.LineTo(complex(float64(i), (math.Sin(a)+1)/2*H))
