@@ -16,7 +16,7 @@ func quadratic() {
 	const p3 = complex(5, 10)
 	const p4 = complex(10, 0)
 
-	dc.MoveToV2(p0)
+	dc.MoveTo(p0)
 	dc.LineToV2(p1)
 	dc.LineToV2(p2)
 	dc.LineToV2(p3)
@@ -25,7 +25,7 @@ func quadratic() {
 	dc.SetLineWidth(8)
 	dc.Stroke()
 
-	dc.MoveToV2(p0)
+	dc.MoveTo(p0)
 	dc.QuadraticTo(p1, p2)
 	dc.QuadraticTo(p3, p4)
 	dc.SetColor(gena.ColorHex("3E606F"))

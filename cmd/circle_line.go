@@ -21,7 +21,7 @@ func CircleLine(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step flo
 
 	for range Range(lineNum) {
 		p1 := points[rand.Intn(len(points))]
-		dc.MoveToV2(p1)
+		dc.MoveTo(p1)
 		p2 := points[rand.Intn(len(points))]
 		dc.LineToV2(p2)
 		dc.Stroke()

@@ -24,7 +24,7 @@ func gradientLinear() {
 
 	dc.SetStrokeStyle(grad)
 	dc.SetLineWidth(4)
-	dc.MoveToV2(10 + 10i)
+	dc.MoveTo(10 + 10i)
 	dc.LineToV2(410 + 10i)
 	dc.LineToV2(410 + 100i)
 	dc.LineToV2(10 + 100i)
@@ -32,7 +32,7 @@ func gradientLinear() {
 	dc.Stroke()
 
 	dc.SetFillStyle(grad)
-	dc.MoveToV2(10 + 120i)
+	dc.MoveTo(10 + 120i)
 	dc.LineToV2(410 + 120i)
 	dc.LineToV2(410 + 300i)
 	dc.LineToV2(10 + 300i)

@@ -232,13 +232,7 @@ func (dc *Context) SetColor(c color.Color) {
 
 // MoveTo starts a new subpath within the current path starting at the
 // specified point.
-func (dc *Context) MoveTo(x, y float64) {
-	dc.MoveToV2(complex(x, y))
-}
-
-// MoveTo starts a new subpath within the current path starting at the
-// specified point.
-func (dc *Context) MoveToV2(v V2) {
+func (dc *Context) MoveTo(v V2) {
 	if dc.hasCurrent {
 		dc.fillPath.Add1(Fixed(dc.start))
 	}
@@ -254,7 +248,7 @@ func (dc *Context) MoveToV2(v V2) {
 // point. If there is no current point, it is equivalent to MoveTo(x, y)
 func (dc *Context) LineToV2(v V2) {
 	if !dc.hasCurrent {
-		dc.MoveToV2(v)
+		dc.MoveTo(v)
 	} else {
 		p := dc.TransformPoint(v)
 		dc.strokePath.Add1(Fixed(p))
@@ -272,7 +266,7 @@ func (dc *Context) LineTo(x, y float64) {
 // MoveTo(x1, y1)
 func (dc *Context) QuadraticTo(a, b V2) {
 	if !dc.hasCurrent {
-		dc.MoveToV2(a)
+		dc.MoveTo(a)
 	}
 	p1 := dc.TransformPoint(a)
 	p2 := dc.TransformPoint(b)
@@ -287,7 +281,7 @@ func (dc *Context) QuadraticTo(a, b V2) {
 // this is emulated with many small line segments.
 func (dc *Context) CubicTo(a, b, c V2) {
 	if !dc.hasCurrent {
-		dc.MoveToV2(a)
+		dc.MoveTo(a)
 	}
 	a0 := dc.current
 	a = dc.TransformPoint(a)
@@ -639,13 +633,13 @@ func (dc *Context) DrawPoint(v V2, r float64) {
 }
 
 func (dc *Context) DrawLine(p1, p2 V2) {
-	dc.MoveToV2(p1)
+	dc.MoveTo(p1)
 	dc.LineToV2(p2)
 }
 
 func (dc *Context) DrawRectangle(topLeft, size V2) {
 	dc.NewSubPath()
-	dc.MoveToV2(topLeft)
+	dc.MoveTo(topLeft)
 	dc.LineToV2(topLeft + complex(X(size), 0))
 	dc.LineToV2(topLeft + size)
 	dc.LineToV2(topLeft + complex(0, Y(size)))
@@ -657,7 +651,7 @@ func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
 	x0, x1, x2, x3 := x, x+r, x+w-r, x+w
 	y0, y1, y2, y3 := y, y+r, y+h-r, y+h
 	dc.NewSubPath()
-	dc.MoveToV2(complex(x1, y0))
+	dc.MoveTo(complex(x1, y0))
 	dc.LineToV2(complex(x2, y0))
 	dc.DrawArc(complex(x2, y1), r, Radians(270), Radians(360))
 	dc.LineToV2(complex(x3, y2))
@@ -681,7 +675,7 @@ func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 			if dc.hasCurrent {
 				dc.LineToV2(v0)
 			} else {
-				dc.MoveToV2(v0)
+				dc.MoveTo(v0)
 			}
 		}
 		dc.QuadraticTo(v1*2-v2/2-v0/2, v2)

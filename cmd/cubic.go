@@ -15,7 +15,7 @@ func cubic() {
 	p2 := complex(8, 8)
 	p3 := complex(10, 0)
 
-	dc.MoveToV2(p0)
+	dc.MoveTo(p0)
 	dc.CubicTo(p1, p2, p3)
 	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.2))
 	dc.SetLineWidth(8)
@@ -24,7 +24,7 @@ func cubic() {
 	dc.SetDash(16, 24)
 	dc.Stroke()
 
-	dc.MoveToV2(p0)
+	dc.MoveTo(p0)
 	dc.LineToV2(p1)
 	dc.LineToV2(p2)
 	dc.LineToV2(p3)

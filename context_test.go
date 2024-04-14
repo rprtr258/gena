@@ -97,7 +97,7 @@ func TestQuadratic(t *testing.T) {
 		p1 := RandomV2() * 100
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
-		dc.MoveToV2(p1)
+		dc.MoveTo(p1)
 		dc.QuadraticTo(p2, p3)
 		dc.SetLineWidth(rnd.Float64() * 3)
 		dc.SetColor(ColorRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
@@ -117,7 +117,7 @@ func TestCubic(t *testing.T) {
 		p2 := RandomV2() * 100
 		p3 := RandomV2() * 100
 		p4 := RandomV2() * 100
-		dc.MoveToV2(p1)
+		dc.MoveTo(p1)
 		dc.CubicTo(p2, p3, p4)
 		dc.SetLineWidth(rnd.Float64() * 3)
 		dc.SetColor(ColorRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
