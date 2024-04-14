@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestParseHexColor(t *testing.T) {
+func TestColorHex(t *testing.T) {
 	for color, want := range map[string]color.RGBA{
 		"#112233":   {0x11, 0x22, 0x33, 0xFF},
 		"#123":      {0x11, 0x22, 0x33, 0xFF},
@@ -15,7 +15,7 @@ func TestParseHexColor(t *testing.T) {
 		"#FFFFFFFF": {0xFF, 0xFF, 0xFF, 0xFF},
 	} {
 		t.Run(color, func(t *testing.T) {
-			got := ParseHexColor(color)
+			got := ColorHex(color)
 			assert.Equal(t, want, got)
 		})
 	}

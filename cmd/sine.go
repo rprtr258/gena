@@ -22,9 +22,9 @@ func sine() {
 		dc.LineTo(x, y)
 	}
 	dc.ClosePath()
-	dc.SetHexColor("#3E606F")
+	dc.SetColor(gena.ColorHex("#3E606F"))
 	dc.FillPreserve()
-	dc.SetHexColor("#19344180")
+	dc.SetColor(gena.ColorHex("#19344180"))
 	dc.SetLineWidth(8)
 	dc.Stroke()
 	gena.SavePNG("sine.png", dc.Image())

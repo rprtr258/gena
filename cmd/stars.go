@@ -20,7 +20,7 @@ func stars() {
 	const H = 120
 	const S = 100
 	dc := gena.NewContext(W, H)
-	dc.SetHexColor("#FFFFFF")
+	dc.SetColor(gena.ColorHex("#FFFFFF"))
 	dc.Clear()
 	n := 5
 	points := Polygon(n)
@@ -34,9 +34,9 @@ func stars() {
 				dc.LineToV2(points[(i*2)%n])
 			}
 			dc.SetLineWidth(10)
-			dc.SetHexColor("#FFCC00")
+			dc.SetColor(gena.ColorHex("#FFCC00"))
 			dc.StrokePreserve()
-			dc.SetHexColor("#FFE43A")
+			dc.SetColor(gena.ColorHex("#FFE43A"))
 			dc.Fill()
 		})
 	}

@@ -2,7 +2,6 @@
 package gena
 
 import (
-	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
@@ -227,32 +226,6 @@ func (dc *Context) SetStrokeStyle(pattern Pattern) {
 // SetColor sets the current color(for both fill and stroke).
 func (dc *Context) SetColor(c color.Color) {
 	dc.setFillAndStrokeColor(c)
-}
-
-// SetHexColor sets the current color using a hex string. The leading pound
-// sign (#) is optional. Both 3- and 6-digit variations are supported. 8 digits
-// may be provided to set the alpha value as well.
-// TODO: move out getting color from hex, make single function to set color
-func (dc *Context) SetHexColor(x string) {
-	x = strings.TrimPrefix(x, "#")
-	var r, g, b int
-	a := 255
-	switch len(x) {
-	case 3:
-		format := "%1x%1x%1x"
-		fmt.Sscanf(x, format, &r, &g, &b)
-		r |= r << 4
-		g |= g << 4
-		b |= b << 4
-	case 6:
-		format := "%02x%02x%02x"
-		fmt.Sscanf(x, format, &r, &g, &b)
-	case 8:
-		format := "%02x%02x%02x%02x"
-		fmt.Sscanf(x, format, &r, &g, &b, &a)
-	}
-
-	dc.SetRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, a)
 }
 
 // SetRGBA255 sets the current color. r, g, b, a values should be between 0 and 255, inclusive.

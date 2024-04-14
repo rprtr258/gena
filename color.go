@@ -3,7 +3,6 @@ package gena
 import (
 	"fmt"
 	"image/color"
-	"strings"
 )
 
 var (
@@ -637,19 +636,8 @@ var (
 )
 
 // ParseHexColor parses color string likes #FFFFFF or #2398EFFF
-func ParseHexColor(s string) color.RGBA {
-	if strings.HasPrefix(s, "#") {
-		if c, ok := parseHex(s[1:]); ok {
-			return c
-		}
-	}
-
-	panic(fmt.Sprintf("invalid hex color string %v", s))
-}
-
-// parseHex returns a color.RGBA by parsing a hex string
 // Reference: https://stackoverflow.com/questions/54197913/parse-hex-string-to-image-color
-func parseHex(s string) (color.RGBA, bool) {
+func ColorHex(s string) color.RGBA {
 	c := color.RGBA{}
 	c.A = 255
 	ok := true
@@ -685,5 +673,10 @@ func parseHex(s string) (color.RGBA, bool) {
 	default:
 		ok = false
 	}
-	return c, ok
+
+	if !ok {
+		panic(fmt.Sprintf("invalid hex color string: %s", s))
+	}
+
+	return c
 }

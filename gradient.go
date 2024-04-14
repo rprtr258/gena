@@ -106,15 +106,15 @@ func PatternGradientRadial(
 			if b == 0 {
 				return color.Transparent
 			}
-			t := 0.5 * c / b
-			if t*cd.r >= mindr {
+
+			if t := 0.5 * c / b; t*cd.r >= mindr {
 				return getColor(t, stops...)
 			}
+
 			return color.Transparent
 		}
 
-		discr := dot3(b, a, 0, b, -c, 0)
-		if discr >= 0 {
+		if discr := b*b - a*c; discr >= 0 {
 			sqrtdiscr := math.Sqrt(discr)
 			t0 := (b + sqrtdiscr) * inva
 			t1 := (b - sqrtdiscr) * inva
@@ -141,7 +141,7 @@ func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 
 		a := math.Atan2(float64(y)-Y(c), float64(x)-X(c))
 
-		t := norm(a, -math.Pi, math.Pi) - rotation
+		t := Remap(a, -math.Pi, math.Pi, 0, 1) - rotation
 		if t < 0 {
 			t += 1
 		}
@@ -156,11 +156,6 @@ func normalizeAngle(t float64) float64 {
 		t += 360
 	}
 	return t
-}
-
-// Map value which is in range [a..b] to range [0..1]
-func norm(value, a, b float64) float64 {
-	return (value - a) * (1.0 / (b - a))
 }
 
 func lerp32to8(a, b uint32, t float64) uint8 {
