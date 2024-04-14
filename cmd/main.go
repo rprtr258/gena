@@ -280,7 +280,7 @@ func circleloop2() {
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}, 7)
-	SavePNG("colorloop2.png", im)
+	SavePNG("circleloop2.png", im)
 }
 
 func circlemove() {
