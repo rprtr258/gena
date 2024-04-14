@@ -789,20 +789,20 @@ See the output of this example below.
 ```go
 package main
 
-import "github.com/rprtr258/gena"
+import . "github.com/rprtr258/gena"
 
 func main() {
 	const S = 1024
 	dc := NewContext(S, S)
 	dc.SetRGBA(0, 0, 0, 0.1)
 	for i := 0; i < 360; i += 15 {
-		dc.Stack(func(dc *gena.Context){
+		dc.Stack(func(dc *Context){
       dc.RotateAbout(Radians(float64(i)), S/2, S/2)
       dc.DrawEllipse(S/2, S/2, S*7/16, S/8)
       dc.Fill()
     })
 	}
-	gena.SavePNG("out.png", dc.Image())
+	SavePNG("out.png", dc.Image())
 }
 ```
 

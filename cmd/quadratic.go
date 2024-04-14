@@ -1,11 +1,11 @@
 package main
 
-import "github.com/rprtr258/gena"
+import . "github.com/rprtr258/gena"
 
 func quadratic() {
 	const S = 1000
-	dc := gena.NewContext(complex(S, S))
-	dc.SetColor(gena.ColorRGB(1, 1, 1))
+	dc := NewContext(complex(S, S))
+	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.Translate(complex(S/2, S/2))
 	dc.Scale(complex(40, 40))
@@ -21,17 +21,17 @@ func quadratic() {
 	dc.LineTo(p2)
 	dc.LineTo(p3)
 	dc.LineTo(p4)
-	dc.SetColor(gena.ColorHex("FF2D00"))
+	dc.SetColor(ColorHex("FF2D00"))
 	dc.SetLineWidth(8)
 	dc.Stroke()
 
 	dc.MoveTo(p0)
 	dc.QuadraticTo(p1, p2)
 	dc.QuadraticTo(p3, p4)
-	dc.SetColor(gena.ColorHex("3E606F"))
+	dc.SetColor(ColorHex("3E606F"))
 	dc.SetLineWidth(16)
 	dc.FillPreserve()
-	dc.SetColor(gena.ColorRGB(0, 0, 0))
+	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Stroke()
 
 	dc.DrawCircle(p0, 0.5)
@@ -39,9 +39,9 @@ func quadratic() {
 	dc.DrawCircle(p2, 0.5)
 	dc.DrawCircle(p3, 0.5)
 	dc.DrawCircle(p4, 0.5)
-	dc.SetColor(gena.ColorRGB(1, 1, 1))
+	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.FillPreserve()
-	dc.SetColor(gena.ColorRGB(0, 0, 0))
+	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.SetLineWidth(4)
 	dc.Stroke()
 
@@ -49,5 +49,5 @@ func quadratic() {
 	dc.DrawStringAnchored("g", complex(-5, 5), complex(0.5, 0.5))
 	dc.DrawStringAnchored("G", complex(5, -5), complex(0.5, 0.5))
 
-	gena.SavePNG("quadratic.png", dc.Image())
+	SavePNG("quadratic.png", dc.Image())
 }

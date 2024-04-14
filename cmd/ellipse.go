@@ -1,20 +1,20 @@
 package main
 
-import "github.com/rprtr258/gena"
+import . "github.com/rprtr258/gena"
 
 func ellipse() {
 	const S = 1024
-	dc := gena.NewContext(complex(S, S))
-	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.1))
+	dc := NewContext(complex(S, S))
+	dc.SetColor(ColorRGBA(0, 0, 0, 0.1))
 	for i := 0; i < 360; i += 15 {
-		dc.Stack(func(dc *gena.Context) {
-			dc.RelativeTo(complex(S/2, S/2), func(dc *gena.Context) {
-				dc.Rotate(gena.Radians(float64(i)))
+		dc.Stack(func(dc *Context) {
+			dc.RelativeTo(complex(S/2, S/2), func(dc *Context) {
+				dc.Rotate(Radians(float64(i)))
 			})
 			dc.DrawEllipse(complex(S/2, S/2), complex(S*7/16, S/8))
 			dc.Fill()
 		})
 	}
-	dc.DrawImageAnchored(gena.Load("cmd/gopher.png"), complex(S, S)/gena.Coeff(2), complex(0.5, 0.5))
-	gena.SavePNG("ellipse.png", dc.Image())
+	dc.DrawImageAnchored(Load("cmd/gopher.png"), complex(S, S)/Coeff(2), complex(0.5, 0.5))
+	SavePNG("ellipse.png", dc.Image())
 }

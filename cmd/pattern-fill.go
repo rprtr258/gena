@@ -1,15 +1,15 @@
 package main
 
-import "github.com/rprtr258/gena"
+import . "github.com/rprtr258/gena"
 
 func patternFill() {
-	dc := gena.NewContext(complex(600, 600))
+	dc := NewContext(complex(600, 600))
 	dc.MoveTo(complex(20, 20))
 	dc.LineTo(complex(590, 20))
 	dc.LineTo(complex(590, 590))
 	dc.LineTo(complex(20, 590))
 	dc.ClosePath()
-	dc.SetFillStyle(gena.PatternSurface(gena.LoadPNG("cmd/baboon.png"), gena.RepeatBoth))
+	dc.SetFillStyle(PatternSurface(LoadPNG("cmd/baboon.png"), RepeatBoth))
 	dc.Fill()
-	gena.SavePNG("patternFill.png", dc.Image())
+	SavePNG("patternFill.png", dc.Image())
 }

@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"math/rand"
 
-	"github.com/rprtr258/gena"
+	. "github.com/rprtr258/gena"
 )
 
 // SpiralSquare draws a spiral square images.
@@ -17,14 +17,14 @@ func SpiralSquare(
 	rectSide, decay float64,
 	fg color.RGBA, randColor bool,
 ) {
-	dc := gena.NewContextForRGBA(c)
+	dc := NewContextForRGBA(c)
 
 	sl := rectSide
 	theta := rand.Intn(360) + 1
-	for i := range gena.Range(squareNum) {
-		dc.Stack(func(ctx *gena.Context) {
-			dc.Translate(gena.Size(c) / 2)
-			dc.Rotate(gena.Radians(float64(theta * (i + 1))))
+	for i := range Range(squareNum) {
+		dc.Stack(func(ctx *Context) {
+			dc.Translate(Size(c) / 2)
+			dc.Rotate(Radians(float64(theta * (i + 1))))
 
 			dc.Scale(complex(sl, sl))
 

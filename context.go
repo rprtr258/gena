@@ -642,9 +642,12 @@ func (dc *Context) DrawRectangle(topLeft, size V2) {
 }
 
 func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
-	x, y, w, h := X(topLeft), Y(topLeft), X(size), Y(size)
-	x0, x1, x2, x3 := x, x+r, x+w-r, x+w
-	y0, y1, y2, y3 := y, y+r, y+h-r, y+h
+	x, y := X(topLeft), Y(topLeft)
+	w, h := X(size), Y(size)
+	x0, y0 := x, y
+	x1, y1 := x+r, y+r
+	x2, y2 := x+w-r, y+h-r
+	x3, y3 := x+w, y+h
 	dc.NewSubPath()
 	dc.MoveTo(complex(x1, y0))
 	dc.LineTo(complex(x2, y0))
@@ -684,12 +687,12 @@ func (dc *Context) DrawEllipse(c, r V2) {
 }
 
 func (dc *Context) DrawArc(v V2, r, angle1, angle2 float64) {
-	dc.DrawEllipticalArc(v, complex(r, r), angle1, angle2)
+	dc.DrawEllipticalArc(v, Diag(r), angle1, angle2)
 }
 
 func (dc *Context) DrawCircle(c V2, r float64) {
 	dc.NewSubPath()
-	dc.DrawEllipticalArc(c, complex(r, r), 0, 2*math.Pi)
+	dc.DrawEllipticalArc(c, Diag(r), 0, 2*math.Pi)
 	dc.ClosePath()
 }
 

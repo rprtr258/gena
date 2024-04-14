@@ -4,24 +4,24 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/rprtr258/gena"
+	. "github.com/rprtr258/gena"
 )
 
 func mystar() {
 	const n = 4
 
-	dc := gena.NewContext(complex(500, 500))
+	dc := NewContext(complex(500, 500))
 
 	dc.SetColor(color.Black)
 	dc.Clear()
 
 	points := PolygonAt(n, 250+250i, 100)
-	for range gena.Range(10) {
-		dc.RelativeTo(250+250i, func(dc *gena.Context) {
+	for range Range(10) {
+		dc.RelativeTo(250+250i, func(dc *Context) {
 			dc.Rotate(math.Pi / 9)
 		})
 
-		for i := range gena.Range(n) {
+		for i := range Range(n) {
 			dc.LineTo(points[i])
 		}
 		dc.LineTo(points[0])
@@ -31,5 +31,5 @@ func mystar() {
 		dc.Stroke()
 	}
 
-	gena.SavePNG("mystar.png", dc.Image())
+	SavePNG("mystar.png", dc.Image())
 }

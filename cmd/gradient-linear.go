@@ -3,16 +3,16 @@ package main
 import (
 	"image/color"
 
-	"github.com/rprtr258/gena"
+	. "github.com/rprtr258/gena"
 )
 
 func gradientLinear() {
-	dc := gena.NewContext(complex(500, 400))
+	dc := NewContext(complex(500, 400))
 
-	grad := gena.PatternGradientLinear(
+	grad := PatternGradientLinear(
 		complex(20, 320),
 		complex(400, 20),
-		gena.Stops{
+		Stops{
 			0:   color.RGBA{0, 255, 0, 255},
 			0.5: color.RGBA{255, 0, 0, 255},
 			1:   color.RGBA{0, 0, 255, 255},
@@ -39,5 +39,5 @@ func gradientLinear() {
 	dc.ClosePath()
 	dc.Fill()
 
-	gena.SavePNG("gradientLinear.png", dc.Image())
+	SavePNG("gradientLinear.png", dc.Image())
 }

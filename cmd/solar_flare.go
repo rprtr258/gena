@@ -6,7 +6,7 @@ import (
 	"image/draw"
 	"math"
 
-	"github.com/rprtr258/gena"
+	. "github.com/rprtr258/gena"
 )
 
 // SolarFlare draws a solar flare images.
@@ -15,19 +15,19 @@ func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
 	const offsetInc = 0.006
 	const inc = 1.0
 	const m = 1.005
-	noise := gena.NewPerlinNoiseDeprecated()
+	noise := NewPerlinNoiseDeprecated()
 
 	for r := 1.0; r < 200; {
-		for range gena.Range(10) {
+		for range Range(10) {
 			nPoints := int(2 * math.Pi * r)
 			nPoints = min(nPoints, 500)
 
 			img := image.NewRGBA(image.Rect(0, 0, c.Bounds().Dx(), c.Bounds().Dy()))
 			draw.Draw(img, img.Bounds(), &image.Uniform{color.Black}, image.Point{}, draw.Src)
-			dc := gena.NewContextForRGBA(img)
+			dc := NewContextForRGBA(img)
 
-			dc.Stack(func(ctx *gena.Context) {
-				dc.Translate(gena.Size(c) / 2)
+			dc.Stack(func(ctx *Context) {
+				dc.Translate(Size(c) / 2)
 				dc.SetLineWidth(1.0)
 				dc.SetColor(lineColor)
 				for j := 0; j < nPoints+1; j += 1 {
@@ -42,7 +42,7 @@ func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
 				dc.Stroke()
 			})
 
-			c = gena.Blend(img, c, gena.Add)
+			c = Blend(img, c, Add)
 			xOffset += offsetInc
 			yOffset += offsetInc
 			r *= m

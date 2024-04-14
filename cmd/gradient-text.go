@@ -3,7 +3,7 @@ package main
 import (
 	"image/color"
 
-	"github.com/rprtr258/gena"
+	. "github.com/rprtr258/gena"
 )
 
 const (
@@ -12,10 +12,10 @@ const (
 )
 
 func gradientText() {
-	dc := gena.NewContext(complex(W, H))
+	dc := NewContext(complex(W, H))
 
 	// draw text
-	dc.SetColor(gena.ColorRGB(0, 0, 0))
+	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 128)
 	dc.DrawStringAnchored("Gradient Text", complex(W/2, H/2), complex(0.5, 0.5))
 
@@ -23,11 +23,11 @@ func gradientText() {
 	mask := dc.AsMask()
 
 	// clear the context
-	dc.SetColor(gena.ColorRGB(1, 1, 1))
+	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 
 	// set a gradient
-	g := gena.PatternGradientLinear(0, complex(W, H), gena.Stops{
+	g := PatternGradientLinear(0, complex(W, H), Stops{
 		0: color.RGBA{255, 0, 0, 255},
 		1: color.RGBA{0, 0, 255, 255},
 	})
@@ -38,5 +38,5 @@ func gradientText() {
 	dc.DrawRectangle(0, complex(W, H))
 	dc.Fill()
 
-	gena.SavePNG("gradientText.png", dc.Image())
+	SavePNG("gradientText.png", dc.Image())
 }
