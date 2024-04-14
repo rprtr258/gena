@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -46,10 +44,10 @@ func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 
 func (o *oceanFish) drawlines(ctx *Context, im *image.RGBA, colorSchema []color.RGBA) {
 	for range Range(o.lineNum) {
-		cl := colorSchema[rand.Intn(len(colorSchema))]
+		cl := RandomItem(colorSchema)
 		ctx.SetColor(cl)
 		ctx.SetLineWidth(RandomF64(3, 20))
-		y := rand.Float64() * float64(im.Bounds().Dy())
+		y := Random() * float64(im.Bounds().Dy())
 		ctx.DrawLine(
 			complex(0, y+RandomF64(-50, 50)),
 			complex(float64(im.Bounds().Dx()), y+RandomF64(-50, 50)),
@@ -60,8 +58,8 @@ func (o *oceanFish) drawlines(ctx *Context, im *image.RGBA, colorSchema []color.
 
 func fishPt(r, theta float64) V2 {
 	return complex(
-		r*math.Cos(theta)-r*math.Pow(math.Sin(theta), 2)/math.Sqrt(2),
-		r*math.Cos(theta)*math.Sin(theta),
+		r*Cos(theta)-r*Pow(Sin(theta), 2)/Sqrt(2.0),
+		r*Cos(theta)*Sin(theta),
 	)
 }
 

@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -18,13 +16,13 @@ type circle1 struct {
 func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64) []circle1 {
 	circles := make([]circle1, 0, cn)
 	for range Range(cn) {
-		x := rand.Intn(w) + 1
-		y := rand.Intn(h) + 1
-		radius := float64(rand.Intn(int(minRadius))) + maxRadius - minRadius
+		x := RandomInt(w) + 1
+		y := RandomInt(h) + 1
+		radius := float64(RandomInt(int(minRadius))) + maxRadius - minRadius
 		circles = append(circles, circle1{
 			pos:    complex(float64(x), float64(y)),
 			radius: radius,
-			d:      Polar(RandomF64(minStep, maxStep), rand.Float64()*math.Pi*2.0),
+			d:      Polar(RandomF64(minStep, maxStep), Random()*PI*2.0),
 		})
 	}
 	return circles
@@ -73,7 +71,7 @@ func RandCircle(
 ) {
 	dc := NewContextFromRGBA(im)
 	for range Range(iters) {
-		cn := rand.Intn(maxCircle) + int(maxCircle/3)
+		cn := RandomInt(maxCircle) + int(maxCircle/3)
 		circles := newCircleSlice(cn, im.Bounds().Dx(), im.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
 		for range Range(maxStepsPerCircle) {
@@ -81,7 +79,7 @@ func RandCircle(
 				for _, c2 := range circles {
 					cl := lineColor
 					if isRandColor {
-						cl = colorSchema[rand.Intn(len(colorSchema))]
+						cl = RandomItem(colorSchema)
 					}
 
 					if c1 == c2 {

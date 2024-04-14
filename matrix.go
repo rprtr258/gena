@@ -1,7 +1,5 @@
 package gena
 
-import "math"
-
 /*
 XX YX  0
 XY YY  0
@@ -36,8 +34,8 @@ func Scale(v V2) Matrix {
 }
 
 func Rotate(angle float64) Matrix {
-	c := math.Cos(angle)
-	s := math.Sin(angle)
+	c := Cos(angle)
+	s := Sin(angle)
 	return Matrix{
 		c, s,
 		-s, c,

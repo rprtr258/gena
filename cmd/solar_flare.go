@@ -4,12 +4,11 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
 
-// SolarFlare draws a solar flare images.
+// SolarFlare draws a solar flare images
 func SolarFlare(c image.Image, lineColor color.Color) {
 	var xOffset, yOffset float64
 	const offsetInc = 0.006
@@ -19,7 +18,7 @@ func SolarFlare(c image.Image, lineColor color.Color) {
 
 	for r := 1.0; r < 200; {
 		for range Range(10) {
-			nPoints := int(2 * math.Pi * r)
+			nPoints := int(2 * PI * r)
 			nPoints = min(nPoints, 500)
 
 			img := image.NewRGBA(image.Rect(0, 0, c.Bounds().Dx(), c.Bounds().Dy()))
@@ -31,13 +30,11 @@ func SolarFlare(c image.Image, lineColor color.Color) {
 				dc.SetLineWidth(1.0)
 				dc.SetColor(lineColor)
 				for j := 0; j < nPoints+1; j += 1 {
-					a := float64(j) / float64(nPoints) * math.Pi * 2
-					px := math.Cos(a)
-					py := math.Sin(a)
+					a := float64(j) / float64(nPoints) * PI * 2
+					px := Cos(a)
+					py := Sin(a)
 					n := noise.Noise2_1(xOffset+px*inc, yOffset+py*inc) * r
-					px *= n
-					py *= n
-					dc.LineTo(complex(px, py))
+					dc.LineTo(complex(px, py) * Coeff(n))
 				}
 				dc.Stroke()
 			})

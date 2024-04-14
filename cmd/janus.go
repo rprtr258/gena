@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -21,20 +20,20 @@ func Janus(im *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, decay float6
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(Size(im) / 2))
 
-			theta := RandomF64(math.Pi/4, 3*math.Pi/4)
-			x1, y1 := math.Cos(theta)*r, math.Sin(theta)*r
+			theta := RandomF64(PI/4, 3*PI/4)
+			x1, y1 := Cos(theta)*r, Sin(theta)*r
 			x2, y2 := -x1, -y1
 
-			noise := RandomF64(-math.Abs(y1), math.Abs(y1))
+			noise := RandomF64(-Abs(y1), Abs(y1))
 			y1 += noise
 			y2 += noise
 
 			s *= 0.836
 			dc.TransformAdd(Scale(complex(s, s)))
-			dc.DrawArc(complex(x1, y1), 1.0, math.Pi*3/2+theta, math.Pi*5/2+theta)
+			dc.DrawArc(complex(x1, y1), 1.0, PI*3/2+theta, PI*5/2+theta)
 			dc.SetColor(clr)
 			dc.Fill()
-			dc.DrawArc(complex(x2, y2), 1.0, math.Pi/2+theta, math.Pi*3/2+theta)
+			dc.DrawArc(complex(x2, y2), 1.0, PI/2+theta, PI*3/2+theta)
 			dc.SetColor(clr)
 			dc.Fill()
 		})

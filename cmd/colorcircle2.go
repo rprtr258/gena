@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -14,14 +12,14 @@ type colorCircle2 struct {
 }
 
 func (cc *colorCircle2) circle(dc *Context, colorSchema []color.RGBA, v V2, d, dx float64) {
-	col := colorSchema[rand.Intn(len(colorSchema))]
+	col := RandomItem(colorSchema)
 	for j := 0.0; j < dx; j += 1.0 {
 		dd := d + j*2.0
 		alpha := min(int((dx/j)*255.0), 255)
 		col.A = uint8(alpha)
 		dc.SetColor(col)
 		for range Range(150) {
-			theta := RandomF64(0, math.Pi*2)
+			theta := RandomF64(0, PI*2)
 			dc.DrawPoint(v+Polar(dd/2, theta), 0.51)
 			dc.Fill()
 		}
@@ -44,8 +42,8 @@ func ColorCircle2(im *image.RGBA, colorSchema []color.RGBA, n int) {
 		r2 := RandomF64(10.0, float64(im.Bounds().Dx())/3)
 
 		cc.circle(dc, colorSchema, v, r1, r2)
-		if rand.Float64() < 0.3 {
-			col := colorSchema[rand.Intn(len(colorSchema))]
+		if Random() < 0.3 {
+			col := RandomItem(colorSchema)
 			dc.SetColor(col)
 			dc.DrawCircle(v, r1/2.0)
 			dc.Fill()

@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -22,7 +21,7 @@ func SpiralSquare(
 	dc := NewContextFromRGBA(im)
 
 	sl := rectSide
-	theta := rand.Intn(360) + 1
+	theta := RandomInt(360) + 1
 	for i := range Range(squareNum) {
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(Size(im) / 2))
@@ -41,7 +40,7 @@ func SpiralSquare(
 			dc.StrokePreserve()
 
 			if randColor {
-				dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
+				dc.SetColor(RandomItem(colorSchema))
 			} else {
 				dc.SetColor(fg)
 			}

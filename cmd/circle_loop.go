@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -20,18 +19,18 @@ func CircleLoop(
 	FillBackground(im, Black)
 	dc := NewContextFromRGBA(im)
 	for i := range Range(iters) {
-		theta := math.Pi / 2 * float64(i)
+		theta := PI / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
 			dc.TransformAdd(Translate(Size(im) / 2))
 			v := complex(
-				math.Cos(Radians(theta)),
-				math.Sin(Radians(theta*2)),
+				Cos(Radians(theta)),
+				Sin(Radians(theta*2)),
 			) * Coeff(radius)
 
 			dc.SetLineWidth(lineWidth)
 			dc.SetColor(lineColor)
 			dc.SetColor(ColorRGBA255(lineColor, alpha))
-			dc.DrawCircle(v, radius+math.Sin(theta*1.5)*float64(i)/2)
+			dc.DrawCircle(v, radius+Sin(theta*1.5)*float64(i)/2)
 			dc.Stroke()
 		})
 	}

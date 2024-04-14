@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -22,16 +20,15 @@ func CircleLine(
 	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(lineWidth)
 	dc.SetColor(lineColor)
+
 	var points []V2
-	for theta := -math.Pi; theta <= math.Pi; theta += step {
+	for theta := -PI; theta <= PI; theta += step {
 		points = append(points, ToPixel(Polar(radius, theta), axis, Size(im)))
 	}
 
 	for range Range(lineNum) {
-		p1 := points[rand.Intn(len(points))]
-		dc.MoveTo(p1)
-		p2 := points[rand.Intn(len(points))]
-		dc.LineTo(p2)
+		dc.MoveTo(RandomItem(points))
+		dc.LineTo(RandomItem(points))
 		dc.Stroke()
 	}
 }

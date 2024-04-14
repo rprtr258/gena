@@ -3,7 +3,53 @@ package gena
 import (
 	"cmp"
 	"math"
+
+	"golang.org/x/exp/constraints"
 )
+
+const PI = math.Pi
+
+func Cos(x float64) float64 {
+	return math.Cos(x)
+}
+
+func Sin(x float64) float64 {
+	return math.Sin(x)
+}
+
+func Abs[T interface {
+	constraints.Float | constraints.Integer
+}](x T) T {
+	return T(math.Abs(float64(x)))
+}
+
+func Floor[T interface {
+	constraints.Float | constraints.Integer
+}](x T) T {
+	return T(math.Floor(float64(x)))
+}
+
+func Mod[T interface {
+	constraints.Float | constraints.Signed
+}](x, y T) T {
+	t := math.Mod(float64(x), float64(y))
+	if t < 0 {
+		t += float64(y)
+	}
+	return T(t)
+}
+
+func Pow[T interface {
+	constraints.Float | constraints.Integer
+}](x, y T) T {
+	return T(math.Pow(float64(x), float64(y)))
+}
+
+func Sqrt[T interface {
+	constraints.Float | constraints.Integer
+}](x T) T {
+	return T(math.Sqrt(float64(x)))
+}
 
 // max(min(x, h), l)
 func Clamp[T cmp.Ordered](x, low, high T) T {
@@ -17,17 +63,12 @@ func Remap(x, low1, high1, low2, high2 float64) float64 {
 
 // x*PI/180
 func Radians(degrees float64) float64 {
-	return degrees * math.Pi / 180
+	return degrees * PI / 180
 }
 
 // x*180/pi
 func Degrees(radians float64) float64 {
-	return radians * 180 / math.Pi
-}
-
-// max(-x,x)
-func Abs[T ~int32 | ~float64](x T) T {
-	return max(-x, x)
+	return radians * 180 / PI
 }
 
 func Lerp(c1, c2, coeff float64) float64 {

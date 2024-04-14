@@ -3,7 +3,6 @@ package gena
 import (
 	"fmt"
 	"image/color"
-	"math"
 )
 
 var (
@@ -663,7 +662,7 @@ func (hs HSV) ToRGB(mh, ms, mv int) color.RGBA {
 		h = 0
 	} // H must be < 1
 
-	i := math.Floor(h)
+	i := Floor(h)
 	v1 := v * (1 - s)
 	v2 := v * (1 - s*(h-i))
 	v3 := v * (1 - s*(1-(h-i)))

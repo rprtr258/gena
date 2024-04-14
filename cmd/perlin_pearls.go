@@ -2,7 +2,6 @@ package main
 
 import (
 	"image"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -52,7 +51,7 @@ func PerlinPearls(im *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN
 	for i := range Range(circleN) {
 		dots := make([]dot, dotsN)
 		for j := range Range(dotsN) {
-			p := cs[i].pos + Polar(cs[i].radius, RandomF64(0, math.Pi*2))
+			p := cs[i].pos + Polar(cs[i].radius, RandomF64(0, PI*2))
 			dots[j] = dot{pos: p, prev: p, count: 0}
 		}
 		ds[i] = dots
@@ -71,7 +70,7 @@ func PerlinPearls(im *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN
 			for k := range ds[i] {
 				n := noise.NoiseV2_1(ds[i][k].pos * factor)
 				ds[i][k].prev = ds[i][k].pos
-				ds[i][k].pos += Polar(2, math.Pi*(n*2+float64(ds[i][k].count)))
+				ds[i][k].pos += Polar(2, PI*(n*2+float64(ds[i][k].count)))
 
 				if Dist(cs[i].pos, ds[i][k].pos) > cs[i].radius+1 {
 					ds[i][k].count += 1

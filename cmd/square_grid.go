@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -14,12 +13,12 @@ func GirdSquares(im *image.RGBA, colorSchema []color.RGBA, step, rectSize int, d
 
 	for x := 0; x < im.Bounds().Dx(); x += step {
 		for y := 0; y < im.Bounds().Dy(); y += step {
-			cl := colorSchema[rand.Intn(len(colorSchema))]
+			cl := RandomItem(colorSchema)
 
 			v0 := complex(float64(x), float64(y))
 			s := float64(rectSize)
 
-			theta := rand.Intn(360) + 1
+			theta := RandomInt(360) + 1
 			for i := range Range(iters) {
 				dc.Stack(func(ctx *Context) {
 					dc.TransformAdd(Translate(v0 + Diag(step)/2))

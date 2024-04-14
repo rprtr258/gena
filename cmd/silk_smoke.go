@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -21,7 +20,7 @@ func SilkSmoke(
 ) {
 	dc := NewContextFromRGBA(im)
 
-	cn := rand.Intn(maxCircle) + int(maxCircle/3)
+	cn := RandomInt(maxCircle) + int(maxCircle/3)
 	circles := newCircleSlice(cn, im.Bounds().Dx(), im.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
 	for range Range(maxStepsPerCircle) {
@@ -34,7 +33,7 @@ func SilkSmoke(
 
 				cl := lineColor
 				if isRandColor {
-					cl = colorSchema[rand.Intn(len(colorSchema))]
+					cl = RandomItem(colorSchema)
 				}
 
 				if c1 == c2 {

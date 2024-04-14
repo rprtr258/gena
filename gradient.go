@@ -52,7 +52,7 @@ func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
 
 		// Calculate distance to (x0,y0) alone (x0,y0)->(x1,y1)
 		mag := Magnitude(d)
-		u := math.Pow(Magnitude((f-v0)*complex(0, 1)*d)/mag, 2)
+		u := Pow(Magnitude((f-v0)*complex(0, 1)*d)/mag, 2)
 		v2 := v0 + d*complex(0, 1)*Coeff(u)
 		return getColor(Magnitude(f-v2)/mag, stops...)
 	}
@@ -114,7 +114,7 @@ func PatternGradientRadial(
 		}
 
 		if discr := b*b - a*c; discr >= 0 {
-			sqrtdiscr := math.Sqrt(discr)
+			sqrtdiscr := Sqrt(discr)
 			t0 := (b + sqrtdiscr) * inva
 			t1 := (b - sqrtdiscr) * inva
 
@@ -132,7 +132,7 @@ func PatternGradientRadial(
 func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 	stops := sortStops(stopss)
 
-	rotation := normalizeAngle(deg) / 360
+	rotation := Mod(deg, 360) / 360
 	return func(f V2) color.Color {
 		if len(stops) == 0 {
 			return color.Transparent
@@ -141,21 +141,13 @@ func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 		d := f - c
 		a := math.Atan2(Y(d), X(d))
 
-		t := Remap(a, -math.Pi, math.Pi, 0, 1) - rotation
+		t := Remap(a, -PI, PI, 0, 1) - rotation
 		if t < 0 {
 			t += 1
 		}
 
 		return getColor(t, stops...)
 	}
-}
-
-func normalizeAngle(t float64) float64 {
-	t = math.Mod(t, 360)
-	if t < 0 {
-		t += 360
-	}
-	return t
 }
 
 func lerp32to8(a, b uint32, t float64) uint8 {

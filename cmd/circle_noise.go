@@ -2,7 +2,6 @@ package main
 
 import (
 	"image"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -36,7 +35,7 @@ func CircleNoise(
 
 	dots := make([]dot, len(angles))
 	for i, angle := range angles {
-		v := Size(im)/2 + Polar(radius, angle*math.Pi*2)
+		v := Size(im)/2 + Polar(radius, angle*PI*2)
 		dots[i] = dot{pos: v, prev: v, count: 0}
 	}
 
@@ -44,7 +43,7 @@ func CircleNoise(
 	for range Range(iters) {
 		for i := range dots {
 			n := noise.NoiseV2_1(dots[i].pos * factor)
-			alpha := math.Pi * (n*2 + float64(dots[i].count))
+			alpha := PI * (n*2 + float64(dots[i].count))
 			nn := Polar(2, alpha)
 			dots[i].prev, dots[i].pos = dots[i].pos, dots[i].pos+nn
 			if Dist(Size(im)/2, dots[i].pos) > radius+2 {

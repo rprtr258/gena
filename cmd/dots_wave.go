@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -21,20 +19,18 @@ func DotsWave(im *image.RGBA, colorSchema []color.RGBA, n int) {
 		), Size(im))
 
 		num := RandomF64(100, 1000)
-		r := rand.Float64() * float64(im.Bounds().Dx()) * 0.15 * rand.Float64()
+		r := Random() * float64(im.Bounds().Dx()) * 0.15 * Random()
 		ind := RandomF64(1, 8)
 
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(v))
-			dc.TransformAdd(Rotate(float64(rand.Intn(8)) * math.Pi / 4))
-			rand.Shuffle(len(colorSchema), func(i, j int) {
-				colorSchema[i], colorSchema[j] = colorSchema[j], colorSchema[i]
-			})
+			dc.TransformAdd(Rotate(float64(RandomInt(8)) * PI / 4))
+			Shuffle(colorSchema)
 			for j := 0.0; j < num; j += ind {
-				s := float64(im.Bounds().Dx()) * 0.15 * RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, rand.Float64()))))))
+				s := float64(im.Bounds().Dx()) * 0.15 * RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, Random()))))))
 				ci := int(float64(len(colorSchema)) * noise.Noise3_1(j*0.01, X(v), Y(v)))
 				dc.SetColor(colorSchema[ci])
-				dc.DrawCircle(complex(j, r*math.Sin(j*0.05)), s*2/3)
+				dc.DrawCircle(complex(j, r*Sin(j*0.05)), s*2/3)
 				dc.Fill()
 			}
 		})

@@ -1,10 +1,5 @@
 package gena
 
-import (
-	"math"
-	"math/rand"
-)
-
 const (
 	perlinYwrapb     = 4
 	perlinYwrap      = 1 << perlinYwrapb
@@ -23,7 +18,7 @@ type PerlinNoise struct {
 func NewPerlinNoiseDeprecated() PerlinNoise {
 	var p [perlinSize + 1]float64
 	for i := range p {
-		p[i] = rand.Float64()
+		p[i] = Random()
 	}
 	return PerlinNoise{
 		perlin: p,
@@ -65,12 +60,12 @@ func (p *PerlinNoise) Noise3_1(x, y, z float64) float64 {
 }
 
 func scaledCosin(x float64) float64 {
-	return (1 - math.Cos(x*math.Pi)) / 2
+	return (1 - Cos(x*PI)) / 2
 }
 
 func (p *PerlinNoise) noise(x, y, z float64) float64 {
-	x, y, z = math.Abs(x), math.Abs(y), math.Abs(z)
-	xi, yi, zi := int(math.Floor(x)), int(math.Floor(y)), int(math.Floor(z))
+	x, y, z = Abs(x), Abs(y), Abs(z)
+	xi, yi, zi := int(Floor(x)), int(Floor(y)), int(Floor(z))
 	xf, yf, zf := x-float64(xi), y-float64(yi), z-float64(zi)
 
 	var rxf, ryf, n1, n2, n3 float64

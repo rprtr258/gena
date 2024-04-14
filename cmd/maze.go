@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -16,7 +15,7 @@ func Maze(im *image.RGBA, lineWidth float64, lineColor color.RGBA, step int) {
 	for x := 0; x < im.Bounds().Dx(); x += step {
 		for y := 0; y < im.Bounds().Dy(); y += step {
 			v := complex(float64(x), float64(y))
-			if rand.Float32() > 0.5 {
+			if Random() > 0.5 {
 				dc.DrawLine(
 					v,
 					v+complex(float64(step), float64(step)),

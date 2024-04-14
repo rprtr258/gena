@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -18,7 +17,7 @@ func mystar() {
 	points := PolygonAt(n, 250+250i, 100)
 	for range Range(10) {
 		dc.TransformAdd(Translate(complex(250, 250)))
-		dc.TransformAdd(Rotate(math.Pi / 9))
+		dc.TransformAdd(Rotate(PI / 9))
 
 		for _, point := range points {
 			dc.LineTo(point)

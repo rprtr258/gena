@@ -3,8 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -32,7 +30,7 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 	}
 
 	var lw float64
-	if rand.Float64() < 0.8 {
+	if Random() < 0.8 {
 		lw = 1
 	} else {
 		lw = RandomF64(1.0, RandomF64(1, 3))
@@ -40,25 +38,25 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 	dc.SetLineWidth(lw)
 
 	noise := cl.noise.Noise3_1(x*0.02+123.234, (1-x)*0.02, 345.4123)
-	noise = math.Pow(noise, 0.5)
+	noise = Sqrt(noise)
 	a2 := Remap(noise, 0.15, 0.85, 0.1, 0.6)
 
-	px := float64(im.Bounds().Dy()) * math.Pow(x/float64(im.Bounds().Dy()), a2)
-	py := float64(im.Bounds().Dy()) * (math.Pow(1-x/float64(im.Bounds().Dy()), a2) -
+	px := float64(im.Bounds().Dy()) * Pow(x/float64(im.Bounds().Dy()), a2)
+	py := float64(im.Bounds().Dy()) * (Pow(1-x/float64(im.Bounds().Dy()), a2) -
 		RandomF64(0, RandomF64(0.18, RandomF64(0.18, 0.7))))
 
-	dc.SetColor(cl.colorSchema[rand.Intn(len(cl.colorSchema))])
+	dc.SetColor(RandomItem(cl.colorSchema))
 
 	nCircles := RandomIntN(1, 6)
-	if rand.Float64() < 0.03 {
+	if Random() < 0.03 {
 		nCircles = RandomIntN(8, 10)
 	}
 
-	r := math.Pow(rand.Float64(), 2) * 50
+	r := Pow(Random(), 2) * 50
 
-	if rand.Float64() < 0.7 {
+	if Random() < 0.7 {
 		for i := range Range(nCircles) {
-			dc.DrawCircle(complex(px, py)*0.39, rand.Float64()*float64(i)*r/float64(nCircles))
+			dc.DrawCircle(complex(px, py)*0.39, Random()*float64(i)*r/float64(nCircles))
 			dc.Stroke()
 		}
 	} else {

@@ -7,7 +7,6 @@ import (
 	"image/jpeg"
 	"image/png"
 	"io"
-	"math"
 	"os"
 	"strings"
 
@@ -395,10 +394,8 @@ func dashPath(paths [][]V2, dashes []float64, offset float64) [][]V2 {
 			for _, dashLength := range dashes {
 				totalLength += dashLength
 			}
-			offset = math.Mod(offset, totalLength)
-			if offset < 0 {
-				offset += totalLength
-			}
+
+			offset = Mod(offset, totalLength)
 			for i, dashLength := range dashes {
 				offset -= dashLength
 				if offset < 0 {
@@ -681,7 +678,7 @@ func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 
 func (dc *Context) DrawEllipse(c, r V2) {
 	dc.NewSubPath()
-	dc.DrawEllipticalArc(c, r, 0, 2*math.Pi)
+	dc.DrawEllipticalArc(c, r, 0, 2*PI)
 	dc.ClosePath()
 }
 
@@ -691,14 +688,14 @@ func (dc *Context) DrawArc(v V2, r, angle1, angle2 float64) {
 
 func (dc *Context) DrawCircle(c V2, r float64) {
 	dc.NewSubPath()
-	dc.DrawEllipticalArc(c, Diag(r), 0, 2*math.Pi)
+	dc.DrawEllipticalArc(c, Diag(r), 0, 2*PI)
 	dc.ClosePath()
 }
 
 func (dc *Context) DrawRegularPolygon(n int, c V2, r, rotation float64) {
-	angle := 2 * math.Pi / float64(n)
+	angle := 2 * PI / float64(n)
 
-	rotation -= math.Pi / 2
+	rotation -= PI / 2
 	if n%2 == 0 {
 		rotation += angle / 2
 	}
@@ -910,7 +907,7 @@ func (dc *Context) TransformSet(m Matrix) {
 }
 
 func (dc *Context) TransformAdd(m Matrix) {
-	dc.matrix = dc.matrix.Multiply(m)
+	dc.matrix = m.Multiply(dc.matrix)
 }
 
 // transformPoint multiplies the specified point by the current matrix, returning a transformed position.

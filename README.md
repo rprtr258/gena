@@ -8,19 +8,9 @@
 ## How to use
 
 ### Hello, Circle!
-```go
-package main
+See example code in [cmd/circle.go](cmd/circle.go).
 
-import . "github.com/rprtr258/gena"
-
-func main() {
-    dc := NewContext(complex(1000, 1000))
-    dc.DrawCircle(complex(500, 500), 400)
-    dc.SetColor(ColorRGB(0, 0, 0))
-    dc.Fill()
-    SavePNG("out.png", dc.Image())
-}
-```
+![](images/circle.png)
 
 ### Creating Contexts
 

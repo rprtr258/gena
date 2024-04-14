@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
 
 	. "github.com/rprtr258/gena"
 )
@@ -19,8 +18,8 @@ type swirlOpts struct {
 
 func (s *swirlOpts) swirlTransform(p V2) V2 {
 	return complex(
-		math.Sin(s.a*Y(p))-math.Cos(s.b*X(p)),
-		math.Sin(s.c*X(p))-math.Cos(s.d*Y(p)),
+		Sin(s.a*Y(p))-Cos(s.b*X(p)),
+		Sin(s.c*X(p))-Cos(s.d*Y(p)),
 	)
 }
 
