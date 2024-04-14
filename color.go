@@ -784,16 +784,19 @@ func ColorLerp(c0, c1 color.Color, t float64) color.Color {
 	}
 }
 
-func lerp8(c1, c2 uint8, coeff float64) uint8 {
+func lerp8(c1, c2 uint32, coeff float64) uint8 {
 	return uint8(float64(c1)*(1-coeff) + float64(c2)*coeff)
 }
 
-func Mix(src, dst color.RGBA) color.RGBA {
-	aSrc := 1 - float64(src.A)/255.0
+func Mix(src, dst color.Color) color.Color {
+	sr, sg, sb, sa := src.RGBA()
+	dr, dg, db, da := dst.RGBA()
+
+	aSrc := 1 - float64(sa)/255.0
 	return color.RGBA{
-		R: lerp8(src.R, dst.R, aSrc),
-		G: lerp8(src.G, dst.G, aSrc),
-		B: lerp8(src.B, dst.B, aSrc),
-		A: lerp8(src.A, dst.A, aSrc),
+		R: lerp8(sr, dr, aSrc),
+		G: lerp8(sg, dg, aSrc),
+		B: lerp8(sb, db, aSrc),
+		A: lerp8(sa, da, aSrc),
 	}
 }

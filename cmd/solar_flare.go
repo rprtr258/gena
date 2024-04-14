@@ -10,7 +10,7 @@ import (
 )
 
 // SolarFlare draws a solar flare images.
-func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
+func SolarFlare(c image.Image, lineColor color.Color) {
 	var xOffset, yOffset float64
 	const offsetInc = 0.006
 	const inc = 1.0

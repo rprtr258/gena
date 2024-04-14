@@ -1,6 +1,9 @@
 package gena
 
-import "image"
+import (
+	"image"
+	"image/color"
+)
 
 type BlendMode int
 
@@ -8,16 +11,16 @@ const (
 	Add BlendMode = iota
 )
 
-func Blend(src, dest *image.RGBA, mode BlendMode) *image.RGBA {
+func Blend(src, dest image.Image, mode BlendMode) image.Image {
 	img := image.NewRGBA(src.Bounds())
 	for i := range Range(src.Bounds().Max.X) {
 		for j := range Range(src.Bounds().Max.Y) {
 			switch mode {
 			case Add:
-				if src.RGBAAt(i, j) == Black {
-					img.Set(i, j, dest.RGBAAt(i, j))
+				if r, g, b, a := src.At(i, j).RGBA(); (color.RGBA{uint8(r), uint8(g), uint8(b), uint8(a)}) == Black {
+					img.Set(i, j, dest.At(i, j))
 				} else {
-					img.SetRGBA(i, j, Mix(src.RGBAAt(i, j), dest.RGBAAt(i, j)))
+					img.Set(i, j, Mix(src.At(i, j), dest.At(i, j)))
 				}
 			}
 		}
