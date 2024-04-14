@@ -17,15 +17,13 @@ func SilkSky(im *image.RGBA, alpha, n int, sunRadius float64) {
 	ms := n*2 + 50
 	mv := 100
 
-	for i := range Range(n) {
-		for j := range Range(n) {
-			hsv := HSV{H: n + j, S: i + 50, V: 70}
-			rgba := hsv.ToRGB(mh, ms, mv)
-			n := Mul2(complex(float64(i), float64(j))+Diag(0.5), Size(im)) / Coeff(float64(n))
-			dc.SetColor(ColorRGBA255(rgba, alpha))
-			r := Dist(n, m)
-			dc.DrawCircle(n, r-sunRadius/2)
-			dc.Fill()
-		}
+	for _, f := range RangeV2_2(n, n) {
+		hsv := HSV{H: n + int(Y(f)), S: int(X(f)) + 50, V: 70}
+		rgba := hsv.ToRGB(mh, ms, mv)
+		n := Mul2(f+Diag(0.5), Size(im)) / Coeff(float64(n))
+		dc.SetColor(ColorRGBA255(rgba, alpha))
+		r := Dist(n, m)
+		dc.DrawCircle(n, r-sunRadius/2)
+		dc.Fill()
 	}
 }

@@ -29,10 +29,10 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 		return
 	}
 
-	var lw float64
-	if Random() < 0.8 {
-		lw = 1
-	} else {
+	H := Y(Size(im))
+
+	lw := 1.0
+	if Random() >= 0.8 {
 		lw = RandomF64(1.0, RandomF64(1, 3))
 	}
 	dc.SetLineWidth(lw)
@@ -41,9 +41,11 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 	noise = Sqrt(noise)
 	a2 := Remap(noise, 0.15, 0.85, 0.1, 0.6)
 
-	px := float64(im.Bounds().Dy()) * Pow(x/float64(im.Bounds().Dy()), a2)
-	py := float64(im.Bounds().Dy()) * (Pow(1-x/float64(im.Bounds().Dy()), a2) -
-		RandomF64(0, RandomF64(0.18, RandomF64(0.18, 0.7))))
+	p := complex(
+		H*Pow(x/H, a2),
+		H*(Pow(1-x/H, a2)-
+			RandomF64(0, RandomF64(0.18, RandomF64(0.18, 0.7)))),
+	) * 0.39
 
 	dc.SetColor(RandomItem(cl.colorSchema))
 
@@ -53,20 +55,19 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 	}
 
 	r := Pow(Random(), 2) * 50
-
 	if Random() < 0.7 {
-		for i := range Range(nCircles) {
-			dc.DrawCircle(complex(px, py)*0.39, Random()*float64(i)*r/float64(nCircles))
+		for _, z := range RangeF64(0, r, nCircles) {
+			dc.DrawCircle(p, Random()*z)
 			dc.Stroke()
 		}
 	} else {
-		for i := range Range(nCircles) {
-			dc.DrawCircle(complex(px, py)*0.39, float64(i)*r/float64(nCircles))
+		for _, z := range RangeF64(0, r, nCircles) {
+			dc.DrawCircle(p, z)
 			dc.Stroke()
 		}
 	}
 
-	dc.TransformAdd(Rotate(x / float64(im.Bounds().Dy()) * 0.2))
+	dc.TransformAdd(Rotate(x / H * 0.2))
 
 	cl.recursionDraw(dc, im, 1*x/4.0, depth-1)
 	cl.recursionDraw(dc, im, 2*x/4.0, depth-1)

@@ -10,8 +10,7 @@ func sine() {
 	// dc.Clear()
 	dc.TransformAdd(Translate(complex(0.95, 0.75)))
 	dc.TransformAdd(Scale(complex(W, H) / 2))
-	for i := range Range(W) {
-		a := float64(i) * 2 * PI / W * 8
+	for i, a := range RangeF64(0, 2*PI*8, W) {
 		dc.LineTo(complex(float64(i), (Sin(a)+1)/2*H))
 	}
 	dc.ClosePath()

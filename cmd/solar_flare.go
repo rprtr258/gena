@@ -10,16 +10,15 @@ import (
 
 // SolarFlare draws a solar flare images
 func SolarFlare(c image.Image, lineColor color.Color) {
-	var xOffset, yOffset float64
+	noise := NewPerlinNoiseDeprecated()
 	const offsetInc = 0.006
 	const inc = 1.0
 	const m = 1.005
-	noise := NewPerlinNoiseDeprecated()
 
+	var offset V2
 	for r := 1.0; r < 200; {
 		for range Range(10) {
-			nPoints := int(2 * PI * r)
-			nPoints = min(nPoints, 500)
+			nPoints := min(int(2*PI*r), 500)
 
 			img := image.NewRGBA(image.Rect(0, 0, c.Bounds().Dx(), c.Bounds().Dy()))
 			draw.Draw(img, img.Bounds(), &image.Uniform{color.Black}, image.Point{}, draw.Src)
@@ -31,17 +30,14 @@ func SolarFlare(c image.Image, lineColor color.Color) {
 				dc.SetColor(lineColor)
 				for j := 0; j < nPoints+1; j += 1 {
 					a := float64(j) / float64(nPoints) * PI * 2
-					px := Cos(a)
-					py := Sin(a)
-					n := noise.Noise2_1(xOffset+px*inc, yOffset+py*inc) * r
-					dc.LineTo(complex(px, py) * Coeff(n))
+					p := Polar(1, a)
+					dc.LineTo(p * Coeff(noise.NoiseV2_1(offset+p*Coeff(inc))*r))
 				}
 				dc.Stroke()
 			})
 
 			c = Blend(img, c, Add)
-			xOffset += offsetInc
-			yOffset += offsetInc
+			offset += Diag(offsetInc)
 			r *= m
 		}
 	}

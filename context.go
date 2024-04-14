@@ -693,17 +693,14 @@ func (dc *Context) DrawCircle(c V2, r float64) {
 }
 
 func (dc *Context) DrawRegularPolygon(n int, c V2, r, rotation float64) {
-	angle := 2 * PI / float64(n)
-
 	rotation -= PI / 2
 	if n%2 == 0 {
-		rotation += angle / 2
+		rotation += PI / float64(n)
 	}
 
 	dc.NewSubPath()
-	for i := range Range(n) {
-		a := rotation + angle*float64(i)
-		dc.LineTo(Polar(r, a) + c)
+	for _, a := range RangeF64(0, 2*PI, n) {
+		dc.LineTo(Polar(r, rotation+a) + c)
 	}
 	dc.ClosePath()
 }

@@ -13,16 +13,15 @@ import (
 func PixelHole(im *image.RGBA, colorSchema []color.RGBA, n, iters int) {
 	dc := NewContextFromRGBA(im)
 	noise := NewPerlinNoiseDeprecated()
-	for i := range Range(iters) {
+	for _, fc := range RangeF64(0, float64(iters), iters) {
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(Size(im) / 2))
 			dc.SetLineWidth(2.0)
-			fc := float64(i)
 			c1 := int(fc/100.0) % len(colorSchema)
 			c2 := (int(fc/100.0) + 1) % len(colorSchema)
 			ratio := fc/100 - Floor(fc/100)
 			cl := ColorLerp(colorSchema[c1], colorSchema[c2], ratio)
-			for j := 0.0; j < float64(n); j += 1.0 {
+			for _, j := range RangeStepF64(0, float64(n), 1.0) {
 				dc.Stack(func(ctx *Context) {
 					dc.SetColor(cl)
 					dc.TransformAdd(Rotate(fc/(50+10*math.Log(fc+1)) + j/20))

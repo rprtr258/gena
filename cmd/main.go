@@ -295,10 +295,8 @@ func circlenoise() {
 	const _iters = 1 // 000
 	noise := NewPerlinNoiseDeprecated()
 	bar := progressbar.Default(_iters)
-	for i := range Range(_iters) {
+	for i, ralpha := range RangeF64(0, 2*PI, _iters) {
 		_ = bar.Add(1)
-
-		ralpha := float64(i) * 2 * PI / _iters
 
 		angles := make([]float64, _dots)
 		for j := range angles {
@@ -430,87 +428,87 @@ func out() {
 func main() {
 	rand.Seed(time.Now().Unix())
 
-	// beziers()
-	// blackhole()
+	beziers()
+	blackhole()
 	circlegrid()
-	// circle()
-	// circleline()
-	// circleloop()
-	// circleloop2()
-	// circlemove()
-	// circlenoise()
-	// clip()
-	// colorcanvas()
-	// colorcircle()
-	// colorcircle2()
-	// concat()
-	// contourline()
-	// crisp()
-	// cubic()
-	// dotswave()
-	// domainwrap()
-	// if false { // TODO: generates lots of images, change to gif
-	// 	domainwrapFrames()
-	// }
-	// dotline()
-	// ellipse()
-	// gofont()
-	// gradientLinear()
-	// gradientRadial()
-	// gradientConic()
-	// if false { // TODO: fix font loading
-	// 	gradientText()
-	// }
-	// gridsquare()
-	// invertMask()
-	// janus()
-	// julia()
-	// lines()
-	// linewidth()
-	// lorem()
-	// mask()
-	// maze()
-	// if false { // TODO: fix font loading
-	// 	meme()
-	// }
-	// mystar()
-	// noiseline()
-	// oceanfish()
-	// openfill()
-	// out()
-	// perlinpearls()
-	// pixelhole()
-	// patternFill()
-	// pointribbon()
-	// if false { // TODO: fix font loading
-	// 	quadratic()
-	// }
-	// randcircle()
-	// randomshape()
-	// rotatedImage()
-	// rotatedText()
-	// scatter()
-	// silksky()
-	// silksmoke()
-	// sine()
-	// solarflare()
-	// spiral()
-	// spiralsquare()
-	// star(5)
-	// stars()
-	// swirl()
-	// test()
-	// if false { // TODO: fix font loading
-	// 	text()
-	// }
-	// tiling()
-	// if false { // TODO: fix font loading
-	// 	unicode()
-	// 	wrap()
-	// }
-	// yarn()
+	circle()
+	circleline()
+	circleloop()
+	circleloop2()
+	circlemove()
+	circlenoise()
+	clip()
+	colorcanvas()
+	colorcircle()
+	colorcircle2()
+	concat()
+	contourline()
+	crisp()
+	cubic()
+	dotswave()
+	domainwrap()
+	if false { // TODO: generates lots of images, change to gif
+		domainwrapFrames()
+	}
+	dotline()
+	ellipse()
+	gofont()
+	gradientLinear()
+	gradientRadial()
+	gradientConic()
+	if false { // TODO: fix font loading
+		gradientText()
+	}
+	gridsquare()
+	invertMask()
+	janus()
+	julia()
+	lines()
+	linewidth()
+	lorem()
+	mask()
+	maze()
+	if false { // TODO: fix font loading
+		meme()
+	}
+	mystar()
+	noiseline()
+	oceanfish()
+	openfill()
+	out()
+	perlinpearls()
+	pixelhole()
+	patternFill()
+	pointribbon()
+	if false { // TODO: fix font loading
+		quadratic()
+	}
+	randcircle()
+	randomshape()
+	rotatedImage()
+	rotatedText()
+	scatter()
+	silksky()
+	silksmoke()
+	sine()
+	solarflare()
+	spiral()
+	spiralsquare()
+	star(5)
+	stars()
+	swirl()
+	test()
+	if false { // TODO: fix font loading
+		text()
+	}
+	tiling()
+	if false { // TODO: fix font loading
+		unicode()
+		wrap()
+	}
+	yarn()
 
-	// if false {
-	// 	_http()
-	// }
+	if false {
+		_http()
+	}
 }
