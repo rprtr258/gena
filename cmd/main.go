@@ -392,8 +392,8 @@ func test() {
 
 	dc := NewContextForRGBA(dest)
 	dc.Stack(func(dc *Context) {
-		dc.Translate(complex(500/2, 500/2))
-		dc.Rotate(40)
+		dc.TransformAdd(Translate(complex(500/2, 500/2)))
+		dc.TransformAdd(Rotate(40))
 		dc.SetColor(color.RGBA{0xFF, 0x00, 0x00, 255})
 		for i := range Range(361) {
 			theta := Radians(float64(i))

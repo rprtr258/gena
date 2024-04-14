@@ -21,7 +21,7 @@ func rotatedText() {
 	}))
 	text := "Hello, world!"
 	wh := dc.MeasureString(text)
-	dc.Rotate(Radians(10))
+	dc.TransformAdd(Rotate(Radians(10)))
 	dc.DrawRectangle(complex(100, 180), wh)
 	dc.Stroke()
 	dc.DrawStringAnchored(text, complex(100, 180), 0)

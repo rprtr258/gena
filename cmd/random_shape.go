@@ -15,9 +15,9 @@ import (
 func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
 	dc := NewContextForRGBA(c)
 
-	dc.Translate(Size(c) / 2)
-	dc.Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25)
-	dc.Translate(-Size(c) / 2)
+	dc.TransformAdd(Translate(Size(c) / 2))
+	dc.TransformAdd(Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25))
+	dc.TransformAdd(Translate(-Size(c) / 2))
 
 	for range Range(shapeNum) {
 		v := Mul2(complex(
@@ -32,8 +32,8 @@ func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
 		theta := math.Pi * 2.0 * float64(rand.Intn(4)) / 4
 
 		dc.Stack(func(ctx *Context) {
-			dc.Translate(v)
-			dc.Rotate(theta)
+			dc.TransformAdd(Translate(v))
+			dc.TransformAdd(Rotate(theta))
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			switch rnd {
 			case 0:

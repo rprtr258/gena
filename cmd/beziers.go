@@ -63,8 +63,8 @@ func beziers() {
 		for i := range Range(W) {
 			v := S * (complex(float64(i), float64(j)) + Diag(0.5))
 			dc.Stack(func(dc *Context) {
-				dc.Translate(v)
-				dc.Scale(complex(S/2, S/2))
+				dc.TransformAdd(Translate(v))
+				dc.TransformAdd(Scale(complex(S/2, S/2)))
 				if j%2 == 0 {
 					randomCubic(dc)
 				} else {

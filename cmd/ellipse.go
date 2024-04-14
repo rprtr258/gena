@@ -9,7 +9,7 @@ func ellipse() {
 	for i := 0; i < 360; i += 15 {
 		dc.Stack(func(dc *Context) {
 			dc.RelativeTo(complex(S/2, S/2), func(dc *Context) {
-				dc.Rotate(Radians(float64(i)))
+				dc.TransformAdd(Rotate(Radians(float64(i))))
 			})
 			dc.DrawEllipse(complex(S/2, S/2), complex(S*7/16, S/8))
 			dc.Fill()

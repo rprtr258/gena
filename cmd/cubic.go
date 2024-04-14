@@ -7,8 +7,8 @@ func cubic() {
 	dc := NewContext(complex(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.Translate(complex(S/2, S/2))
-	dc.Scale(complex(40, 40))
+	dc.TransformAdd(Translate(complex(S/2, S/2)))
+	dc.TransformAdd(Scale(complex(40, 40)))
 
 	p0 := complex(-10, 0)
 	p1 := complex(-8, -8)

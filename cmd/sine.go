@@ -13,7 +13,7 @@ func sine() {
 	// dc.SetHexColor("#FFFFFF")
 	// dc.Clear()
 	dc.RelativeTo(complex(0.95, 0.75), func(dc *Context) {
-		dc.Scale(complex(W, H) / 2)
+		dc.TransformAdd(Scale(complex(W, H) / 2))
 	})
 	for i := range Range(W) {
 		a := float64(i) * 2 * math.Pi / W * 8

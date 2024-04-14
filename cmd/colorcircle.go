@@ -30,7 +30,7 @@ func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 			cs := RandomFloat64(2, 8)
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			dc.Stack(func(ctx *Context) {
-				dc.Translate(v)
+				dc.TransformAdd(Translate(v))
 				for a := 0.0; a < math.Pi*2.0; a += math.Pi * 2.0 / float64(n) {
 					dc.DrawEllipse(Polar(s, a)/2, complex(cs/2, cs/2))
 					dc.Fill()

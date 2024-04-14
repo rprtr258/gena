@@ -18,7 +18,7 @@ type circleLoop2 struct {
 //   - depth: Control the number of circles.
 func CircleLoop2(c *image.RGBA, colorSchema []color.RGBA, depth int) {
 	dc := NewContextForRGBA(c)
-	dc.Translate(Size(c) / 2)
+	dc.TransformAdd(Translate(Size(c) / 2))
 	cl := &circleLoop2{
 		noise:       NewPerlinNoiseDeprecated(),
 		colorSchema: colorSchema,
@@ -68,7 +68,7 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, dept
 		}
 	}
 
-	dc.Rotate(x / float64(c.Bounds().Dy()) * 0.2)
+	dc.TransformAdd(Rotate(x / float64(c.Bounds().Dy()) * 0.2))
 
 	cl.recursionDraw(dc, c, 1*x/4.0, depth-1)
 	cl.recursionDraw(dc, c, 2*x/4.0, depth-1)

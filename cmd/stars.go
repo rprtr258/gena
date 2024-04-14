@@ -27,9 +27,9 @@ func stars() {
 	for x := S / 2; x < W; x += S {
 		dc.Stack(func(ctx *Context) {
 			s := rand.Float64()*S/4 + S/4
-			dc.Translate(complex(float64(x), H/2))
-			dc.Rotate(rand.Float64() * 2 * math.Pi)
-			dc.Scale(complex(s, s))
+			dc.TransformAdd(Translate(complex(float64(x), H/2)))
+			dc.TransformAdd(Rotate(rand.Float64() * 2 * math.Pi))
+			dc.TransformAdd(Scale(complex(s, s)))
 			for i := range Range(n + 1) {
 				dc.LineTo(points[(i*2)%n])
 			}

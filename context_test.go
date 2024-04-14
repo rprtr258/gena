@@ -164,7 +164,7 @@ func TestPushPop(t *testing.T) {
 	for i := 0; i < 360; i += 15 {
 		dc.Stack(func(dc *Context) {
 			dc.RelativeTo(complex(S/2, S/2), func(dc *Context) {
-				dc.Rotate(Radians(float64(i)))
+				dc.TransformAdd(Rotate(Radians(float64(i))))
 			})
 			dc.DrawEllipse(complex(S/2, S/2), complex(S*7/16, S/8))
 			dc.Fill()
@@ -227,7 +227,7 @@ func TestDrawPoint(t *testing.T) {
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 1, 0))
-	dc.Scale(complex(10, 10))
+	dc.TransformAdd(Scale(complex(10, 10)))
 	for y := 0; y <= 10; y++ {
 		for x := 0; x <= 10; x++ {
 			dc.DrawPoint(complex(float64(x), float64(y)), 3)

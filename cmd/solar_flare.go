@@ -27,7 +27,7 @@ func SolarFlare(c image.Image, lineColor color.Color) {
 			dc := NewContextForRGBA(img)
 
 			dc.Stack(func(ctx *Context) {
-				dc.Translate(Size(c) / 2)
+				dc.TransformAdd(Translate(Size(c) / 2))
 				dc.SetLineWidth(1.0)
 				dc.SetColor(lineColor)
 				for j := 0; j < nPoints+1; j += 1 {

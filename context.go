@@ -236,7 +236,7 @@ func (dc *Context) MoveTo(v V2) {
 	if dc.hasCurrent {
 		dc.fillPath.Add1(Fixed(dc.start))
 	}
-	p := dc.TransformPoint(v)
+	p := dc.transformPoint(v)
 	dc.strokePath.Start(Fixed(p))
 	dc.fillPath.Start(Fixed(p))
 	dc.start = p
@@ -250,7 +250,7 @@ func (dc *Context) LineTo(v V2) {
 	if !dc.hasCurrent {
 		dc.MoveTo(v)
 	} else {
-		p := dc.TransformPoint(v)
+		p := dc.transformPoint(v)
 		dc.strokePath.Add1(Fixed(p))
 		dc.fillPath.Add1(Fixed(p))
 		dc.current = p
@@ -263,8 +263,8 @@ func (dc *Context) QuadraticTo(a, b V2) {
 	if !dc.hasCurrent {
 		dc.MoveTo(a)
 	}
-	p1 := dc.TransformPoint(a)
-	p2 := dc.TransformPoint(b)
+	p1 := dc.transformPoint(a)
+	p2 := dc.transformPoint(b)
 	dc.strokePath.Add2(Fixed(p1), Fixed(p2))
 	dc.fillPath.Add2(Fixed(p1), Fixed(p2))
 	dc.current = p2
@@ -279,9 +279,9 @@ func (dc *Context) CubicTo(a, b, c V2) {
 		dc.MoveTo(a)
 	}
 	a0 := dc.current
-	a = dc.TransformPoint(a)
-	b = dc.TransformPoint(b)
-	c = dc.TransformPoint(c)
+	a = dc.transformPoint(a)
+	b = dc.transformPoint(b)
+	c = dc.transformPoint(c)
 	points := CubicBezier(a0, a, b, c)
 	previous := Fixed(dc.current)
 	for _, p := range points[1:] {
@@ -621,8 +621,8 @@ func (dc *Context) SetPixel(v V2) {
 // is still transformed, but not the shape of the point.
 func (dc *Context) DrawPoint(v V2, r float64) {
 	dc.Stack(func(dc *Context) {
-		t := dc.TransformPoint(v)
-		dc.Identity()
+		t := dc.transformPoint(v)
+		dc.TransformSet(Identity)
 		dc.DrawCircle(t, r)
 	})
 }
@@ -885,6 +885,7 @@ func (dc *Context) WordWrap(s string, width float64) []string {
 		if len(fields)%2 == 1 {
 			fields = append(fields, "")
 		}
+
 		x := ""
 		for i := 0; i < len(fields); i += 2 {
 			w := X(dc.MeasureString(x + fields[i]))
@@ -912,52 +913,29 @@ func (dc *Context) WordWrap(s string, width float64) []string {
 
 // Transformation Matrix Operations
 
-// Identity resets the current transformation matrix to the identity matrix.
-// This results in no translating, scaling, rotating, or shearing.
-func (dc *Context) Identity() {
-	dc.matrix = Identity
+func (dc *Context) TransformSet(m Matrix) {
+	dc.matrix = m
 }
 
-// Translate updates the current matrix with a translation.
-func (dc *Context) Translate(v V2) {
-	dc.matrix = dc.matrix.Translate(v)
-}
-
-// Scale updates the current matrix with a scaling factor.
-// Scaling occurs about the origin.
-func (dc *Context) Scale(v V2) {
-	dc.matrix = dc.matrix.Scale(v)
+func (dc *Context) TransformAdd(m Matrix) {
+	dc.matrix = dc.matrix.Multiply(m)
 }
 
 func (dc *Context) RelativeTo(v V2, fn func(*Context)) {
-	dc.Translate(v)
+	dc.TransformAdd(Translate(v))
 	fn(dc)
-	dc.Translate(-v)
+	dc.TransformAdd(Translate(-v))
 }
 
-// Rotate updates the current matrix with a anticlockwise rotation.
-// Rotation occurs about the origin. Angle is specified in radians.
-func (dc *Context) Rotate(angle float64) {
-	dc.matrix = dc.matrix.Rotate(angle)
-}
-
-// Shear updates the current matrix with a shearing angle.
-// Shearing occurs about the origin.
-func (dc *Context) Shear(v V2) {
-	dc.matrix = dc.matrix.Shear(v)
-}
-
-// TransformPoint multiplies the specified point by the current matrix,
-// returning a transformed position.
-func (dc *Context) TransformPoint(v V2) V2 {
+// transformPoint multiplies the specified point by the current matrix, returning a transformed position.
+func (dc *Context) transformPoint(v V2) V2 {
 	return dc.matrix.TransformPoint(v)
 }
 
-// InvertY flips the Y axis so that Y grows from bottom to top and Y=0 is at
-// the bottom of the image.
+// InvertY flips the Y axis so that Y grows from bottom to top and Y=0 is at the bottom of the image.
 func (dc *Context) InvertY() {
-	dc.Translate(complex(0, float64(dc.height)))
-	dc.Scale(1 - 1i)
+	dc.TransformAdd(Translate(complex(0, float64(dc.height))))
+	dc.TransformAdd(Scale(complex(1, -1)))
 }
 
 // Stack

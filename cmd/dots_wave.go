@@ -25,8 +25,8 @@ func DotsWave(c *image.RGBA, colorSchema []color.RGBA, dotsN int) {
 		ind := RandomFloat64(1, 8)
 
 		dc.Stack(func(ctx *Context) {
-			dc.Translate(v)
-			dc.Rotate(float64(rand.Intn(8)) * math.Pi / 4)
+			dc.TransformAdd(Translate(v))
+			dc.TransformAdd(Rotate(float64(rand.Intn(8)) * math.Pi / 4))
 			rand.Shuffle(len(colorSchema), func(i, j int) {
 				colorSchema[i], colorSchema[j] = colorSchema[j], colorSchema[i]
 			})

@@ -24,8 +24,8 @@ func scatter() {
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	points := CreatePoints(1000)
-	dc.Translate(complex(P, P))
-	dc.Scale(complex(S-P*2, S-P*2))
+	dc.TransformAdd(Translate(complex(P, P)))
+	dc.TransformAdd(Scale(complex(S-P*2, S-P*2)))
 	// draw minor grid
 	for i := 1; i <= 10; i++ {
 		x := float64(i) / 10
@@ -52,7 +52,7 @@ func scatter() {
 		dc.Fill()
 	}
 	// draw text
-	dc.Identity()
+	dc.TransformSet(Identity)
 	dc.SetColor(ColorRGB(0, 0, 0))
 	if false { // TODO: fix font loading
 		dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 24)

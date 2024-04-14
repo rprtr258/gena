@@ -22,7 +22,7 @@ func rotatedImage() {
 	// draw image with current matrix applied
 	dc.SetColor(ColorHex("#0000ff"))
 	dc.SetLineWidth(2)
-	dc.Rotate(Radians(10))
+	dc.TransformAdd(Rotate(Radians(10)))
 	dc.DrawRectangle(complex(100, 0), complex(float64(iw), float64(ih)/2+20.0))
 	dc.StrokePreserve()
 	dc.Clip()

@@ -18,7 +18,7 @@ func mystar() {
 	points := PolygonAt(n, 250+250i, 100)
 	for range Range(10) {
 		dc.RelativeTo(250+250i, func(dc *Context) {
-			dc.Rotate(math.Pi / 9)
+			dc.TransformAdd(Rotate(math.Pi / 9))
 		})
 
 		for i := range Range(n) {

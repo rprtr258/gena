@@ -15,7 +15,7 @@ func CircleLoop(c *image.RGBA, lineWidth float64, lineColor color.RGBA, alpha in
 	for i := range Range(iters) {
 		theta := math.Pi / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
-			dc.Translate(Size(c) / 2)
+			dc.TransformAdd(Translate(Size(c) / 2))
 			v := complex(
 				math.Cos(Radians(theta)),
 				math.Sin(Radians(theta*2)),

@@ -23,10 +23,10 @@ func SpiralSquare(
 	theta := rand.Intn(360) + 1
 	for i := range Range(squareNum) {
 		dc.Stack(func(ctx *Context) {
-			dc.Translate(Size(c) / 2)
-			dc.Rotate(Radians(float64(theta * (i + 1))))
+			dc.TransformAdd(Translate(Size(c) / 2))
+			dc.TransformAdd(Rotate(Radians(float64(theta * (i + 1)))))
 
-			dc.Scale(complex(sl, sl))
+			dc.TransformAdd(Scale(complex(sl, sl)))
 
 			dc.LineTo(complex(-0.5, 0.5))
 			dc.LineTo(complex(0.5, 0.5))

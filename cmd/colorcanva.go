@@ -33,9 +33,9 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64)
 		rects[i], rects[j] = rects[j], rects[i]
 	})
 
-	dc.Translate(Size(c) / 2)
-	dc.Scale(complex(0.6, 0.6))
-	dc.Translate(-Size(c) / 2)
+	dc.TransformAdd(Translate(Size(c) / 2))
+	dc.TransformAdd(Scale(complex(0.6, 0.6)))
+	dc.TransformAdd(Translate(-Size(c) / 2))
 
 	for i := range rects {
 		drawColorCanva(dc, seg, colorSchema, rects[i])
