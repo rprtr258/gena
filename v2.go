@@ -76,3 +76,7 @@ func Dist(p1, p2 V2) float64 {
 func Dot(p1, p2 V2) float64 {
 	return real(p1 * cmplx.Conj(p2))
 }
+
+func LerpV2(a, b V2, t float64) V2 {
+	return a + (b-a)*Coeff(t)
+}

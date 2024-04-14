@@ -29,3 +29,7 @@ func Degrees(radians float64) float64 {
 func Abs[T ~int32 | ~float64](x T) T {
 	return max(-x, x)
 }
+
+func Lerp(c1, c2, coeff float64) float64 {
+	return c1*(1-coeff) + c2*coeff
+}

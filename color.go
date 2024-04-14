@@ -3,6 +3,7 @@ package gena
 import (
 	"fmt"
 	"image/color"
+	"math"
 )
 
 var (
@@ -635,6 +636,63 @@ var (
 	}
 )
 
+type HSV struct {
+	H, S, V int
+}
+
+// ToRGB converts a HSV color mode to RGB mode
+// mh, ms, mv are used to set the maximum number for HSV.
+func (hs HSV) ToRGB(mh, ms, mv int) color.RGBA {
+	hs.H = min(hs.H, mh)
+	hs.S = min(hs.S, ms)
+	hs.V = min(hs.V, mv)
+
+	h, s, v := float64(hs.H)/float64(mh), float64(hs.S)/float64(ms), float64(hs.V)/float64(mv)
+
+	if s == 0 { // HSV from 0 to 1
+		return color.RGBA{
+			R: uint8(v * 255),
+			G: uint8(v * 255),
+			B: uint8(v * 255),
+			A: 0,
+		}
+	}
+
+	h *= 6
+	if h == 6 {
+		h = 0
+	} // H must be < 1
+
+	i := math.Floor(h)
+	v1 := v * (1 - s)
+	v2 := v * (1 - s*(h-i))
+	v3 := v * (1 - s*(1-(h-i)))
+
+	var r, g, b float64
+	switch i {
+	case 0:
+		r, g, b = v, v3, v1
+	case 1:
+		r, g, b = v2, v, v1
+	case 2:
+		r, g, b = v1, v, v3
+	case 3:
+		r, g, b = v1, v2, v
+	case 4:
+		r, g, b = v3, v1, v
+	default:
+		r, g, b = v, v1, v2
+	}
+
+	return color.RGBA{
+		// RGB results from 0 to 255
+		R: uint8(r * 255),
+		G: uint8(g * 255),
+		B: uint8(b * 255),
+		A: 0,
+	}
+}
+
 // ColorRGBA sets the current color. r, g, b, a values should be between 0 and 1, inclusive.
 func ColorRGBA(r, g, b, a float64) color.NRGBA {
 	return color.NRGBA{
@@ -723,5 +781,19 @@ func ColorLerp(c0, c1 color.Color, t float64) color.Color {
 		lerp32to8(g0, g1, t),
 		lerp32to8(b0, b1, t),
 		lerp32to8(a0, a1, t),
+	}
+}
+
+func lerp8(c1, c2 uint8, coeff float64) uint8 {
+	return uint8(float64(c1)*(1-coeff) + float64(c2)*coeff)
+}
+
+func Mix(src, dst color.RGBA) color.RGBA {
+	aSrc := 1 - float64(src.A)/255.0
+	return color.RGBA{
+		R: lerp8(src.R, dst.R, aSrc),
+		G: lerp8(src.G, dst.G, aSrc),
+		B: lerp8(src.B, dst.B, aSrc),
+		A: lerp8(src.A, dst.A, aSrc),
 	}
 }

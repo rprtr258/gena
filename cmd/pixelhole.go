@@ -22,7 +22,7 @@ func PixelHole(c *image.RGBA, colorSchema []color.RGBA, dotN, iters int) {
 			c1 := int(fc/100.0) % len(colorSchema)
 			c2 := (int(fc/100.0) + 1) % len(colorSchema)
 			ratio := fc/100 - math.Floor(fc/100)
-			cl := LerpColor(colorSchema[c1], colorSchema[c2], ratio)
+			cl := ColorLerp(colorSchema[c1], colorSchema[c2], ratio)
 			for j := 0.0; j < float64(dotN); j += 1.0 {
 				dc.Stack(func(ctx *Context) {
 					dc.SetColor(cl)
