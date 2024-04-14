@@ -458,6 +458,7 @@ func main() {
 	gofont()
 	gradientLinear()
 	gradientRadial()
+	gradientConic()
 	if false { // TODO: fix font loading
 		gradientText()
 	}

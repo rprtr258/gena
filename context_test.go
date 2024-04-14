@@ -2,7 +2,6 @@ package gena
 
 import (
 	"crypto/md5"
-	"flag"
 	"fmt"
 	"image/color"
 	"math/rand"
@@ -11,12 +10,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var save bool
-
-func init() {
-	flag.BoolVar(&save, "save", false, "save PNG output for each test case")
-	flag.Parse()
-}
+// save PNG output for each test case
+var save = false
 
 func hash(dc *Context) string {
 	return fmt.Sprintf("%x", md5.Sum(dc.im.Pix))

@@ -675,10 +675,16 @@ func ColorHex(s string) color.RGBA {
 			return b - '0'
 		case b >= 'a' && b <= 'f':
 			return b - 'a' + 10
+		case b >= 'A' && b <= 'F':
+			return b - 'A' + 10
 		default:
 			ok = false
 			return 0
 		}
+	}
+
+	if s[0] == '#' {
+		s = s[1:]
 	}
 
 	n := len(s)
