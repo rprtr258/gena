@@ -35,7 +35,7 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 	if rand.Float64() < 0.8 {
 		lw = 1
 	} else {
-		lw = RandomFloat64(1.0, RandomFloat64(1, 3))
+		lw = RandomF64(1.0, RandomF64(1, 3))
 	}
 	dc.SetLineWidth(lw)
 
@@ -45,13 +45,13 @@ func (cl *circleLoop2) recursionDraw(dc *Context, im *image.RGBA, x float64, dep
 
 	px := float64(im.Bounds().Dy()) * math.Pow(x/float64(im.Bounds().Dy()), a2)
 	py := float64(im.Bounds().Dy()) * (math.Pow(1-x/float64(im.Bounds().Dy()), a2) -
-		RandomFloat64(0, RandomFloat64(0.18, RandomFloat64(0.18, 0.7))))
+		RandomF64(0, RandomF64(0.18, RandomF64(0.18, 0.7))))
 
 	dc.SetColor(cl.colorSchema[rand.Intn(len(cl.colorSchema))])
 
-	nCircles := RandomRangeInt(1, 6)
+	nCircles := RandomIntN(1, 6)
 	if rand.Float64() < 0.03 {
-		nCircles = RandomRangeInt(8, 10)
+		nCircles = RandomIntN(8, 10)
 	}
 
 	r := math.Pow(rand.Float64(), 2) * 50

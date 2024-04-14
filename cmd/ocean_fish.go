@@ -48,11 +48,11 @@ func (o *oceanFish) drawlines(ctx *Context, im *image.RGBA, colorSchema []color.
 	for range Range(o.lineNum) {
 		cl := colorSchema[rand.Intn(len(colorSchema))]
 		ctx.SetColor(cl)
-		ctx.SetLineWidth(RandomFloat64(3, 20))
+		ctx.SetLineWidth(RandomF64(3, 20))
 		y := rand.Float64() * float64(im.Bounds().Dy())
 		ctx.DrawLine(
-			complex(0, y+RandomFloat64(-50, 50)),
-			complex(float64(im.Bounds().Dx()), y+RandomFloat64(-50, 50)),
+			complex(0, y+RandomF64(-50, 50)),
+			complex(float64(im.Bounds().Dx()), y+RandomF64(-50, 50)),
 		)
 		ctx.Stroke()
 	}

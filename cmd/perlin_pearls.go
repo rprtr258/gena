@@ -27,10 +27,10 @@ func PerlinPearls(im *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN
 	for len(cs) < circleN {
 		c := circles{
 			pos: complex(
-				RandomFloat64(100, float64(im.Bounds().Dx())-50),
-				RandomFloat64(100, float64(im.Bounds().Dy())-50),
+				RandomF64(100, float64(im.Bounds().Dx())-50),
+				RandomF64(100, float64(im.Bounds().Dy())-50),
 			),
-			radius:   RandomFloat64(20, 100),
+			radius:   RandomF64(20, 100),
 			colorMin: colorMin,
 			colorMax: colorMax,
 		}
@@ -52,7 +52,7 @@ func PerlinPearls(im *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN
 	for i := range Range(circleN) {
 		dots := make([]dot, dotsN)
 		for j := range Range(dotsN) {
-			p := cs[i].pos + Polar(cs[i].radius, RandomFloat64(0, math.Pi*2))
+			p := cs[i].pos + Polar(cs[i].radius, RandomF64(0, math.Pi*2))
 			dots[j] = dot{pos: p, prev: p, count: 0}
 		}
 		ds[i] = dots

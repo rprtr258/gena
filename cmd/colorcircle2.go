@@ -21,7 +21,7 @@ func (cc *colorCircle2) circle(dc *Context, colorSchema []color.RGBA, v V2, d, d
 		col.A = uint8(alpha)
 		dc.SetColor(col)
 		for range Range(150) {
-			theta := RandomFloat64(0, math.Pi*2)
+			theta := RandomF64(0, math.Pi*2)
 			dc.DrawPoint(v+Polar(dd/2, theta), 0.51)
 			dc.Fill()
 		}
@@ -40,8 +40,8 @@ func ColorCircle2(im *image.RGBA, colorSchema []color.RGBA, n int) {
 	for range Range(cc.circleNum) {
 		v := Mul2(RandomV2(), Size(im))
 
-		r1 := RandomFloat64(50.0, float64(im.Bounds().Dx())/4)
-		r2 := RandomFloat64(10.0, float64(im.Bounds().Dx())/3)
+		r1 := RandomF64(50.0, float64(im.Bounds().Dx())/4)
+		r2 := RandomF64(10.0, float64(im.Bounds().Dx())/3)
 
 		cc.circle(dc, colorSchema, v, r1, r2)
 		if rand.Float64() < 0.3 {

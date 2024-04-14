@@ -16,7 +16,7 @@ func RandomShape(im *image.RGBA, colorSchema []color.RGBA, n int) {
 	dc := NewContextFromRGBA(im)
 
 	dc.TransformAdd(Translate(Size(im) / 2))
-	dc.TransformAdd(Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25))
+	dc.TransformAdd(Rotate(RandomF64(-1, 1) * math.Pi * 0.25))
 	dc.TransformAdd(Translate(-Size(im) / 2))
 
 	for range Range(n) {
@@ -25,8 +25,8 @@ func RandomShape(im *image.RGBA, colorSchema []color.RGBA, n int) {
 			RandomGaussian(0.5, 0.2),
 		), Size(im))
 
-		w := RandomFloat64(0, float64(im.Bounds().Dx())/3)*RandomFloat64(0, rand.Float64()) + 5.0
-		h := w + RandomFloat64(-1, 1)*3.0
+		w := RandomF64(0, float64(im.Bounds().Dx())/3)*RandomF64(0, rand.Float64()) + 5.0
+		h := w + RandomF64(-1, 1)*3.0
 
 		rnd := rand.Intn(4)
 		theta := math.Pi * 2.0 * float64(rand.Intn(4)) / 4
@@ -47,7 +47,7 @@ func RandomShape(im *image.RGBA, colorSchema []color.RGBA, n int) {
 					dc.DrawRectangle(0, complex(w, h))
 				}
 			case 3:
-				dc.DrawRectangle(0, complex(w*2, RandomFloat64(2, 10)))
+				dc.DrawRectangle(0, complex(w*2, RandomF64(2, 10)))
 			}
 			dc.Fill()
 		})

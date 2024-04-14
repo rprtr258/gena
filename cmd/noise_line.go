@@ -29,8 +29,8 @@ func NoiseLine(im *image.RGBA, colorSchema []color.RGBA, iters int) {
 
 	t := rand.Float64() * 10
 	for range Range(iters) {
-		x := RandomFloat64(-0.5, 1.5) * float64(im.Bounds().Dx())
-		y := RandomFloat64(-0.5, 1.5) * float64(im.Bounds().Dy())
+		x := RandomF64(-0.5, 1.5) * float64(im.Bounds().Dx())
+		y := RandomF64(-0.5, 1.5) * float64(im.Bounds().Dy())
 		cl := colorSchema[rand.Intn(len(colorSchema))]
 		cl.A = 255
 

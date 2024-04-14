@@ -7,12 +7,12 @@ import (
 )
 
 // rand()*(max-min) + min
-func RandomRangeInt[I constraints.Integer](min, max I) I {
+func RandomIntN[I constraints.Integer](min, max I) I {
 	return I(rand.Intn(int(max)-int(min)) + int(min))
 }
 
 // rand()*(max-min) + min
-func RandomFloat64(min, max float64) float64 {
+func RandomF64(min, max float64) float64 {
 	return rand.Float64()*(max-min) + min
 }
 
@@ -21,7 +21,7 @@ func RandomGaussian(mean, std float64) float64 {
 	return rand.NormFloat64()*std + mean
 }
 
-// rand()+rand()*i
+// (rand(), rand())
 func RandomV2() V2 {
 	return complex(rand.Float64(), rand.Float64())
 }

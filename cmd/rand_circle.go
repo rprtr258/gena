@@ -24,7 +24,7 @@ func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64
 		circles = append(circles, circle1{
 			pos:    complex(float64(x), float64(y)),
 			radius: radius,
-			d:      Polar(RandomFloat64(minStep, maxStep), rand.Float64()*math.Pi*2.0),
+			d:      Polar(RandomF64(minStep, maxStep), rand.Float64()*math.Pi*2.0),
 		})
 	}
 	return circles

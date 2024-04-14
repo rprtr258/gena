@@ -28,8 +28,8 @@ func DotLine(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int,
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 		} else {
 			dc.SetColor(ColorRGBA255(color.RGBA{
-				RandomRangeInt[uint8](222, 255),
-				RandomRangeInt[uint8](20, 222),
+				RandomIntN[uint8](222, 255),
+				RandomIntN[uint8](20, 222),
 				0,
 				0,
 			}, 255))

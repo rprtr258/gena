@@ -16,13 +16,13 @@ func DotsWave(im *image.RGBA, colorSchema []color.RGBA, n int) {
 	noise := NewPerlinNoiseDeprecated()
 	for range Range(n) {
 		v := Mul2(complex(
-			RandomFloat64(-0.1, 1.1),
-			RandomFloat64(-0.1, 1.1),
+			RandomF64(-0.1, 1.1),
+			RandomF64(-0.1, 1.1),
 		), Size(im))
 
-		num := RandomFloat64(100, 1000)
+		num := RandomF64(100, 1000)
 		r := rand.Float64() * float64(im.Bounds().Dx()) * 0.15 * rand.Float64()
-		ind := RandomFloat64(1, 8)
+		ind := RandomF64(1, 8)
 
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(v))
@@ -31,7 +31,7 @@ func DotsWave(im *image.RGBA, colorSchema []color.RGBA, n int) {
 				colorSchema[i], colorSchema[j] = colorSchema[j], colorSchema[i]
 			})
 			for j := 0.0; j < num; j += ind {
-				s := float64(im.Bounds().Dx()) * 0.15 * RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, rand.Float64()))))))
+				s := float64(im.Bounds().Dx()) * 0.15 * RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, rand.Float64()))))))
 				ci := int(float64(len(colorSchema)) * noise.Noise3_1(j*0.01, X(v), Y(v)))
 				dc.SetColor(colorSchema[ci])
 				dc.DrawCircle(complex(j, r*math.Sin(j*0.05)), s*2/3)

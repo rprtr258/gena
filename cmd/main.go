@@ -240,7 +240,7 @@ func yarn() {
 func blackhole() {
 	c := newCanvas(500, 500)
 	FillBackground(c, color.RGBA{30, 30, 30, 255})
-	BlackHole(c, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), RandomFloat64(0, 1))
+	BlackHole(c, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), RandomF64(0, 1))
 	SavePNG("blackhole.png", c)
 }
 

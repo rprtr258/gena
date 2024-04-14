@@ -6,12 +6,10 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-const (
-	W = 1024
-	H = 512
-)
-
 func gradientText() {
+	const W = 1024
+	const H = 512
+
 	dc := NewContext(complex(W, H))
 
 	// draw text

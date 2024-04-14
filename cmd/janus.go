@@ -21,11 +21,11 @@ func Janus(im *image.RGBA, colorSchema []color.RGBA, fg color.RGBA, decay float6
 		dc.Stack(func(ctx *Context) {
 			dc.TransformAdd(Translate(Size(im) / 2))
 
-			theta := RandomFloat64(math.Pi/4, 3*math.Pi/4)
+			theta := RandomF64(math.Pi/4, 3*math.Pi/4)
 			x1, y1 := math.Cos(theta)*r, math.Sin(theta)*r
 			x2, y2 := -x1, -y1
 
-			noise := RandomFloat64(-math.Abs(y1), math.Abs(y1))
+			noise := RandomF64(-math.Abs(y1), math.Abs(y1))
 			y1 += noise
 			y2 += noise
 
