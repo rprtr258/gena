@@ -27,7 +27,7 @@ func gradientText() {
 	dc.Clear()
 
 	// set a gradient
-	g := gena.NewLinearGradient(0, complex(W, H), gena.Stops{
+	g := gena.PatternGradientLinear(0, complex(W, H), gena.Stops{
 		0: color.RGBA{255, 0, 0, 255},
 		1: color.RGBA{0, 0, 255, 255},
 	})

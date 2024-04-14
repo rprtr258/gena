@@ -9,7 +9,7 @@ import (
 func gradientLinear() {
 	dc := gena.NewContext(500, 400)
 
-	grad := gena.NewLinearGradient(
+	grad := gena.PatternGradientLinear(
 		complex(20, 320),
 		complex(400, 20),
 		gena.Stops{

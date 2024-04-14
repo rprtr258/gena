@@ -26,11 +26,7 @@ func sortStops(stops Stops) []stop {
 	return res
 }
 
-// Linear Gradient
-func NewLinearGradient(
-	v0, v1 V2,
-	stopss Stops,
-) Pattern {
+func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
 	stops := sortStops(stopss)
 
 	return func(x, y int) color.Color {
@@ -76,7 +72,7 @@ func dot3(
 	return x0*x1 + y0*y1 + z0*z1
 }
 
-func NewRadialGradient(
+func PatternGradientRadial(
 	p0 V2, r0 float64,
 	p1 V2, r1 float64,
 	stopss Stops,
@@ -134,11 +130,7 @@ func NewRadialGradient(
 	}
 }
 
-// Conic Gradient
-func NewConicGradient(
-	cx, cy, deg float64,
-	stopss Stops,
-) Pattern {
+func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 	stops := sortStops(stopss)
 
 	rotation := normalizeAngle(deg) / 360
@@ -147,7 +139,7 @@ func NewConicGradient(
 			return color.Transparent
 		}
 
-		a := math.Atan2(float64(y)-cy, float64(x)-cx)
+		a := math.Atan2(float64(y)-Y(c), float64(x)-X(c))
 
 		t := norm(a, -math.Pi, math.Pi) - rotation
 		if t < 0 {
