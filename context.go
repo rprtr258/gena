@@ -61,8 +61,8 @@ const (
 )
 
 var (
-	defaultFillStyle   = NewSolidPattern(color.White)
-	defaultStrokeStyle = NewSolidPattern(color.Black)
+	defaultFillStyle   = PatternSolid(color.White)
+	defaultStrokeStyle = PatternSolid(color.Black)
 )
 
 type Context struct {
@@ -210,8 +210,8 @@ func (dc *Context) SetFillRuleEvenOdd() {
 
 func (dc *Context) setFillAndStrokeColor(c color.Color) {
 	dc.color = c
-	dc.fillPattern = NewSolidPattern(c)
-	dc.strokePattern = NewSolidPattern(c)
+	dc.fillPattern = PatternSolid(c)
+	dc.strokePattern = PatternSolid(c)
 }
 
 // SetFillStyle sets current fill style
