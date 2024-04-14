@@ -707,3 +707,15 @@ func ColorHex(s string) color.RGBA {
 
 	return c
 }
+
+func ColorLerp(c0, c1 color.Color, t float64) color.Color {
+	r0, g0, b0, a0 := c0.RGBA()
+	r1, g1, b1, a1 := c1.RGBA()
+
+	return color.RGBA{
+		lerp32to8(r0, r1, t),
+		lerp32to8(g0, g1, t),
+		lerp32to8(b0, b1, t),
+		lerp32to8(a0, a1, t),
+	}
+}

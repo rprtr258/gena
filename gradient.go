@@ -98,7 +98,7 @@ func PatternGradientRadial(
 
 		// copy from pixman's pixman-radial-gradient.c
 
-		d := complex(float64(x)+0.5, float64(y)+0.5) - c0.p
+		d := Plus(complex(float64(x), float64(y)), 0.5) - c0.p
 		b := dot3(X(d), Y(d), c0.r, X(cd.p), Y(cd.p), cd.r)
 		c := dot3(X(d), Y(d), -c0.r, X(d), Y(d), c0.r)
 
@@ -162,18 +162,6 @@ func lerp32to8(a, b uint32, t float64) uint8 {
 	return uint8(int32(float64(a)+t*(float64(b)-float64(a))) >> 8)
 }
 
-func colorLerp(c0, c1 color.Color, t float64) color.Color {
-	r0, g0, b0, a0 := c0.RGBA()
-	r1, g1, b1, a1 := c1.RGBA()
-
-	return color.RGBA{
-		lerp32to8(r0, r1, t),
-		lerp32to8(g0, g1, t),
-		lerp32to8(b0, b1, t),
-		lerp32to8(a0, a1, t),
-	}
-}
-
 func getColor(pos float64, stops ...stop) color.Color {
 	if pos <= 0.0 || len(stops) == 1 {
 		return stops[0].color
@@ -187,8 +175,8 @@ func getColor(pos float64, stops ...stop) color.Color {
 
 	for i, stop := range stops[1:] {
 		if pos < stop.pos {
-			pos = (pos - stops[i].pos) / (stop.pos - stops[i].pos)
-			return colorLerp(stops[i].color, stop.color, pos)
+			t := (pos - stops[i].pos) / (stop.pos - stops[i].pos)
+			return ColorLerp(stops[i].color, stop.color, t)
 		}
 	}
 
