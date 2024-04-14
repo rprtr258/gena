@@ -9,15 +9,15 @@ func wrap() {
 	const H = 1024
 	const P = 16
 	dc := gena.NewContext(W, H)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.DrawLine(complex(W/2, 0), complex(W/2, H))
 	dc.DrawLine(complex(0, H/2), complex(W, H/2))
 	dc.DrawRectangle(complex(P, P), gena.Sub(complex(W, H), P*2))
-	dc.SetRGBA(0, 0, 1, 0.25)
+	dc.SetColor(gena.ColorRGBA(0, 0, 1, 0.25))
 	dc.SetLineWidth(3)
 	dc.Stroke()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.LoadFontFace("/Library/Fonts/Arial Bold.ttf", 18)
 	dc.DrawStringWrapped("UPPER LEFT", P, P, 0, 0, 0, 1.5, gena.AlignLeft)
 	dc.DrawStringWrapped("UPPER RIGHT", W-P, P, 1, 0, 0, 1.5, gena.AlignRight)

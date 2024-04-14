@@ -27,12 +27,12 @@ func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, 
 		if randColor {
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 		} else {
-			dc.SetRGBA255(color.RGBA{
+			dc.SetColor(ColorRGBA255(color.RGBA{
 				RandomRangeInt[uint8](222, 255),
 				RandomRangeInt[uint8](20, 222),
 				0,
 				0,
-			}, 255)
+			}, 255))
 		}
 		for range Range(k) {
 			new := old + complex(float64(dir[rand.Intn(2)]), float64(dir[rand.Intn(2)]))

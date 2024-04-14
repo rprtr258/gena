@@ -9,7 +9,7 @@ func crisp() {
 	const Major = 100
 
 	dc := gena.NewContext(W, H)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 
 	// minor grid
@@ -22,7 +22,7 @@ func crisp() {
 		dc.DrawLine(complex(0, fy), complex(W, fy))
 	}
 	dc.SetLineWidth(1)
-	dc.SetRGBA(0, 0, 0, 0.25)
+	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.25))
 	dc.Stroke()
 
 	// major grid
@@ -35,14 +35,14 @@ func crisp() {
 		dc.DrawLine(complex(0, fy), complex(W, fy))
 	}
 	dc.SetLineWidth(1)
-	dc.SetRGBA(0, 0, 0, 0.5)
+	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.5))
 	dc.Stroke()
 
 	// axes
 	dc.DrawLine(complex(W/2, 0), complex(W/2, H))
 	dc.DrawLine(complex(0, H/2), complex(W, H/2))
 	dc.SetLineWidth(1)
-	dc.SetRGBA(0, 0, 0, 1)
+	dc.SetColor(gena.ColorRGBA(0, 0, 0, 1))
 	dc.Stroke()
 
 	gena.SavePNG("crisp.png", dc.Image())

@@ -92,7 +92,7 @@ func RandCircle(
 
 					if distance <= c1.radius+c2.radius {
 						cc := c1.pos + c2.pos/2
-						dc.SetRGBA255(cl, 30)
+						dc.SetColor(ColorRGBA255(cl, 30))
 						dc.SetLineWidth(lineWidth)
 						dc.DrawCircleV2(cc, distance/2)
 						dc.Stroke()

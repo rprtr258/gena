@@ -228,36 +228,6 @@ func (dc *Context) SetColor(c color.Color) {
 	dc.setFillAndStrokeColor(c)
 }
 
-// SetRGBA255 sets the current color. r, g, b, a values should be between 0 and 255, inclusive.
-func (dc *Context) SetRGBA255(cl color.RGBA, a int) {
-	dc.color = color.NRGBA{cl.R, cl.G, cl.B, uint8(a)}
-	dc.setFillAndStrokeColor(dc.color)
-}
-
-// SetRGB255 sets the current color. r, g, b values should be between 0 and 255, inclusive.
-// Alpha will be set to 255 (fully opaque).
-func (dc *Context) SetRGB255(r, g, b int) {
-	dc.SetRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, 255)
-}
-
-// SetRGBA sets the current color. r, g, b, a values should be between 0 and 1,
-// inclusive.
-func (dc *Context) SetRGBA(r, g, b, a float64) {
-	dc.color = color.NRGBA{
-		uint8(r * 255),
-		uint8(g * 255),
-		uint8(b * 255),
-		uint8(a * 255),
-	}
-	dc.setFillAndStrokeColor(dc.color)
-}
-
-// SetRGB sets the current color. r, g, b values should be between 0 and 1,
-// inclusive. Alpha will be set to 1 (fully opaque).
-func (dc *Context) SetRGB(r, g, b float64) {
-	dc.SetRGBA(r, g, b, 1)
-}
-
 // Path Manipulation
 
 // MoveTo starts a new subpath within the current path starting at the

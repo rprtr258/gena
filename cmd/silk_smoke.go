@@ -25,7 +25,7 @@ func SilkSmoke(
 	circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
 
 	for range Range(maxStepsPerCircle) {
-		dc.SetRGBA255(color.RGBA{}, 5)
+		dc.SetColor(ColorRGBA255(color.RGBA{}, 5))
 		dc.DrawRectangle(0, Size(c))
 		dc.Fill()
 
@@ -42,7 +42,7 @@ func SilkSmoke(
 				}
 
 				if Dist(c1.pos, c2.pos) <= c1.radius+c2.radius {
-					dc.SetRGBA255(cl, alpha)
+					dc.SetColor(ColorRGBA255(cl, alpha))
 					dc.SetLineWidth(lineWidth)
 
 					dc.LineToV2(c1.pos)

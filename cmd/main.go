@@ -423,7 +423,7 @@ func out() {
 	dc.DrawCircle(650, 500, 300)
 	dc.Clip()
 	dc.DrawRectangle(0, complex(1000, 1000))
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Fill()
 	gena.SavePNG("out.png", dc.Image())
 }

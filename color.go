@@ -635,6 +635,33 @@ var (
 	}
 )
 
+// ColorRGBA sets the current color. r, g, b, a values should be between 0 and 1, inclusive.
+func ColorRGBA(r, g, b, a float64) color.NRGBA {
+	return color.NRGBA{
+		uint8(r * 255),
+		uint8(g * 255),
+		uint8(b * 255),
+		uint8(a * 255),
+	}
+}
+
+// ColorRGB sets the current color. r, g, b values should be between 0 and 1,
+// inclusive. Alpha will be set to 1 (fully opaque).
+func ColorRGB(r, g, b float64) color.Color {
+	return ColorRGBA(r, g, b, 1)
+}
+
+// ColorRGBA255 sets the current color. r, g, b, a values should be between 0 and 255, inclusive.
+func ColorRGBA255(cl color.RGBA, a int) color.NRGBA {
+	return color.NRGBA{cl.R, cl.G, cl.B, uint8(a)}
+}
+
+// ColorRGB255 sets the current color. r, g, b values should be between 0 and 255, inclusive.
+// Alpha will be set to 255 (fully opaque).
+func ColorRGB255(r, g, b int) color.NRGBA {
+	return ColorRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, 255)
+}
+
 // ParseHexColor parses color string likes #FFFFFF or #2398EFFF
 // Reference: https://stackoverflow.com/questions/54197913/parse-hex-string-to-image-color
 func ColorHex(s string) color.RGBA {

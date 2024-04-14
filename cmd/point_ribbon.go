@@ -18,12 +18,12 @@ func PointRibbon(c *image.RGBA, lineWidth, r float64, iters int) {
 	dt := 0.0001
 	for range Range(iters) {
 		delta := 2.0*r*math.Cos(4.0*dt*t) + r*math.Cos(t)
-		dc.SetRGBA255(color.RGBA{
+		dc.SetColor(color.RGBA{
 			uint8(delta),
 			uint8(2*r*math.Sin(t) - r*math.Cos(3*dt*t)),
 			100,
-			0,
-		}, 10)
+			10,
+		})
 		dc.DrawPoint(complex(
 			2*math.Sin(2*t*dt)+math.Cos(t*dt),
 			2*math.Sin(t*dt)-math.Sin(5*t),

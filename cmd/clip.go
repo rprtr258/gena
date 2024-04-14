@@ -9,7 +9,7 @@ func clip() {
 	dc.DrawCircleV2(650+500i, 300)
 	dc.Clip()
 	dc.DrawRectangle(0, 1000+1000i)
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Fill()
 	gena.SavePNG("clip.png", dc.Image())
 }

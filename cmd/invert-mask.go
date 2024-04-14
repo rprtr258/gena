@@ -8,7 +8,7 @@ func invertMask() {
 	dc.Clip()
 	dc.InvertMask()
 	dc.DrawRectangle(0, complex(1024, 1024))
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Fill()
 	gena.SavePNG("invertMask.png", dc.Image())
 }

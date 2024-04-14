@@ -10,9 +10,9 @@ func spiral() {
 	const S = 1024
 	const N = 2048
 	dc := gena.NewContext(S, S)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	for i := 0; i <= N; i++ {
 		t := float64(i) / N
 		d := t*S*0.4 + 10

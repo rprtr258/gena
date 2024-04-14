@@ -15,9 +15,9 @@ func lorem() {
 	const W = 800
 	const H = 400
 	dc := gena.NewContext(W, H)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	// dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18)
 	const h = 24
 	for i, line := range loremIpsumLines {

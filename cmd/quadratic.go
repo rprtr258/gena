@@ -5,7 +5,7 @@ import "github.com/rprtr258/gena"
 func quadratic() {
 	const S = 1000
 	dc := gena.NewContext(S, S)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.Translate(complex(S/2, S/2))
 	dc.Scale(complex(40, 40))
@@ -31,7 +31,7 @@ func quadratic() {
 	dc.SetColor(gena.ColorHex("3E606F"))
 	dc.SetLineWidth(16)
 	dc.FillPreserve()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.Stroke()
 
 	dc.DrawCircleV2(p0, 0.5)
@@ -39,9 +39,9 @@ func quadratic() {
 	dc.DrawCircleV2(p2, 0.5)
 	dc.DrawCircleV2(p3, 0.5)
 	dc.DrawCircleV2(p4, 0.5)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.FillPreserve()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.SetLineWidth(4)
 	dc.Stroke()
 

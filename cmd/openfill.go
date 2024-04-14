@@ -18,12 +18,12 @@ func openfill() {
 			// dc.ClosePath()
 		}
 	}
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.FillPreserve()
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.SetLineWidth(8)
 	dc.StrokePreserve()
-	dc.SetRGB(1, 0, 0)
+	dc.SetColor(gena.ColorRGB(1, 0, 0))
 	dc.SetLineWidth(4)
 	dc.StrokePreserve()
 	gena.SavePNG("openfill.png", dc.Image())

@@ -7,9 +7,9 @@ func unicode() {
 	const T = 16 * 2
 	const F = 28
 	dc := gena.NewContext(S, S)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.LoadFontFace("Xolonium-Regular.ttf", F)
 	for r := range gena.Range(256) {
 		for c := range gena.Range(256) {

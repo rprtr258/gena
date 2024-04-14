@@ -11,15 +11,15 @@ func point() gena.V2 {
 }
 
 func drawCurve(dc *gena.Context) {
-	dc.SetRGBA(0, 0, 0, 0.1)
+	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.1))
 	dc.FillPreserve()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.SetLineWidth(12)
 	dc.Stroke()
 }
 
 func drawPoints(dc *gena.Context) {
-	dc.SetRGBA(1, 0, 0, 0.5)
+	dc.SetColor(gena.ColorRGBA(1, 0, 0, 0.5))
 	dc.SetLineWidth(2)
 	dc.Stroke()
 }
@@ -57,7 +57,7 @@ func beziers() {
 	const W = 8
 	const H = 8
 	dc := gena.NewContext(S*W, S*H)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
 	for j := range gena.Range(H) {
 		for i := range gena.Range(W) {

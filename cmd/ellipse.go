@@ -5,7 +5,7 @@ import "github.com/rprtr258/gena"
 func ellipse() {
 	const S = 1024
 	dc := gena.NewContext(S, S)
-	dc.SetRGBA(0, 0, 0, 0.1)
+	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.1))
 	for i := 0; i < 360; i += 15 {
 		dc.Stack(func(dc *gena.Context) {
 			dc.RelativeTo(complex(S/2, S/2), func(dc *gena.Context) {

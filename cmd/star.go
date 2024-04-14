@@ -22,10 +22,10 @@ func star(n int) {
 	for i := range gena.Range(n + 1) {
 		dc.LineToV2(points[(i*2)%n])
 	}
-	dc.SetRGBA(0, 0.5, 0, 1)
+	dc.SetColor(gena.ColorRGBA(0, 0.5, 0, 1))
 	dc.SetFillRule(gena.FillRuleEvenOdd)
 	dc.FillPreserve()
-	dc.SetRGBA(0, 1, 0, 0.5)
+	dc.SetColor(gena.ColorRGBA(0, 1, 0, 0.5))
 	dc.SetLineWidth(16)
 	dc.Stroke()
 	gena.SavePNG("star.png", dc.Image())

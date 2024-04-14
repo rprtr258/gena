@@ -23,7 +23,7 @@ func CircleLoop(c *image.RGBA, lineWidth float64, lineColor color.RGBA, alpha in
 
 			dc.SetLineWidth(lineWidth)
 			dc.SetColor(lineColor)
-			dc.SetRGBA255(lineColor, alpha)
+			dc.SetColor(ColorRGBA255(lineColor, alpha))
 			dc.DrawCircleV2(v, radius+math.Sin(theta*1.5)*float64(i)/2)
 			dc.Stroke()
 		})

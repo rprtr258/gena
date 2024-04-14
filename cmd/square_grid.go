@@ -36,7 +36,7 @@ func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, de
 					dc.SetLineWidth(3)
 					dc.SetColor(gena.Tomato)
 					dc.StrokePreserve()
-					dc.SetRGBA255(cl, 255)
+					dc.SetColor(gena.ColorRGBA255(cl, 255))
 					dc.Fill()
 				})
 				s -= decay * float64(rectSize)

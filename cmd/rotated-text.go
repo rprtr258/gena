@@ -9,9 +9,9 @@ import (
 func rotatedText() {
 	const S = 400
 	dc := gena.NewContext(S, S)
-	dc.SetRGB(1, 1, 1)
+	dc.SetColor(gena.ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.SetRGB(0, 0, 0)
+	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	font, err := truetype.Parse(goregular.TTF)
 	if err != nil {
 		panic(err.Error())
