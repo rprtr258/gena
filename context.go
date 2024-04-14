@@ -2,15 +2,18 @@
 package gena
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
 	"image/png"
 	"io"
 	"math"
+	"os"
 	"strings"
 
 	"github.com/golang/freetype/raster"
+	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/basicfont"
@@ -233,8 +236,26 @@ func (dc *Context) SetColor(c color.Color) {
 // SetHexColor sets the current color using a hex string. The leading pound
 // sign (#) is optional. Both 3- and 6-digit variations are supported. 8 digits
 // may be provided to set the alpha value as well.
+// TODO: move out getting color from hex, make single function to set color
 func (dc *Context) SetHexColor(x string) {
-	r, g, b, a := parseHexColor(x)
+	x = strings.TrimPrefix(x, "#")
+	var r, g, b int
+	a := 255
+	switch len(x) {
+	case 3:
+		format := "%1x%1x%1x"
+		fmt.Sscanf(x, format, &r, &g, &b)
+		r |= r << 4
+		g |= g << 4
+		b |= b << 4
+	case 6:
+		format := "%02x%02x%02x"
+		fmt.Sscanf(x, format, &r, &g, &b)
+	case 8:
+		format := "%02x%02x%02x%02x"
+		fmt.Sscanf(x, format, &r, &g, &b, &a)
+	}
+
 	dc.SetRGBA255(color.RGBA{uint8(r), uint8(g), uint8(b), 0}, a)
 }
 
@@ -820,9 +841,18 @@ func (dc *Context) SetFontFace(fontFace font.Face) {
 	dc.fontHeight = float64(fontFace.Metrics().Height) / 64
 }
 
+// LoadFontFace is a helper function to load the specified font file with
+// the specified point size. Note that the returned `font.Face` objects
+// are not thread safe and cannot be used in parallel across goroutines.
+// You can usually just use the Context.LoadFontFace function instead of
+// this package-level function.
 func (dc *Context) LoadFontFace(path string, points float64) {
-	face := LoadFontFace(path, points)
-	dc.fontFace = face
+	fontBytes := must1(os.ReadFile(path))
+	f := must1(truetype.Parse(fontBytes))
+
+	dc.fontFace = truetype.NewFace(f, &truetype.Options{
+		Size: points,
+	})
 	dc.fontHeight = points * 72 / 96
 }
 
