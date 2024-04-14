@@ -29,8 +29,8 @@ func PixelHole(c *image.RGBA, colorSchema []color.RGBA, dotN, iters int) {
 					dc.Rotate(fc/(50+10*math.Log(fc+1)) + j/20)
 					dd := fc/(5+j) + fc/5 + math.Sin(j)*50
 					dc.Translate(complex(gena.RandomFloat64(dd/2, dd), 0))
-					x := noise.Noise2D(fc/50+j/50, 5000)*float64(c.Bounds().Dx())/10 + rand.Float64()*float64(c.Bounds().Dx())/20
-					y := noise.Noise2D(fc/50+j/50, 10000)*float64(c.Bounds().Dy())/10 + rand.Float64()*float64(c.Bounds().Dy())/20
+					x := noise.Noise2_1(fc/50+j/50, 5000)*float64(c.Bounds().Dx())/10 + rand.Float64()*float64(c.Bounds().Dx())/20
+					y := noise.Noise2_1(fc/50+j/50, 10000)*float64(c.Bounds().Dy())/10 + rand.Float64()*float64(c.Bounds().Dy())/20
 
 					rr := gena.RandomFloat64(1.0, 6-math.Log(fc+1)/10)
 					dc.DrawCircleV2(complex(x, y), rr)

@@ -34,7 +34,7 @@ func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
 					a := float64(j) / float64(nPoints) * math.Pi * 2
 					px := math.Cos(a)
 					py := math.Sin(a)
-					n := noise.Noise2D(xOffset+px*inc, yOffset+py*inc) * r
+					n := noise.Noise2_1(xOffset+px*inc, yOffset+py*inc) * r
 					px *= n
 					py *= n
 					dc.LineTo(px, py)

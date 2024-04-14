@@ -20,7 +20,7 @@ func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
 		v := Mul2(RandomV2(), Size(c))
 
 		for range Range(1500) {
-			theta := noise.NoiseV2(v/800) * math.Pi * 2 * 800
+			theta := noise.NoiseV2_1(v/800) * math.Pi * 2 * 800
 			v += Polar(0.4, theta)
 
 			dc.SetColor(cls)

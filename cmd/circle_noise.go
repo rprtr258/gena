@@ -43,7 +43,7 @@ func CircleNoise(
 	const factor = 0.008
 	for range Range(iters) {
 		for i := range dots {
-			n := noise.NoiseV2(dots[i].pos * factor)
+			n := noise.NoiseV2_1(dots[i].pos * factor)
 			alpha := math.Pi * (n*2 + float64(dots[i].count))
 			nn := Polar(2, alpha)
 			dots[i].prev, dots[i].pos = dots[i].pos, dots[i].pos+nn

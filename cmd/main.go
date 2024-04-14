@@ -303,12 +303,12 @@ func circlenoise() {
 
 		angles := make([]float64, _dots)
 		for j := range angles {
-			angles[j] = noise.NoiseV2(complex(float64(j), 0)+gena.Polar(1, ralpha)) + ralpha
+			angles[j] = noise.NoiseV2_1(complex(float64(j), 0)+gena.Polar(1, ralpha)) + ralpha
 		}
 
 		peepo := [4096]float64{}
 		for j := range peepo {
-			peepo[j] = noise.NoiseV2(complex(float64(j), 1) + gena.Polar(1, ralpha))
+			peepo[j] = noise.NoiseV2_1(complex(float64(j), 1) + gena.Polar(1, ralpha))
 		}
 		noise2 := gena.NewPerlinNoise(peepo)
 

@@ -32,7 +32,7 @@ func DotsWave(c *image.RGBA, colorSchema []color.RGBA, dotsN int) {
 			})
 			for j := 0.0; j < num; j += ind {
 				s := float64(c.Bounds().Dx()) * 0.15 * RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, RandomFloat64(0, rand.Float64()))))))
-				ci := int(float64(len(colorSchema)) * noise.Noise3D(j*0.01, X(v), Y(v)))
+				ci := int(float64(len(colorSchema)) * noise.Noise3_1(j*0.01, X(v), Y(v)))
 				dc.SetColor(colorSchema[ci])
 				dc.DrawCircle(j, r*math.Sin(j*0.05), s*2/3)
 				dc.Fill()

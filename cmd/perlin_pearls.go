@@ -69,7 +69,7 @@ func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN,
 		const factor = 0.008
 		for range Range(iters) {
 			for k := range ds[i] {
-				n := noise.NoiseV2(ds[i][k].pos * factor)
+				n := noise.NoiseV2_1(ds[i][k].pos * factor)
 				ds[i][k].prev = ds[i][k].pos
 				ds[i][k].pos += Polar(2, math.Pi*(n*2+float64(ds[i][k].count)))
 

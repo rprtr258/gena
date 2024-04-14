@@ -39,7 +39,7 @@ func (cl *circleLoop2) recursionDraw(dc *Context, c *image.RGBA, x float64, dept
 	}
 	dc.SetLineWidth(lw)
 
-	noise := cl.noise.Noise3D(x*0.02+123.234, (1-x)*0.02, 345.4123)
+	noise := cl.noise.Noise3_1(x*0.02+123.234, (1-x)*0.02, 345.4123)
 	noise = math.Pow(noise, 0.5)
 	a2 := Remap(noise, 0.15, 0.85, 0.1, 0.6)
 

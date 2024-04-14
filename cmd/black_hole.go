@@ -36,7 +36,7 @@ func BlackHole(
 		for theta := 0.0; theta < 2*math.Pi; theta += 2 * math.Pi / 360 {
 			r1 := math.Cos(theta) + 1
 			r2 := math.Sin(theta) + 1
-			r := radius + noise.Noise3D(k*r1, k*r2, float64(i)*circleGap)*noisiness
+			r := radius + noise.Noise3_1(k*r1, k*r2, float64(i)*circleGap)*noisiness
 			dc.LineToV2(base + Polar(r, theta))
 		}
 		dc.Stroke()
