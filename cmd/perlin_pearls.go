@@ -19,7 +19,7 @@ type circles struct {
 //   - colorMin: The minimum color.
 //   - colorMax: The maximum color.
 func PerlinPearls(c *image.RGBA, lineWidth float64, alpha uint8, circleN, dotsN, colorMin, colorMax, iters int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(0.5)
 	dc.SetColor(Black)
 

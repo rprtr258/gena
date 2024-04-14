@@ -17,7 +17,7 @@ type circleLoop2 struct {
 // CircleLoop2 draws a circle composed by colored circles.
 //   - depth: Control the number of circles.
 func CircleLoop2(c *image.RGBA, colorSchema []color.RGBA, depth int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.TransformAdd(Translate(Size(c) / 2))
 	cl := &circleLoop2{
 		noise:       NewPerlinNoiseDeprecated(),

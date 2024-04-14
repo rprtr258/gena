@@ -11,7 +11,7 @@ import (
 
 // Generative draws a color circle images.
 func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	for range Range(circleNum) {
 		v := Mul2(complex(

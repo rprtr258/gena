@@ -21,7 +21,7 @@ func ColorCircle2(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
 		circleNum: circleNum,
 	}
 
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	for range Range(cc.circleNum) {
 		v := Mul2(RandomV2(), Size(c))
 

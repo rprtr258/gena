@@ -19,7 +19,7 @@ func SilkSmoke(
 	minSteps, maxSteps, minRadius, maxRadius float64,
 	isRandColor bool,
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	cn := rand.Intn(maxCircle) + int(maxCircle/3)
 	circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)

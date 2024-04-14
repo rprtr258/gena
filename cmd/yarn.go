@@ -10,7 +10,7 @@ import (
 // Yarn draws a yarn image.
 //   - n: The number of the curve.
 func Yarn(c *image.RGBA, lineWidth float64, lineColor color.RGBA, n int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(lineWidth)
 	dc.SetColor(lineColor)
 	noise := NewPerlinNoiseDeprecated()

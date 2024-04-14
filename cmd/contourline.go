@@ -13,7 +13,7 @@ import (
 // It uses the perlin noise` to do some flow field.
 //   - lineNum: It indicates how many lines.
 func ContourLine(c *image.RGBA, colorSchema []color.RGBA, lineNum int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
 	for range Range(lineNum) {
 		cls := colorSchema[rand.Intn(len(colorSchema))]

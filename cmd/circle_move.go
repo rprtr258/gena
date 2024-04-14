@@ -11,7 +11,7 @@ import (
 // Generative draws a sircle moving images.
 //   - circleNum: The number of the circle in the image.
 func CircleMove(c *image.RGBA, circleNum int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(0.3)
 	noise := NewPerlinNoiseDeprecated()
 	cl := rand.Intn(255)

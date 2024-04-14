@@ -12,7 +12,7 @@ import (
 // PixelHole draws a hole with colored dots.
 //   - dotN: The number of point in each iteration.
 func PixelHole(c *image.RGBA, colorSchema []color.RGBA, dotN, iters int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
 	for i := range Range(iters) {
 		dc.Stack(func(ctx *Context) {

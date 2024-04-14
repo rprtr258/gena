@@ -13,7 +13,7 @@ import (
 // The whole image would rotate with some degree.
 //   - shapeNum: It indicates how many shapes you want to draw.
 func RandomShape(c *image.RGBA, colorSchema []color.RGBA, shapeNum int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	dc.TransformAdd(Translate(Size(c) / 2))
 	dc.TransformAdd(Rotate(RandomFloat64(-1, 1) * math.Pi * 0.25))

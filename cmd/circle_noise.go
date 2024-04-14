@@ -26,7 +26,7 @@ func CircleNoise(
 	iters int,
 	noise PerlinNoise,
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(2.0)
 	dc.SetColor(Black)
 	radius := float64(c.Bounds().Dx()) * 0.8 / 2

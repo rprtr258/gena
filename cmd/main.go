@@ -69,7 +69,7 @@ func _http() {
 				// Generate a new image
 				c := newCanvas(500, 500)
 				FillBackground(c, Black)
-				Janus(c, DarkRed, LightPink, 10, 0.2)
+				Janus(c, DarkRed, LightPink, 0.2)
 
 				// Return the image as []byte
 				return ToBytes(c)
@@ -89,7 +89,7 @@ func _http() {
 func janus() {
 	c := newCanvas(500, 500)
 	FillBackground(c, Black)
-	Janus(c, DarkRed, LightPink, 10, 0.2)
+	Janus(c, DarkRed, LightPink, 0.2)
 	SavePNG("janus.png", c)
 }
 
@@ -390,7 +390,7 @@ func domainwrapFrames() {
 func test() {
 	dest := image.NewRGBA(image.Rect(0, 0, 500, 500))
 
-	dc := NewContextForRGBA(dest)
+	dc := NewContextFromRGBA(dest)
 	dc.Stack(func(dc *Context) {
 		dc.TransformAdd(Translate(complex(500/2, 500/2)))
 		dc.TransformAdd(Rotate(40))

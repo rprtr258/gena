@@ -22,7 +22,7 @@ func BlackHole(
 	noise PerlinNoise,
 	alpha float64, // [0, 1)
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	kMax := Remap(alpha, 0, 1, 0.5, 1)
 	dc.SetLineWidth(0.4)
 	dc.SetColor(lineColor)

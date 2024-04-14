@@ -23,7 +23,7 @@ func OceanFish(c *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 		fishNum: fishNum,
 	}
 
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	o.drawlines(dc, c, colorSchema)
 

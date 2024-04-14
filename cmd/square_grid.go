@@ -10,7 +10,7 @@ import (
 
 // Generative draws a grid squares image.
 func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	for x := 0; x < c.Bounds().Dx(); x += step {
 		for y := 0; y < c.Bounds().Dy(); y += step {

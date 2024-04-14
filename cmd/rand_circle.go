@@ -71,7 +71,7 @@ func RandCircle(
 	isRandColor bool,
 	iters int,
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	for range Range(iters) {
 		cn := rand.Intn(maxCircle) + int(maxCircle/3)
 		circles := newCircleSlice(cn, c.Bounds().Dx(), c.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)

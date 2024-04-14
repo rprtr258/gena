@@ -10,7 +10,7 @@ import (
 //   - circleNum: The number of the circles in this drawing.
 //   - sunRadius: The radius of the sun. The sun is a point/circle where other circles meet.
 func SilkSky(c *image.RGBA, alpha, circleNum int, sunRadius float64) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	m := Mul2(RandomV2(), Size(c))/5 + Size(c)*3/5
 
 	mh := circleNum*2 + 2

@@ -37,7 +37,7 @@ func CircleGrid(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, circ
 		circleNumMax: circleNumMax,
 	}
 
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	cg.grid(dc, c)
 	dc.TransformAdd(Translate(Size(c) / 2))
 	dc.TransformAdd(Scale(complex(0.9, 0.9)))

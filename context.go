@@ -88,15 +88,8 @@ type Context struct {
 	matrix        Matrix
 }
 
-// NewContext creates a new image.RGBA with the specified width and height
-// and prepares a context for rendering onto that image.
-func NewContext(size V2) *Context {
-	return NewContextForRGBA(image.NewRGBA(image.Rect(0, 0, int(X(size)), int(Y(size)))))
-}
-
-// NewContextForRGBA prepares a context for rendering onto the specified image.
-// No copy is made.
-func NewContextForRGBA(im *image.RGBA) *Context {
+// NewContextFromRGBA prepares a context for rendering onto the specified image.
+func NewContextFromRGBA(im *image.RGBA) *Context {
 	w := im.Bounds().Size().X
 	h := im.Bounds().Size().Y
 	return &Context{
@@ -113,6 +106,13 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		fontHeight:    13,
 		matrix:        Identity,
 	}
+}
+
+// NewContext creates a new image.RGBA with the specified width and height
+// and prepares a context for rendering onto that image.
+func NewContext(size V2) *Context {
+	im := image.NewRGBA(image.Rect(0, 0, int(X(size)), int(Y(size))))
+	return NewContextFromRGBA(im)
 }
 
 // GetCurrentPoint will return the current point and if there is a current point.
@@ -307,8 +307,7 @@ func (dc *Context) ClosePath() {
 	}
 }
 
-// ClearPath clears the current path. There is no current point after this
-// operation.
+// ClearPath clears the current path. There is no current point after this operation.
 func (dc *Context) ClearPath() {
 	dc.strokePath.Clear()
 	dc.fillPath.Clear()
@@ -843,41 +842,34 @@ func (dc *Context) DrawStringWrapped(s string, pos, a V2, width, lineSpacing flo
 	}
 }
 
-func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) (width, height float64) {
+func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) V2 {
 	lines := strings.Split(s, "\n")
 
 	// sync h formula with DrawStringWrapped
-	height = float64(len(lines)) * dc.fontHeight * lineSpacing
-	height -= (lineSpacing - 1) * dc.fontHeight
-
-	d := &font.Drawer{
-		Face: dc.fontFace,
-	}
+	height := float64(len(lines))*dc.fontHeight*lineSpacing - (lineSpacing-1)*dc.fontHeight
 
 	// max width from lines
+	d := &font.Drawer{Face: dc.fontFace}
+	var width float64
 	for _, line := range lines {
 		adv := d.MeasureString(line)
-		currentWidth := float64(adv >> 6) // from Context.MeasureString
-		if currentWidth > width {
+		if currentWidth := float64(adv >> 6); currentWidth > width {
 			width = currentWidth
 		}
 	}
 
-	return width, height
+	return complex(width, height)
 }
 
 // MeasureString returns the rendered width and height of the specified text
 // given the current font face.
 func (dc *Context) MeasureString(s string) V2 {
-	d := &font.Drawer{
-		Face: dc.fontFace,
-	}
+	d := &font.Drawer{Face: dc.fontFace}
 	a := d.MeasureString(s)
 	return complex(float64(a>>6), dc.fontHeight)
 }
 
-// WordWrap wraps the specified string to the given max width and current
-// font face.
+// WordWrap wraps the specified string to the given max width and current font face.
 func (dc *Context) WordWrap(s string, width float64) []string {
 	var result []string
 	for _, line := range strings.Split(s, "\n") {

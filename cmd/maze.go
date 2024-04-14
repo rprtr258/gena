@@ -10,7 +10,7 @@ import (
 
 // Maze draws a random maze image.
 func Maze(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetColor(lineColor)
 	dc.SetLineWidth(lineWidth)
 	for x := 0; x < c.Bounds().Dx(); x += step {

@@ -14,7 +14,7 @@ import (
 //   - ras, canv: Control the appearance of this image.
 //   - randColor: Use the specified color or random colors.
 func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, ras, canv float64, randColor bool, iters int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(lineWidth)
 	dir := []int{-1, 1}
 	for range Range(iters) {

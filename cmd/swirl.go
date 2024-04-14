@@ -81,7 +81,7 @@ func Swirl(img *image.RGBA, fg, bg color.RGBA, a, b, c, d float64, axis V2, iter
 		axis:  axis,
 		iters: iters,
 	}
-	dc := NewContextForRGBA(img)
+	dc := NewContextFromRGBA(img)
 	dc.SetLineWidth(3)
 	start := complex(1.0, 1.0)
 

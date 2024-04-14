@@ -15,7 +15,7 @@ type Rect struct {
 
 // ColorCanva returns a color canva image.
 func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(lineWidth)
 
 	rects := make([]Rect, 0)

@@ -17,7 +17,7 @@ func SpiralSquare(
 	rectSide, decay float64,
 	fg color.RGBA, randColor bool,
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 
 	sl := rectSide
 	theta := rand.Intn(360) + 1

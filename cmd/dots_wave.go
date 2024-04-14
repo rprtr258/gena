@@ -12,7 +12,7 @@ import (
 // Generative draws a dots wave images.
 //   - dotsN: The number of dots wave in the image.
 func DotsWave(c *image.RGBA, colorSchema []color.RGBA, dotsN int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
 	for range Range(dotsN) {
 		v := Mul2(complex(

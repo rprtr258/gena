@@ -11,7 +11,7 @@ import (
 
 // CircleLine draws a cirle line image.
 func CircleLine(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step float64, lineNum int, radius float64, axis V2) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	dc.SetLineWidth(lineWidth)
 	dc.SetColor(lineColor)
 	var points []V2

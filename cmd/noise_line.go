@@ -13,7 +13,7 @@ import (
 // NoiseLine draws some random line and circles based on `perlin noise`.
 //   - n: The number of random line.
 func NoiseLine(c *image.RGBA, colorSchema []color.RGBA, n int) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(c)
 	noise := NewPerlinNoiseDeprecated()
 
 	dc.SetColor(Black)
