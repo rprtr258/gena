@@ -45,10 +45,10 @@ func SilkSmoke(
 					dc.SetColor(ColorRGBA255(cl, alpha))
 					dc.SetLineWidth(lineWidth)
 
-					dc.LineToV2(c1.pos)
-					dc.LineToV2(c2.pos)
-					dc.LineToV2((c1.pos + c2.pos) / 2)
-					dc.LineToV2(c1.pos)
+					dc.LineTo(c1.pos)
+					dc.LineTo(c2.pos)
+					dc.LineTo((c1.pos + c2.pos) / 2)
+					dc.LineTo(c1.pos)
 
 					dc.Stroke()
 				}

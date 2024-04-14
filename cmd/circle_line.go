@@ -23,7 +23,7 @@ func CircleLine(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step flo
 		p1 := points[rand.Intn(len(points))]
 		dc.MoveTo(p1)
 		p2 := points[rand.Intn(len(points))]
-		dc.LineToV2(p2)
+		dc.LineTo(p2)
 		dc.Stroke()
 	}
 }

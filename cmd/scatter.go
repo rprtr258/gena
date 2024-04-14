@@ -30,18 +30,18 @@ func scatter() {
 	for i := 1; i <= 10; i++ {
 		x := float64(i) / 10
 		dc.MoveTo(complex(x, 0))
-		dc.LineTo(x, 1)
+		dc.LineTo(complex(x, 1))
 		dc.MoveTo(complex(0, x))
-		dc.LineTo(1, x)
+		dc.LineTo(complex(1, x))
 	}
 	dc.SetColor(gena.ColorRGBA(0, 0, 0, 0.25))
 	dc.SetLineWidth(1)
 	dc.Stroke()
 	// draw axes
 	dc.MoveTo(0)
-	dc.LineTo(1, 0)
+	dc.LineTo(complex(1, 0))
 	dc.MoveTo(0)
-	dc.LineTo(0, 1)
+	dc.LineTo(complex(0, 1))
 	dc.SetColor(gena.ColorRGB(0, 0, 0))
 	dc.SetLineWidth(4)
 	dc.Stroke()

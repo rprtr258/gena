@@ -25,9 +25,9 @@ func cubic() {
 	dc.Stroke()
 
 	dc.MoveTo(p0)
-	dc.LineToV2(p1)
-	dc.LineToV2(p2)
-	dc.LineToV2(p3)
+	dc.LineTo(p1)
+	dc.LineTo(p2)
+	dc.LineTo(p3)
 	dc.SetColor(gena.ColorRGBA(1, 0, 0, 0.4))
 	dc.SetLineWidth(2)
 	dc.SetDash(4, 8, 1, 8)

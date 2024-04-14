@@ -22,9 +22,9 @@ func mystar() {
 		})
 
 		for i := range gena.Range(n) {
-			dc.LineToV2(points[i])
+			dc.LineTo(points[i])
 		}
-		dc.LineToV2(points[0])
+		dc.LineTo(points[0])
 
 		dc.SetColor(color.White)
 		dc.SetLineWidth(0.5)

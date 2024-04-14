@@ -135,7 +135,7 @@ func TestFill(t *testing.T) {
 	for range Range(10) {
 		dc.NewSubPath()
 		for range Range(10) {
-			dc.LineToV2(RandomV2() * 100)
+			dc.LineTo(RandomV2() * 100)
 		}
 		dc.ClosePath()
 		dc.SetColor(ColorRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()))

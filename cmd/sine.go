@@ -17,9 +17,7 @@ func sine() {
 	})
 	for i := range gena.Range(W) {
 		a := float64(i) * 2 * math.Pi / W * 8
-		x := float64(i)
-		y := (math.Sin(a) + 1) / 2 * H
-		dc.LineTo(x, y)
+		dc.LineTo(complex(float64(i), (math.Sin(a)+1)/2*H))
 	}
 	dc.ClosePath()
 	dc.SetColor(gena.ColorHex("#3E606F"))

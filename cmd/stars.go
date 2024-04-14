@@ -31,7 +31,7 @@ func stars() {
 			dc.Rotate(rand.Float64() * 2 * math.Pi)
 			dc.Scale(complex(s, s))
 			for i := range gena.Range(n + 1) {
-				dc.LineToV2(points[(i*2)%n])
+				dc.LineTo(points[(i*2)%n])
 			}
 			dc.SetLineWidth(10)
 			dc.SetColor(gena.ColorHex("#FFCC00"))

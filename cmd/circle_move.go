@@ -28,7 +28,7 @@ func CircleMove(c *image.RGBA, circleNum int) {
 			xx = (xx + cx) / 150
 			yy = (yy + cy) / 150
 			p *= Coeff(1 + 1.5*noise.Noise2_1(xx, yy))
-			dc.LineToV2(p + complex(cx, cy))
+			dc.LineTo(p + complex(cx, cy))
 			cxx = cx
 		}
 

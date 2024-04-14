@@ -20,7 +20,7 @@ func star(n int) {
 	dc.SetColor(gena.ColorHex("#fff"))
 	dc.Clear()
 	for i := range gena.Range(n + 1) {
-		dc.LineToV2(points[(i*2)%n])
+		dc.LineTo(points[(i*2)%n])
 	}
 	dc.SetColor(gena.ColorRGBA(0, 0.5, 0, 1))
 	dc.SetFillRule(gena.FillRuleEvenOdd)

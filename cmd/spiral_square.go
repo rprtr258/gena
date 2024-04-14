@@ -28,11 +28,11 @@ func SpiralSquare(
 
 			dc.Scale(complex(sl, sl))
 
-			dc.LineTo(-0.5, 0.5)
-			dc.LineTo(0.5, 0.5)
-			dc.LineTo(0.5, -0.5)
-			dc.LineTo(-0.5, -0.5)
-			dc.LineTo(-0.5, 0.5)
+			dc.LineTo(complex(-0.5, 0.5))
+			dc.LineTo(complex(0.5, 0.5))
+			dc.LineTo(complex(0.5, -0.5))
+			dc.LineTo(complex(-0.5, -0.5))
+			dc.LineTo(complex(-0.5, 0.5))
 
 			dc.SetLineWidth(lineWidth)
 			dc.SetColor(lineColor)

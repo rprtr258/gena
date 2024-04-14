@@ -244,9 +244,9 @@ func (dc *Context) MoveTo(v V2) {
 	dc.hasCurrent = true
 }
 
-// LineTo adds a line segment to the current path starting at the current
-// point. If there is no current point, it is equivalent to MoveTo(x, y)
-func (dc *Context) LineToV2(v V2) {
+// LineTo adds a line segment to the current path starting at the current point.
+// If there is no current point, it is equivalent to MoveTo(v)
+func (dc *Context) LineTo(v V2) {
 	if !dc.hasCurrent {
 		dc.MoveTo(v)
 	} else {
@@ -255,10 +255,6 @@ func (dc *Context) LineToV2(v V2) {
 		dc.fillPath.Add1(Fixed(p))
 		dc.current = p
 	}
-}
-
-func (dc *Context) LineTo(x, y float64) {
-	dc.LineToV2(complex(x, y))
 }
 
 // QuadraticTo adds a quadratic bezier curve to the current path starting at
@@ -634,15 +630,15 @@ func (dc *Context) DrawPoint(v V2, r float64) {
 
 func (dc *Context) DrawLine(p1, p2 V2) {
 	dc.MoveTo(p1)
-	dc.LineToV2(p2)
+	dc.LineTo(p2)
 }
 
 func (dc *Context) DrawRectangle(topLeft, size V2) {
 	dc.NewSubPath()
 	dc.MoveTo(topLeft)
-	dc.LineToV2(topLeft + complex(X(size), 0))
-	dc.LineToV2(topLeft + size)
-	dc.LineToV2(topLeft + complex(0, Y(size)))
+	dc.LineTo(topLeft + complex(X(size), 0))
+	dc.LineTo(topLeft + size)
+	dc.LineTo(topLeft + complex(0, Y(size)))
 	dc.ClosePath()
 }
 
@@ -652,13 +648,13 @@ func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
 	y0, y1, y2, y3 := y, y+r, y+h-r, y+h
 	dc.NewSubPath()
 	dc.MoveTo(complex(x1, y0))
-	dc.LineToV2(complex(x2, y0))
+	dc.LineTo(complex(x2, y0))
 	dc.DrawArc(complex(x2, y1), r, Radians(270), Radians(360))
-	dc.LineToV2(complex(x3, y2))
+	dc.LineTo(complex(x3, y2))
 	dc.DrawArc(complex(x2, y2), r, Radians(0), Radians(90))
-	dc.LineToV2(complex(x1, y3))
+	dc.LineTo(complex(x1, y3))
 	dc.DrawArc(complex(x1, y2), r, Radians(90), Radians(180))
-	dc.LineToV2(complex(x0, y1))
+	dc.LineTo(complex(x0, y1))
 	dc.DrawArc(complex(x1, y1), r, Radians(180), Radians(270))
 	dc.ClosePath()
 }
@@ -673,7 +669,7 @@ func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 		v2 := center + Mul2(Rotation(a2), r)
 		if i == 0 {
 			if dc.hasCurrent {
-				dc.LineToV2(v0)
+				dc.LineTo(v0)
 			} else {
 				dc.MoveTo(v0)
 			}
@@ -713,7 +709,7 @@ func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 	dc.NewSubPath()
 	for i := range Range(n) {
 		a := rotation + angle*float64(i)
-		dc.LineToV2(Polar(r, a) + complex(x, y))
+		dc.LineTo(Polar(r, a) + complex(x, y))
 	}
 	dc.ClosePath()
 }

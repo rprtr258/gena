@@ -72,7 +72,7 @@ func (o *oceanFish) drawfish(dc *Context, v V2, r float64) {
 
 		dc.MoveTo(fishPt(r, 0))
 		for i := 1; i < 361; i++ {
-			dc.LineToV2(fishPt(r, Radians(float64(i))))
+			dc.LineTo(fishPt(r, Radians(float64(i))))
 		}
 		dc.ClosePath()
 	})

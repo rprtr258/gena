@@ -27,11 +27,11 @@ func GirdSquares(c *image.RGBA, colorSchema []color.RGBA, step, rectSize int, de
 
 					dc.Scale(complex(s, s))
 
-					dc.LineTo(-0.5, 0.5)
-					dc.LineTo(0.5, 0.5)
-					dc.LineTo(0.5, -0.5)
-					dc.LineTo(-0.5, -0.5)
-					dc.LineTo(-0.5, 0.5)
+					dc.LineTo(complex(-0.5, 0.5))
+					dc.LineTo(complex(0.5, 0.5))
+					dc.LineTo(complex(0.5, -0.5))
+					dc.LineTo(complex(-0.5, -0.5))
+					dc.LineTo(complex(-0.5, 0.5))
 
 					dc.SetLineWidth(3)
 					dc.SetColor(gena.Tomato)

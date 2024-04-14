@@ -32,8 +32,8 @@ func randomQuadratic(dc *gena.Context) {
 	dc.QuadraticTo(p1, p2)
 	drawCurve(dc)
 	dc.MoveTo(p0)
-	dc.LineToV2(p1)
-	dc.LineToV2(p2)
+	dc.LineTo(p1)
+	dc.LineTo(p2)
 	drawPoints(dc)
 }
 
@@ -46,9 +46,9 @@ func randomCubic(dc *gena.Context) {
 	dc.CubicTo(p1, p2, p3)
 	drawCurve(dc)
 	dc.MoveTo(p0)
-	dc.LineToV2(p1)
-	dc.LineToV2(p2)
-	dc.LineToV2(p3)
+	dc.LineTo(p1)
+	dc.LineTo(p2)
+	dc.LineTo(p3)
 	drawPoints(dc)
 }
 

@@ -37,7 +37,7 @@ func SolarFlare(c *image.RGBA, lineColor color.RGBA) {
 					n := noise.Noise2_1(xOffset+px*inc, yOffset+py*inc) * r
 					px *= n
 					py *= n
-					dc.LineTo(px, py)
+					dc.LineTo(complex(px, py))
 				}
 				dc.Stroke()
 			})
