@@ -61,7 +61,7 @@ func beziers() {
 	dc.Clear()
 	for j := range gena.Range(H) {
 		for i := range gena.Range(W) {
-			v := gena.Plus(complex(float64(i), float64(j))*S, S/2)
+			v := S * (complex(float64(i), float64(j)) + gena.Diag(0.5))
 			dc.Stack(func(dc *gena.Context) {
 				dc.Translate(v)
 				dc.Scale(complex(S/2, S/2))

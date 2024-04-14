@@ -97,7 +97,7 @@ func PatternGradientRadial(
 
 		// copy from pixman's pixman-radial-gradient.c
 
-		d := Plus(f, 0.5) - c0.p
+		d := f + Diag(0.5) - c0.p
 		b := dot3(X(d), Y(d), c0.r, X(cd.p), Y(cd.p), cd.r)
 		c := dot3(X(d), Y(d), -c0.r, X(d), Y(d), c0.r)
 

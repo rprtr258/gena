@@ -17,7 +17,7 @@ func meme() {
 				// give it rounded corners
 				continue
 			}
-			dc.DrawStringAnchored(s, gena.Plus(complex(float64(dx), float64(dy)), S/2), complex(0.5, 0.5))
+			dc.DrawStringAnchored(s, complex(float64(dx), float64(dy))+gena.Diag(S/2), gena.Diag(0.5))
 		}
 	}
 	dc.SetColor(gena.ColorRGB(1, 1, 1))

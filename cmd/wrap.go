@@ -13,7 +13,7 @@ func wrap() {
 	dc.Clear()
 	dc.DrawLine(complex(W/2, 0), complex(W/2, H))
 	dc.DrawLine(complex(0, H/2), complex(W, H/2))
-	dc.DrawRectangle(complex(P, P), gena.Sub(complex(W, H), P*2))
+	dc.DrawRectangle(complex(P, P), complex(W, H)-gena.Diag(P*2))
 	dc.SetColor(gena.ColorRGBA(0, 0, 1, 0.25))
 	dc.SetLineWidth(3)
 	dc.Stroke()

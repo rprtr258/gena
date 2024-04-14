@@ -23,7 +23,7 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64)
 	for i := 0.; i < seg; i += 1. {
 		for j := 0.; j < seg; j += 1. {
 			rects = append(rects, Rect{
-				Pos:  Plus(complex(i, j)*Coeff(w), w/2),
+				Pos:  complex(i, j)*Coeff(w) + Diag(w/2),
 				Size: complex(w, w),
 			})
 		}

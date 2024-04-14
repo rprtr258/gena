@@ -17,7 +17,7 @@ func spiral() {
 		t := float64(i) / N
 		d := t*S*0.4 + 10
 		a := t * math.Pi * 2 * 20
-		dc.DrawCircle(gena.Plus(gena.Polar(d, a), S/2), t*8)
+		dc.DrawCircle(gena.Polar(d, a)+gena.Diag(S)/2, t*8)
 	}
 	dc.Fill()
 	gena.SavePNG("spiral.png", dc.Image())

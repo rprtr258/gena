@@ -40,11 +40,11 @@ func DotLine(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, 
 				new = old
 			}
 			if X(new) == X(old) && rand.Intn(6) > 4 {
-				dc.DrawEllipse(Plus(old*Coeff(ras), canv), complex(lineWidth, lineWidth))
+				dc.DrawEllipse(old*Coeff(ras)+Diag(canv), complex(lineWidth, lineWidth))
 				dc.Fill()
 				continue
 			}
-			dc.DrawLine(Plus(old*Coeff(ras), canv), Plus(new*Coeff(ras), canv))
+			dc.DrawLine(old*Coeff(ras)+Diag(canv), new*Coeff(ras)+Diag(canv))
 			old = new
 			dc.Stroke()
 		}

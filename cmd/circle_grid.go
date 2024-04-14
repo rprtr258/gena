@@ -48,7 +48,7 @@ func CircleGrid(c *image.RGBA, colorSchema []color.RGBA, lineWidth float64, circ
 
 	for i := range Range(seg) {
 		for j := range Range(seg) {
-			v := Plus(complex(float64(i), float64(j))*Coeff(w), w/2)
+			v := complex(float64(i), float64(j))*Coeff(w) + Diag(w/2)
 			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
 			dc.DrawCircle(v, w/2*RandomFloat64(0.1, 0.5))
 			dc.Fill()

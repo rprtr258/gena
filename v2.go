@@ -1,6 +1,8 @@
 package gena
 
-import "math/cmplx"
+import (
+	"math/cmplx"
+)
 
 type V2 = complex128
 
@@ -30,8 +32,9 @@ func Coeff(x float64) V2 {
 	return complex(x, 0)
 }
 
-func Diag(x float64) V2 {
-	return complex(x, x)
+func Diag[N interface{ ~float64 | ~int }](x N) V2 {
+	xx := float64(x)
+	return complex(xx, xx)
 }
 
 func Mul2(v, w V2) V2 {
@@ -50,14 +53,6 @@ func Normalized(v V2) V2 {
 	return SetMag(v, 1)
 }
 
-func Plus(v V2, z float64) V2 {
-	return v + Diag(z)
-}
-
-func Sub(v V2, z float64) V2 {
-	return v - Diag(z)
-}
-
 // ToPolar converts points from cartesian coordinates to polar coordinates
 func ToPolar(v V2) V2 {
 	return complex(cmplx.Abs(v), cmplx.Phase(v))
@@ -70,7 +65,7 @@ func ToCartesian(v V2) V2 {
 
 // ToPixel converts cartesian coordinates to actual pixels coordinates in an image
 func ToPixel(v, axis, size V2) V2 {
-	return Mul2(size/Coeff(2), Plus(Div2(v, axis), 1))
+	return Mul2(size/Coeff(2), Div2(v, axis)+Diag(1))
 }
 
 // Dist returns the Euclidean distance between two point on 2D dimension.
