@@ -6,7 +6,7 @@ import (
 )
 
 // max(min(x, h), l)
-func Constrain[T cmp.Ordered](x, low, high T) T {
+func Clamp[T cmp.Ordered](x, low, high T) T {
 	return max(min(x, high), low)
 }
 

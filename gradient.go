@@ -1,100 +1,75 @@
 package gena
 
 import (
+	"cmp"
 	"image/color"
 	"math"
-	"sort"
+	"slices"
 )
+
+type Stops map[float64]color.Color
 
 type stop struct {
 	pos   float64
 	color color.Color
 }
 
-type stops []stop
+func sortStops(stops Stops) []stop {
+	res := make([]stop, 0, len(stops))
+	for pos, color := range stops {
+		res = append(res, stop{pos, color})
+	}
 
-// Len satisfies the Sort interface.
-func (s stops) Len() int {
-	return len(s)
-}
-
-// Less satisfies the Sort interface.
-func (s stops) Less(i, j int) bool {
-	return s[i].pos < s[j].pos
-}
-
-// Swap satisfies the Sort interface.
-func (s stops) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-
-type Gradient interface {
-	Pattern
-	AddColorStop(offset float64, color color.Color)
+	slices.SortFunc(res, func(i, j stop) int {
+		return cmp.Compare(i.pos, j.pos)
+	})
+	return res
 }
 
 // Linear Gradient
-type linearGradient struct {
-	x0, y0, x1, y1 float64
-	stops          stops
-}
+func NewLinearGradient(
+	x0, y0, x1, y1 float64,
+	stopss Stops,
+) Pattern {
+	stops := sortStops(stopss)
 
-func (g *linearGradient) ColorAt(x, y int) color.Color {
-	if len(g.stops) == 0 {
-		return color.Transparent
+	return func(x, y int) color.Color {
+		if len(stops) == 0 {
+			return color.Transparent
+		}
+
+		fx, fy := float64(x), float64(y)
+		dx, dy := x1-x0, y1-y0
+
+		// Horizontal
+		if dy == 0 && dx != 0 {
+			return getColor((fx-x0)/dx, stops...)
+		}
+
+		// Vertical
+		if dx == 0 && dy != 0 {
+			return getColor((fy-y0)/dy, stops...)
+		}
+
+		// Dot product
+		s0 := dx*(fx-x0) + dy*(fy-y0)
+		if s0 < 0 {
+			return stops[0].color
+		}
+
+		// Calculate distance to (x0,y0) alone (x0,y0)->(x1,y1)
+		mag := math.Hypot(dx, dy)
+		u := ((fx-x0)*-dy + (fy-y0)*dx) / (mag * mag)
+		x2, y2 := x0+u*-dy, y0+u*dx
+		d := math.Hypot(fx-x2, fy-y2) / mag
+		return getColor(d, stops...)
 	}
-
-	fx, fy := float64(x), float64(y)
-	x0, y0, x1, y1 := g.x0, g.y0, g.x1, g.y1
-	dx, dy := x1-x0, y1-y0
-
-	// Horizontal
-	if dy == 0 && dx != 0 {
-		return getColor((fx-x0)/dx, g.stops)
-	}
-
-	// Vertical
-	if dx == 0 && dy != 0 {
-		return getColor((fy-y0)/dy, g.stops)
-	}
-
-	// Dot product
-	s0 := dx*(fx-x0) + dy*(fy-y0)
-	if s0 < 0 {
-		return g.stops[0].color
-	}
-	// Calculate distance to (x0,y0) alone (x0,y0)->(x1,y1)
-	mag := math.Hypot(dx, dy)
-	u := ((fx-x0)*-dy + (fy-y0)*dx) / (mag * mag)
-	x2, y2 := x0+u*-dy, y0+u*dx
-	d := math.Hypot(fx-x2, fy-y2) / mag
-	return getColor(d, g.stops)
-}
-
-func (g *linearGradient) AddColorStop(offset float64, color color.Color) {
-	g.stops = append(g.stops, stop{pos: offset, color: color})
-	sort.Sort(g.stops)
-}
-
-func NewLinearGradient(x0, y0, x1, y1 float64) Gradient {
-	g := &linearGradient{
-		x0: x0, y0: y0,
-		x1: x1, y1: y1,
-	}
-	return g
 }
 
 // Radial Gradient
 type circle struct {
 	p V2
 	r float64
-}
-
-type radialGradient struct {
-	c0, c1, cd circle
-	a, inva    float64
-	mindr      float64
-	stops      stops
 }
 
 func dot3(
@@ -104,101 +79,86 @@ func dot3(
 	return x0*x1 + y0*y1 + z0*z1
 }
 
-func (g *radialGradient) ColorAt(x, y int) color.Color {
-	if len(g.stops) == 0 {
-		return color.Transparent
-	}
+func NewRadialGradient(
+	p0 V2, r0 float64,
+	p1 V2, r1 float64,
+	stopss Stops,
+) Pattern {
+	stops := sortStops(stopss)
 
-	// copy from pixman's pixman-radial-gradient.c
-
-	d := complex(float64(x)+0.5, float64(y)+0.5) - g.c0.p
-	b := dot3(X(d), Y(d), g.c0.r, X(g.cd.p), Y(g.cd.p), g.cd.r)
-	c := dot3(X(d), Y(d), -g.c0.r, X(d), Y(d), g.c0.r)
-
-	if g.a == 0 {
-		if b == 0 {
-			return color.Transparent
-		}
-		t := 0.5 * c / b
-		if t*g.cd.r >= g.mindr {
-			return getColor(t, g.stops)
-		}
-		return color.Transparent
-	}
-
-	discr := dot3(b, g.a, 0, b, -c, 0)
-	if discr >= 0 {
-		sqrtdiscr := math.Sqrt(discr)
-		t0 := (b + sqrtdiscr) * g.inva
-		t1 := (b - sqrtdiscr) * g.inva
-
-		if t0*g.cd.r >= g.mindr {
-			return getColor(t0, g.stops)
-		} else if t1*g.cd.r >= g.mindr {
-			return getColor(t1, g.stops)
-		}
-	}
-
-	return color.Transparent
-}
-
-func (g *radialGradient) AddColorStop(offset float64, color color.Color) {
-	g.stops = append(g.stops, stop{pos: offset, color: color})
-	sort.Sort(g.stops)
-}
-
-func NewRadialGradient(p0 V2, r0 float64, p1 V2, r1 float64) Gradient {
 	c0 := circle{p0, r0}
-	c1 := circle{p1, r1}
+	// c1 := circle{p1, r1}
 	cd := circle{p1 - p0, r1 - r0}
 	a := dot3(X(cd.p), Y(cd.p), -cd.r, X(cd.p), Y(cd.p), cd.r)
+
 	var inva float64
 	if a != 0 {
 		inva = 1.0 / a
 	}
+
 	mindr := -c0.r
-	g := &radialGradient{
-		c0:    c0,
-		c1:    c1,
-		cd:    cd,
-		a:     a,
-		inva:  inva,
-		mindr: mindr,
+
+	return func(x, y int) color.Color {
+		if len(stops) == 0 {
+			return color.Transparent
+		}
+
+		// copy from pixman's pixman-radial-gradient.c
+
+		d := complex(float64(x)+0.5, float64(y)+0.5) - c0.p
+		b := dot3(X(d), Y(d), c0.r, X(cd.p), Y(cd.p), cd.r)
+		c := dot3(X(d), Y(d), -c0.r, X(d), Y(d), c0.r)
+
+		if a == 0 {
+			if b == 0 {
+				return color.Transparent
+			}
+			t := 0.5 * c / b
+			if t*cd.r >= mindr {
+				return getColor(t, stops...)
+			}
+			return color.Transparent
+		}
+
+		discr := dot3(b, a, 0, b, -c, 0)
+		if discr >= 0 {
+			sqrtdiscr := math.Sqrt(discr)
+			t0 := (b + sqrtdiscr) * inva
+			t1 := (b - sqrtdiscr) * inva
+
+			if t0*cd.r >= mindr {
+				return getColor(t0, stops...)
+			} else if t1*cd.r >= mindr {
+				return getColor(t1, stops...)
+			}
+		}
+
+		return color.Transparent
 	}
-	return g
 }
 
 // Conic Gradient
-type conicGradient struct {
-	cx, cy   float64
-	rotation float64
-	stops    stops
-}
+func NewConicGradient(
+	cx, cy, deg float64,
+	stopss Stops,
+) Pattern {
+	stops := sortStops(stopss)
 
-func (g *conicGradient) ColorAt(x, y int) color.Color {
-	if len(g.stops) == 0 {
-		return color.Transparent
-	}
-	a := math.Atan2(float64(y)-g.cy, float64(x)-g.cx)
-	t := norm(a, -math.Pi, math.Pi) - g.rotation
-	if t < 0 {
-		t += 1
-	}
-	return getColor(t, g.stops)
-}
+	rotation := normalizeAngle(deg) / 360
+	return func(x, y int) color.Color {
+		if len(stops) == 0 {
+			return color.Transparent
+		}
 
-func (g *conicGradient) AddColorStop(offset float64, color color.Color) {
-	g.stops = append(g.stops, stop{pos: offset, color: color})
-	sort.Sort(g.stops)
-}
+		a := math.Atan2(float64(y)-cy, float64(x)-cx)
 
-func NewConicGradient(cx, cy, deg float64) Gradient {
-	g := &conicGradient{
-		cx:       cx,
-		cy:       cy,
-		rotation: normalizeAngle(deg) / 360,
+		t := norm(a, -math.Pi, math.Pi) - rotation
+		if t < 0 {
+			t += 1
+		}
+
+		return getColor(t, stops...)
 	}
-	return g
 }
 
 func normalizeAngle(t float64) float64 {
@@ -230,7 +190,7 @@ func colorLerp(c0, c1 color.Color, t float64) color.Color {
 	}
 }
 
-func getColor(pos float64, stops stops) color.Color {
+func getColor(pos float64, stops ...stop) color.Color {
 	if pos <= 0.0 || len(stops) == 1 {
 		return stops[0].color
 	}

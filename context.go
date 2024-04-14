@@ -216,10 +216,6 @@ func (dc *Context) setFillAndStrokeColor(c color.Color) {
 
 // SetFillStyle sets current fill style
 func (dc *Context) SetFillStyle(pattern Pattern) {
-	// if pattern is SolidPattern, also change dc.color(for dc.Clear, dc.drawString)
-	if fillStyle, ok := pattern.(*solidPattern); ok {
-		dc.color = fillStyle.color
-	}
 	dc.fillPattern = pattern
 }
 
@@ -406,8 +402,9 @@ func (dc *Context) capper() raster.Capper {
 		return raster.RoundCapper
 	case LineCapSquare:
 		return raster.SquareCapper
+	default:
+		return nil
 	}
-	return nil
 }
 
 func (dc *Context) joiner() raster.Joiner {
@@ -416,8 +413,9 @@ func (dc *Context) joiner() raster.Joiner {
 		return raster.BevelJoiner
 	case LineJoinRound:
 		return raster.RoundJoiner
+	default:
+		return nil
 	}
-	return nil
 }
 
 func rasterPath(paths [][]V2) raster.Path {
@@ -590,20 +588,7 @@ func (dc *Context) fill(painter raster.Painter) {
 // line cap, line join and dash settings. The path is preserved after this
 // operation.
 func (dc *Context) StrokePreserve() {
-	var painter raster.Painter
-	if dc.mask == nil {
-		if pattern, ok := dc.strokePattern.(*solidPattern); ok {
-			// with a nil mask and a solid color pattern, we can be more efficient
-			// TODO: refactor so we don't have to do this type assertion stuff?
-			p := raster.NewRGBAPainter(dc.im)
-			p.SetColor(pattern.color)
-			painter = p
-		}
-	}
-	if painter == nil {
-		painter = newPatternPainter(dc.im, dc.mask, dc.strokePattern)
-	}
-	dc.stroke(painter)
+	dc.stroke(newPatternPainter(dc.im, dc.mask, dc.strokePattern))
 }
 
 // Stroke strokes the current path with the current color, line width,
@@ -617,20 +602,7 @@ func (dc *Context) Stroke() {
 // FillPreserve fills the current path with the current color. Open subpaths
 // are implicity closed. The path is preserved after this operation.
 func (dc *Context) FillPreserve() {
-	var painter raster.Painter
-	if dc.mask == nil {
-		if pattern, ok := dc.fillPattern.(*solidPattern); ok {
-			// with a nil mask and a solid color pattern, we can be more efficient
-			// TODO: refactor so we don't have to do this type assertion stuff?
-			p := raster.NewRGBAPainter(dc.im)
-			p.SetColor(pattern.color)
-			painter = p
-		}
-	}
-	if painter == nil {
-		painter = newPatternPainter(dc.im, dc.mask, dc.fillPattern)
-	}
-	dc.fill(painter)
+	dc.fill(newPatternPainter(dc.im, dc.mask, dc.fillPattern))
 }
 
 // Fill fills the current path with the current color. Open subpaths

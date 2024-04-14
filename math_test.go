@@ -16,7 +16,7 @@ func TestConstrain(t *testing.T) {
 		"in2":   {x: -1.0, low: -3.5, high: 1.5, want: -1.0},
 	} {
 		t.Run(name, func(t *testing.T) {
-			assert.Equal(t, tt.want, Constrain(tt.x, tt.low, tt.high))
+			assert.Equal(t, tt.want, Clamp(tt.x, tt.low, tt.high))
 		})
 	}
 
@@ -29,7 +29,7 @@ func TestConstrain(t *testing.T) {
 		"in":     {x: 100, low: 0, high: 255, want: 100},
 	} {
 		t.Run(name, func(t *testing.T) {
-			assert.Equal(t, tt.want, Constrain(tt.x, tt.low, tt.high))
+			assert.Equal(t, tt.want, Clamp(tt.x, tt.low, tt.high))
 		})
 	}
 }

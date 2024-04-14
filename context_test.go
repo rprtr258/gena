@@ -245,10 +245,11 @@ func TestDrawPoint(t *testing.T) {
 
 func TestLinearGradient(t *testing.T) {
 	dc := NewContext(100, 100)
-	g := NewLinearGradient(0, 0, 100, 100)
-	g.AddColorStop(0, color.RGBA{0, 255, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
-	g.AddColorStop(0.5, color.RGBA{255, 0, 0, 255})
+	g := NewLinearGradient(0, 0, 100, 100, Stops{
+		0:   color.RGBA{0, 255, 0, 255},
+		0.5: color.RGBA{255, 0, 0, 255},
+		1:   color.RGBA{0, 0, 255, 255},
+	})
 	dc.SetFillStyle(g)
 	dc.DrawRectangle(0, complex(100, 100))
 	dc.Fill()
@@ -258,10 +259,11 @@ func TestLinearGradient(t *testing.T) {
 
 func TestRadialGradient(t *testing.T) {
 	dc := NewContext(100, 100)
-	g := NewRadialGradient(30+50i, 0, 70+50i, 50)
-	g.AddColorStop(0, color.RGBA{0, 255, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
-	g.AddColorStop(0.5, color.RGBA{255, 0, 0, 255})
+	g := NewRadialGradient(30+50i, 0, 70+50i, 50, Stops{
+		0:   color.RGBA{0, 255, 0, 255},
+		0.5: color.RGBA{255, 0, 0, 255},
+		1:   color.RGBA{0, 0, 255, 255},
+	})
 	dc.SetFillStyle(g)
 	dc.DrawRectangle(0, complex(100, 100))
 	dc.Fill()

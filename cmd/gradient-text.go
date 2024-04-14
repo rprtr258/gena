@@ -27,9 +27,10 @@ func gradientText() {
 	dc.Clear()
 
 	// set a gradient
-	g := gena.NewLinearGradient(0, 0, W, H)
-	g.AddColorStop(0, color.RGBA{255, 0, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
+	g := gena.NewLinearGradient(0, 0, W, H, gena.Stops{
+		0: color.RGBA{255, 0, 0, 255},
+		1: color.RGBA{0, 0, 255, 255},
+	})
 	dc.SetFillStyle(g)
 
 	// using the mask, fill the context with the gradient

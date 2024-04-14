@@ -16,56 +16,41 @@ const (
 	RepeatNone
 )
 
-type Pattern interface {
-	ColorAt(x, y int) color.Color
-}
+type Pattern func(x, y int) color.Color
 
 // Solid Pattern
-type solidPattern struct {
-	color color.Color
-}
-
-func (p *solidPattern) ColorAt(x, y int) color.Color {
-	return p.color
-}
-
-func NewSolidPattern(color color.Color) Pattern {
-	return &solidPattern{color: color}
+func NewSolidPattern(c color.Color) Pattern {
+	return func(x, y int) color.Color {
+		return c
+	}
 }
 
 // Surface Pattern
-type surfacePattern struct {
-	im image.Image
-	op RepeatOp
-}
-
-func (p *surfacePattern) ColorAt(x, y int) color.Color {
-	b := p.im.Bounds()
-	switch p.op {
-	case RepeatX:
-		if y >= b.Dy() {
-			return color.Transparent
-		}
-	case RepeatY:
-		if x >= b.Dx() {
-			return color.Transparent
-		}
-	case RepeatNone:
-		if x >= b.Dx() || y >= b.Dy() {
-			return color.Transparent
-		}
-	}
-	return p.im.At(x%b.Dx()+b.Min.X, y%b.Dy()+b.Min.Y)
-}
-
 func NewSurfacePattern(im image.Image, op RepeatOp) Pattern {
-	return &surfacePattern{im: im, op: op}
+	return func(x, y int) color.Color {
+		b := im.Bounds()
+		switch op {
+		case RepeatX:
+			if y >= b.Dy() {
+				return color.Transparent
+			}
+		case RepeatY:
+			if x >= b.Dx() {
+				return color.Transparent
+			}
+		case RepeatNone:
+			if x >= b.Dx() || y >= b.Dy() {
+				return color.Transparent
+			}
+		}
+		return im.At(x%b.Dx()+b.Min.X, y%b.Dy()+b.Min.Y)
+	}
 }
 
 type patternPainter struct {
-	im   *image.RGBA
-	mask *image.Alpha
-	p    Pattern
+	im      *image.RGBA
+	mask    *image.Alpha
+	pattern Pattern
 }
 
 // Paint satisfies the Painter interface.
@@ -101,7 +86,7 @@ func (r *patternPainter) Paint(ss []raster.Span, done bool) {
 					continue
 				}
 			}
-			c := r.p.ColorAt(x, y)
+			c := r.pattern(x, y)
 			cr, cg, cb, ca := c.RGBA()
 			dr := uint32(r.im.Pix[i+0])
 			dg := uint32(r.im.Pix[i+1])
