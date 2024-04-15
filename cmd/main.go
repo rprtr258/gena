@@ -171,7 +171,7 @@ func pointribbon() {
 func randcircle() {
 	im := newImage(500, 500)
 	FillBackground(im, MistyRose)
-	RandCircle(im, Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, true, 4)
+	RandCircle(im, Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, 4)
 	SavePNG("randcircle.png", im)
 }
 
@@ -197,7 +197,7 @@ func silksky() {
 func silksmoke() {
 	im := newImage(500, 500)
 	FillBackground(im, Black)
-	SilkSmoke(im, Plasma, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30, false)
+	SilkSmoke(im, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30)
 	SavePNG("silksmoke.png", im)
 }
 

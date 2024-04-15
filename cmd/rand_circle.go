@@ -8,48 +8,45 @@ import (
 )
 
 type circle1 struct {
-	pos    V2
+	center V2
 	radius float64
 	d      V2
 }
 
-func newCircleSlice(cn, w, h int, minStep, maxStep, minRadius, maxRadius float64) []circle1 {
-	circles := make([]circle1, 0, cn)
-	for range Range(cn) {
-		x := RandomInt(w) + 1
-		y := RandomInt(h) + 1
-		radius := float64(RandomInt(int(minRadius))) + maxRadius - minRadius
-		circles = append(circles, circle1{
-			pos:    complex(float64(x), float64(y)),
-			radius: radius,
-			d:      Polar(RandomF64(minStep, maxStep), Random()*PI*2.0),
-		})
+func newCircleSlice(cn int, size V2, minStep, maxStep, minRadius, maxRadius float64) []circle1 {
+	circles := make([]circle1, cn)
+	for i := range circles {
+		circles[i] = circle1{
+			center: Diag(1) + RandomV2N(0, size),
+			radius: RandomF64(minRadius, maxRadius),
+			d:      Polar(RandomF64(minStep, maxStep), Random()*PI*2),
+		}
 	}
 	return circles
 }
 
-func circleSliceUpdate(cs []circle1, bounds image.Rectangle) []circle1 {
+func circleSliceUpdate(cs []circle1, size V2) []circle1 {
 	res := make([]circle1, len(cs))
 	for i, c := range cs {
-		c.pos += c.d
+		c.center += c.d
 
-		if X(c.pos) <= 0 {
-			c.pos = complex(0, imag(c.pos))
+		if X(c.center) <= 0 {
+			c.center = complex(0, imag(c.center))
 			c.d = complex(-X(c.d), Y(c.d))
 		}
 
-		if Y(c.pos) <= 0 {
-			c.pos = complex(real(c.pos), 0)
+		if Y(c.center) <= 0 {
+			c.center = complex(real(c.center), 0)
 			c.d = complex(X(c.d), -Y(c.d))
 		}
 
-		if X(c.pos) > float64(bounds.Dx()) {
-			c.pos = complex(float64(bounds.Dx()), imag(c.pos))
+		if X(c.center) > X(size) {
+			c.center = complex(X(size), imag(c.center))
 			c.d = complex(-X(c.d), Y(c.d))
 		}
 
-		if Y(c.pos) > float64(bounds.Dy()) {
-			c.pos = complex(real(c.pos), float64(bounds.Dy()))
+		if Y(c.center) > Y(size) {
+			c.center = complex(real(c.center), Y(size))
 			c.d = complex(X(c.d), -Y(c.d))
 		}
 
@@ -66,31 +63,24 @@ func RandCircle(
 	lineColor color.RGBA,
 	maxCircle, maxStepsPerCircle int,
 	minSteps, maxSteps, minRadius, maxRadius float64,
-	isRandColor bool,
 	iters int,
 ) {
 	dc := NewContextFromRGBA(im)
 	for range Range(iters) {
 		cn := RandomInt(maxCircle) + int(maxCircle/3)
-		circles := newCircleSlice(cn, im.Bounds().Dx(), im.Bounds().Dy(), minSteps, maxSteps, minRadius, maxRadius)
+		circles := newCircleSlice(cn, Size(im), minSteps, maxSteps, minRadius, maxRadius)
 
 		for range Range(maxStepsPerCircle) {
 			for _, c1 := range circles {
 				for _, c2 := range circles {
-					cl := lineColor
-					if isRandColor {
-						cl = RandomItem(colorSchema)
-					}
-
 					if c1 == c2 {
 						continue
 					}
 
-					distance := Dist(c1.pos, c2.pos)
-
+					distance := Dist(c1.center, c2.center)
 					if distance <= c1.radius+c2.radius {
-						cc := c1.pos + c2.pos/2
-						dc.SetColor(ColorRGBA255(cl, 30))
+						cc := c1.center + c2.center/2
+						dc.SetColor(ColorRGBA255(RandomItem(colorSchema), 30))
 						dc.SetLineWidth(lineWidth)
 						dc.DrawCircle(cc, distance/2)
 						dc.Stroke()
@@ -98,7 +88,7 @@ func RandCircle(
 				}
 			}
 
-			circles = circleSliceUpdate(circles, im.Bounds())
+			circles = circleSliceUpdate(circles, Size(im))
 		}
 	}
 }
