@@ -39,6 +39,8 @@ func drawfish(dc *Context, r float64) {
 // OceanFish draws an ocean and some fishes in the center.
 //   - lineNum: The number of the line used to simulate the ocean wave.
 //   - fishNum: The number of fish.
+//
+// TODO: make similar to original
 func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 	W := X(Size(im))
 
