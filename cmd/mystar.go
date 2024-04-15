@@ -9,14 +9,13 @@ import (
 func mystar() {
 	const n = 4
 
-	dc := NewContext(complex(500, 500))
-
+	dc := NewContext(Diag(500))
 	dc.SetColor(color.Black)
 	dc.Clear()
+	dc.TransformAdd(Translate(Diag(250)))
 
-	points := PolygonAt(n, 250+250i, 100)
+	points := PolygonAt(n, 0, 100)
 	for range Range(10) {
-		dc.TransformAdd(Translate(complex(250, 250)))
 		dc.TransformAdd(Rotate(PI / 9))
 
 		for _, point := range points {
