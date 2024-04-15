@@ -118,7 +118,7 @@ InvertY()
 
 It is often desired to rotate or scale about a point that is not the origin. The functions `RotateAbout`, `ScaleAbout`, `ShearAbout` are provided as a convenience.
 
-`InvertY` is provided in case Y should increase from bottom to top vs. The default is top to bottom.
+`InvertY` is provided in case Y should increase from bottom to top. The default is top to bottom.
 
 ### Clipping Functions
 Use clipping regions to restrict drawing operations to an area that you defined using paths.
@@ -179,6 +179,7 @@ SaveJPG(path string, im image.Image, quality uint8)
 ![](images/contourline.png)
 
 ### Domain Warp
+Source: https://iquilezles.org/articles/warp/
 ![](images/domainwarp.png)
 
 ### Dot Line
