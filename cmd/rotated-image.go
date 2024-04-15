@@ -5,7 +5,7 @@ import . "github.com/rprtr258/gena"
 func rotatedImage() {
 	const W = 400
 	const H = 500
-	im := LoadPNG("cmd/gopher.png")
+	im := Load("cmd/gopher.png")
 	iw, ih := im.Bounds().Dx(), im.Bounds().Dy()
 	dc := NewContext(complex(W, H))
 	// draw outline

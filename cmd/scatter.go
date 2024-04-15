@@ -1,16 +1,14 @@
 package main
 
 import (
-	"math/rand"
-
 	. "github.com/rprtr258/gena"
 )
 
 func CreatePoints(n int) []V2 {
 	points := make([]V2, n)
-	for i := range Range(n) {
-		x := 0.5 + rand.NormFloat64()*0.1
-		y := x + rand.NormFloat64()*0.1
+	for i := range points {
+		x := RandomGaussian(0.5, 0.1)
+		y := RandomGaussian(x, 0.1)
 		points[i] = complex(x, y)
 	}
 	return points

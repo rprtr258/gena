@@ -1,10 +1,6 @@
 package main
 
-import (
-	"math"
-
-	. "github.com/rprtr258/gena"
-)
+import . "github.com/rprtr258/gena"
 
 func spiral() {
 	const S = 1024
@@ -16,7 +12,7 @@ func spiral() {
 	for i := 0; i <= N; i++ {
 		t := float64(i) / N
 		d := t*S*0.4 + 10
-		a := t * math.Pi * 2 * 20
+		a := t * PI * 2 * 20
 		dc.DrawCircle(Polar(d, a)+Diag(S)/2, t*8)
 	}
 	dc.Fill()

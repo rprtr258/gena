@@ -3,10 +3,18 @@ package gena
 import (
 	"fmt"
 	"image/color"
-	"math"
 )
 
 var (
+	// base colors
+	Red   = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
+	Green = color.RGBA{0x00, 0xFF, 0x00, 0xFF}
+	Blue  = color.RGBA{0x00, 0x00, 0xFF, 0xFF}
+
+	Black     = color.RGBA{0x00, 0x00, 0x00, 0xFF}
+	LightGray = color.RGBA{0xC8, 0xC8, 0xC8, 0xFF}
+	White     = color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
+
 	MistyRose        = color.RGBA{0xFF, 0xE4, 0xE1, 0xFF}
 	DarkSalmon       = color.RGBA{0xE9, 0x96, 0x7A, 0xFF}
 	Tan              = color.RGBA{0xD2, 0xB4, 0x8C, 0xFF}
@@ -24,9 +32,6 @@ var (
 	LightPink        = color.RGBA{0xFF, 0xB6, 0xC1, 0xFF}
 	Tomato           = color.RGBA{0xFF, 0x63, 0x47, 0xFF}
 	Orange           = color.RGBA{0xFF, 0xA5, 0x00, 0xFF}
-	Black            = color.RGBA{0x00, 0x00, 0x00, 0xFF}
-	White            = color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
-	LightGray        = color.RGBA{200, 200, 200, 255}
 	Outdoors         = []color.RGBA{
 		{67, 110, 165, 255},
 		{47, 76, 114, 255},
@@ -663,7 +668,7 @@ func (hs HSV) ToRGB(mh, ms, mv int) color.RGBA {
 		h = 0
 	} // H must be < 1
 
-	i := math.Floor(h)
+	i := Floor(h)
 	v1 := v * (1 - s)
 	v2 := v * (1 - s*(h-i))
 	v3 := v * (1 - s*(1-(h-i)))

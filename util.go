@@ -25,7 +25,3 @@ func imageToRGBA(src image.Image) *image.RGBA {
 	draw.Draw(dst, bounds, src, bounds.Min, draw.Src)
 	return dst
 }
-
-func Range(n int) []struct{} {
-	return make([]struct{}, n)
-}

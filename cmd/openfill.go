@@ -1,30 +1,30 @@
 package main
 
-import (
-	"math"
-	"math/rand"
-
-	. "github.com/rprtr258/gena"
-)
+import . "github.com/rprtr258/gena"
 
 func openfill() {
-	dc := NewContext(complex(1000, 1000))
-	for j := range Range(10) {
-		for i := range Range(10) {
-			v := complex(float64(i), float64(j))*100 + 50
-			a1 := rand.Float64() * 2 * math.Pi
-			a2 := a1 + rand.Float64()*math.Pi + math.Pi/2
-			dc.DrawArc(v, 40, a1, a2)
-			// dc.ClosePath()
+	const N = 10
+	const SZ = 1000
+	dc := NewContext(Diag(SZ))
+	dc.TransformAdd(Translate(Diag(SZ / N / 2)))
+	for _, y := range RangeF64(0, SZ, N) {
+		for _, x := range RangeF64(0, SZ, N) {
+			f := complex(x, y)
+			a1 := PI * Random() * 2
+			a2 := PI * (Random() + 0.5)
+			dc.DrawArc(f, 40, a1, a1+a2)
 		}
 	}
-	dc.SetColor(ColorRGB(0, 0, 0))
+	dc.SetColor(Black)
 	dc.FillPreserve()
-	dc.SetColor(ColorRGB(1, 1, 1))
+
+	dc.SetColor(White)
 	dc.SetLineWidth(8)
 	dc.StrokePreserve()
-	dc.SetColor(ColorRGB(1, 0, 0))
+
+	dc.SetColor(Red)
 	dc.SetLineWidth(4)
 	dc.StrokePreserve()
+
 	SavePNG("openfill.png", dc.Image())
 }

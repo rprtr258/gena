@@ -3,57 +3,48 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
 
 // Generative draws a color circle images.
-func ColorCircle(c *image.RGBA, colorSchema []color.RGBA, circleNum int) {
-	dc := NewContextForRGBA(c)
+func ColorCircle(im *image.RGBA, colorSchema []color.NRGBA, n int) {
+	dc := NewContextFromRGBA(im)
 
-	for range Range(circleNum) {
-		v := Mul2(complex(
-			RandomFloat64(-0.1, 1.1),
-			RandomFloat64(-0.1, 1.1),
-		), Size(c))
-		s := RandomFloat64(0, RandomFloat64(0, float64(c.Bounds().Dx()/2))) + 10
+	for range Range(n) {
+		v := Mul2(RandomV2N(Diag(-0.1), Diag(1.1)), Size(im))
+		s := RandomF64(0, RandomF64(0, X(Size(im))/2)) + 10
 
-		rnd := rand.Intn(3)
-		if rnd == 2 {
-			rnd = rand.Intn(3)
-		}
-		switch rnd {
+		switch RandomWeighted(map[int]float64{0: 4, 1: 4, 2: 1}) {
 		case 0:
-			n := RandomRangeInt(4, 30)
-			cs := RandomFloat64(2, 8)
-			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
+			// circle made of points
+			n := RandomIntN(4, 30)
+			cs := RandomF64(2, 8)
+			dc.SetColor(RandomItem(colorSchema))
 			dc.Stack(func(ctx *Context) {
-				dc.TransformAdd(Translate(v))
-				for a := 0.0; a < math.Pi*2.0; a += math.Pi * 2.0 / float64(n) {
-					dc.DrawEllipse(Polar(s, a)/2, complex(cs/2, cs/2))
+				for _, a := range RangeF64(0, PI*2, n) {
+					dc.DrawCircle(v+Polar(s/2, a), cs/2)
 					dc.Fill()
 				}
 			})
 		case 1:
-			dc.SetLineWidth(RandomFloat64(0, 1))
-			dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
-			dc.DrawCircle(v, RandomFloat64(0, s)/2)
+			// regular circle
+			dc.SetLineWidth(Random())
+			dc.SetColor(RandomItem(colorSchema))
+			dc.DrawCircle(v, RandomF64(0, s)/2)
 			dc.Stroke()
 		case 2:
-			cl := colorSchema[rand.Intn(len(colorSchema))]
+			// ring cloud of points
+			cl := RandomItem(colorSchema)
 			dc.SetLineWidth(1.0)
-			sx := s * RandomFloat64(0.1, 0.55)
-			for j := 0.0001; j < sx; j++ {
-				dd := s + j*2.0
-				alpha := Clamp(int(255*sx/j), 0, 255)
-
-				cl.A = uint8(alpha)
+			sx := s * RandomF64(0.1, 0.55)
+			for _, j := range RangeStepF64(0.0001, sx, 1) {
+				cl.A = 64
 				dc.SetColor(cl)
 
+				dd := s + j*2
 				for range Range(200) {
-					theta := RandomFloat64(0, math.Pi*2)
+					theta := RandomF64(0, PI*2)
 					dc.DrawPoint(v+Polar(dd*0.3, theta), 0.6)
 					dc.Stroke()
 				}

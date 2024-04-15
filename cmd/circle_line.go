@@ -3,27 +3,32 @@ package main
 import (
 	"image"
 	"image/color"
-	"math"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
 
 // CircleLine draws a cirle line image.
-func CircleLine(c *image.RGBA, lineWidth float64, lineColor color.RGBA, step float64, lineNum int, radius float64, axis V2) {
-	dc := NewContextForRGBA(c)
+func CircleLine(
+	im *image.RGBA,
+	lineWidth float64,
+	lineColor color.RGBA,
+	step float64,
+	lineNum int,
+	radius float64,
+	axis V2,
+) {
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(lineWidth)
 	dc.SetColor(lineColor)
+
 	var points []V2
-	for theta := -math.Pi; theta <= math.Pi; theta += step {
-		points = append(points, ToPixel(Polar(radius, theta), axis, Size(c)))
+	for theta := -PI; theta <= PI; theta += step {
+		points = append(points, ToPixel(Polar(radius, theta), axis, Size(im)))
 	}
 
 	for range Range(lineNum) {
-		p1 := points[rand.Intn(len(points))]
-		dc.MoveTo(p1)
-		p2 := points[rand.Intn(len(points))]
-		dc.LineTo(p2)
+		dc.MoveTo(RandomItem(points))
+		dc.LineTo(RandomItem(points))
 		dc.Stroke()
 	}
 }

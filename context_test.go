@@ -210,13 +210,11 @@ func TestSetPixel(t *testing.T) {
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 1, 0))
 	i := 0
-	for y := range Range(100) {
-		for x := range Range(100) {
-			if i%31 == 0 {
-				dc.SetPixel(complex(float64(x), float64(y)))
-			}
-			i++
+	for _, f := range RangeV2_2(100, 100) {
+		if i%31 == 0 {
+			dc.SetPixel(f)
 		}
+		i++
 	}
 	saveImage(dc, "TestSetPixel")
 	assertHash(t, dc, "27dda6b4b1d94f061018825b11982793")

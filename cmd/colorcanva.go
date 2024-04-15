@@ -4,7 +4,6 @@ import (
 	"image"
 	"image/color"
 	"math/cmplx"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
@@ -14,12 +13,12 @@ type Rect struct {
 }
 
 // ColorCanva returns a color canva image.
-func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
-	dc := NewContextForRGBA(c)
+func ColorCanva(im *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
+	dc := NewContextFromRGBA(im)
 	dc.SetLineWidth(lineWidth)
 
 	rects := make([]Rect, 0)
-	w := float64(c.Bounds().Dx()) / seg
+	w := float64(im.Bounds().Dx()) / seg
 	for i := 0.; i < seg; i += 1. {
 		for j := 0.; j < seg; j += 1. {
 			rects = append(rects, Rect{
@@ -29,13 +28,11 @@ func ColorCanva(c *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64)
 		}
 	}
 
-	rand.Shuffle(len(rects), func(i, j int) {
-		rects[i], rects[j] = rects[j], rects[i]
-	})
+	Shuffle(rects)
 
-	dc.TransformAdd(Translate(Size(c) / 2))
+	dc.TransformAdd(Translate(Size(im) / 2))
 	dc.TransformAdd(Scale(complex(0.6, 0.6)))
-	dc.TransformAdd(Translate(-Size(c) / 2))
+	dc.TransformAdd(Translate(-Size(im) / 2))
 
 	for i := range rects {
 		drawColorCanva(dc, seg, colorSchema, rects[i])
@@ -47,7 +44,7 @@ func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rec
 	wh := Mul2(rect.Size/5, RandomV2()*Coeff(seg*2)+1)
 
 	var delta V2
-	switch rand.Intn(4) {
+	switch RandomInt(4) {
 	case 0:
 		delta = complex(-X(rect.Size), -Y(rect.Size))
 	case 1:
@@ -61,6 +58,6 @@ func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rec
 
 	dc.SetColor(Black)
 	dc.StrokePreserve()
-	dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
+	dc.SetColor(RandomItem(colorSchema))
 	dc.Fill()
 }

@@ -3,30 +3,30 @@ package main
 import (
 	"image"
 	"image/color"
-	"math/rand"
 
 	. "github.com/rprtr258/gena"
 )
 
 // SpiralSquare draws a spiral square images.
 func SpiralSquare(
-	c *image.RGBA, colorSchema []color.RGBA,
+	im *image.RGBA,
+	colorSchema []color.RGBA,
 	lineWidth float64,
 	lineColor color.RGBA,
 	squareNum int,
 	rectSide, decay float64,
-	fg color.RGBA, randColor bool,
+	fg color.RGBA,
+	randColor bool,
 ) {
-	dc := NewContextForRGBA(c)
+	dc := NewContextFromRGBA(im)
+	dc.TransformAdd(Translate(Size(im) / 2))
 
 	sl := rectSide
-	theta := rand.Intn(360) + 1
-	for i := range Range(squareNum) {
+	theta := RandomInt(360) + 1
+	for range Range(squareNum) {
+		dc.TransformAdd(Rotate(Radians(float64(theta))))
 		dc.Stack(func(ctx *Context) {
-			dc.TransformAdd(Translate(Size(c) / 2))
-			dc.TransformAdd(Rotate(Radians(float64(theta * (i + 1)))))
-
-			dc.TransformAdd(Scale(complex(sl, sl)))
+			dc.TransformAdd(Scale(Diag(sl)))
 
 			dc.LineTo(complex(-0.5, 0.5))
 			dc.LineTo(complex(0.5, 0.5))
@@ -39,7 +39,7 @@ func SpiralSquare(
 			dc.StrokePreserve()
 
 			if randColor {
-				dc.SetColor(colorSchema[rand.Intn(len(colorSchema))])
+				dc.SetColor(RandomItem(colorSchema))
 			} else {
 				dc.SetColor(fg)
 			}

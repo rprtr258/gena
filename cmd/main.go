@@ -5,7 +5,6 @@ import (
 	"image"
 	"image/color"
 	"log"
-	"math"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -25,34 +24,34 @@ func cmap(r, m1, m2 float64) color.RGBA {
 	}
 }
 
-func newCanvas(w, h int) *image.RGBA {
+func newImage(w, h int) *image.RGBA {
 	return image.NewRGBA(image.Rect(0, 0, w, h))
 }
 
 func dotline() {
-	c := newCanvas(2080, 2080)
-	FillBackground(c, color.RGBA{230, 230, 230, 255})
-	DotLine(c, DarkPink, 10, 100, 20, 50, false, 15000)
-	SavePNG("dotline.png", c)
+	im := newImage(2080, 2080)
+	FillBackground(im, color.RGBA{230, 230, 230, 255})
+	DotLine(im, DarkPink, 10, 100, 20, 50, false, 15000)
+	SavePNG("dotline.png", im)
 }
 
 func dotswave() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	DotsWave(c, []color.RGBA{
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	DotsWave(im, []color.RGBA{
 		{0xFF, 0xBE, 0x0B, 0xFF},
 		{0xFB, 0x56, 0x07, 0xFF},
 		{0xFF, 0x00, 0x6E, 0xFF},
 		{0x83, 0x38, 0xEC, 0xFF},
 		{0x3A, 0x86, 0xFF, 0xFF},
 	}, 300)
-	SavePNG("dotswave.png", c)
+	SavePNG("dotswave.png", im)
 }
 
 func gridsquare() {
-	c := newCanvas(600, 600)
-	GirdSquares(c, DarkPink, 24, 10, 0.2, 20)
-	SavePNG("gsquare.png", c)
+	im := newImage(600, 600)
+	GirdSquares(im, DarkPink, 24, 10, 0.2, 20)
+	SavePNG("gsquare.png", im)
 }
 
 func _http() {
@@ -67,12 +66,12 @@ func _http() {
 			// Draw the image to bytes
 			b := func() []byte {
 				// Generate a new image
-				c := newCanvas(500, 500)
-				FillBackground(c, Black)
-				Janus(c, DarkRed, LightPink, 10, 0.2)
+				im := newImage(500, 500)
+				FillBackground(im, Black)
+				Janus(im, DarkRed, LightPink, 0.2)
 
 				// Return the image as []byte
-				return ToBytes(c)
+				return ToBytes(im)
 			}()
 
 			// Set content headers
@@ -87,39 +86,39 @@ func _http() {
 }
 
 func janus() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	Janus(c, DarkRed, LightPink, 10, 0.2)
-	SavePNG("janus.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	Janus(im, DarkRed, LightPink, 0.2)
+	SavePNG("janus.png", im)
 }
 
 func julia() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Azure)
-	Julia(c, Viridis, func(z complex128) complex128 {
+	im := newImage(500, 500)
+	FillBackground(im, Azure)
+	Julia(im, Viridis, func(z complex128) complex128 {
 		return z*z + complex(-0.1, 0.651)
 	}, 40, 1.5+1.5i, 800)
-	SavePNG("julia.png", c)
+	SavePNG("julia.png", im)
 }
 
 func maze() {
-	c := newCanvas(600, 600)
-	FillBackground(c, Azure)
-	Maze(c, 3, Orange, 20)
-	SavePNG("maze.png", c)
+	im := newImage(600, 600)
+	FillBackground(im, Azure)
+	Maze(im, 3, Orange, 20)
+	SavePNG("maze.png", im)
 }
 
 func noiseline() {
-	c := newCanvas(1000, 1000)
-	FillBackground(c, color.RGBA{0xF0, 0xFE, 0xFF, 0xFF})
-	NoiseLine(c, []color.RGBA{
+	im := newImage(1000, 1000)
+	FillBackground(im, color.RGBA{0xF0, 0xFE, 0xFF, 0xFF})
+	NoiseLine(im, []color.RGBA{
 		{0x06, 0x7B, 0xC2, 0xFF},
 		{0x84, 0xBC, 0xDA, 0xFF},
 		{0xEC, 0xC3, 0x0B, 0xFF},
 		{0xF3, 0x77, 0x48, 0xFF},
 		{0xD5, 0x60, 0x62, 0xFF},
 	}, 1000)
-	SavePNG("noiseline.png", c)
+	SavePNG("noiseline.png", im)
 }
 
 func oceanfish() {
@@ -137,158 +136,157 @@ func oceanfish() {
 		{0x19, 0x6E, 0x94, 0xFF},
 		{0x35, 0x3A, 0x57, 0xFF},
 	}
-	c := newCanvas(500, 500)
-	OceanFish(c, colors, 100, 8)
-	SavePNG("oceanfish.png", c)
+	im := newImage(500, 500)
+	OceanFish(im, colors, 100, 8)
+	SavePNG("oceanfish.png", im)
 }
 
 func perlinpearls() {
-	c := newCanvas(500, 500)
-	FillBackground(c, White)
-	PerlinPearls(c, 0.3, 120, 10, 200, 40, 80, 200)
-	SavePNG("perlinperls.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, White)
+	PerlinPearls(im, 0.3, 120, 10, 200, 40, 80, 200)
+	SavePNG("perlinperls.png", im)
 }
 
 func pixelhole() {
-	c := newCanvas(800, 800)
-	FillBackground(c, Black)
-	PixelHole(c, []color.RGBA{
+	im := newImage(800, 800)
+	FillBackground(im, Black)
+	PixelHole(im, []color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},
 		{0xF8, 0x66, 0x24, 0xFF},
 		{0xEA, 0x35, 0x46, 0xFF},
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}, 60, 1200)
-	SavePNG("pixelhole.png", c)
+	SavePNG("pixelhole.png", im)
 }
 
 func pointribbon() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Lavender)
-	PointRibbon(c, 2, 50, 150000)
-	SavePNG("pointribbon.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, Lavender)
+	PointRibbon(im, 2, 50, 150000)
+	SavePNG("pointribbon.png", im)
 }
 
 func randcircle() {
-	c := newCanvas(500, 500)
-	FillBackground(c, MistyRose)
-	RandCircle(c, Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, true, 4)
-	SavePNG("randcircle.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, MistyRose)
+	RandCircle(im, Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, 4)
+	SavePNG("randcircle.png", im)
 }
 
 func randomshape() {
-	c := newCanvas(500, 500)
-	FillBackground(c, White)
-	RandomShape(c, []color.RGBA{
+	im := newImage(500, 500)
+	FillBackground(im, White)
+	RandomShape(im, []color.RGBA{
 		{0xCF, 0x2B, 0x34, 0xFF},
 		{0xF0, 0x8F, 0x46, 0xFF},
 		{0xF0, 0xC1, 0x29, 0xFF},
 		{0x19, 0x6E, 0x94, 0xFF},
 		{0x35, 0x3A, 0x57, 0xFF},
 	}, 150)
-	SavePNG("randomshape.png", c)
+	SavePNG("randomshape.png", im)
 }
 
 func silksky() {
-	c := newCanvas(600, 600)
-	SilkSky(c, 10, 15, 5)
-	SavePNG("silksky.png", c)
+	im := newImage(600, 600)
+	SilkSky(im, 10, 15, 5)
+	SavePNG("silksky.png", im)
 }
 
 func silksmoke() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	SilkSmoke(c, Plasma, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30, false)
-	SavePNG("silksmoke.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	SilkSmoke(im, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30)
+	SavePNG("silksmoke.png", im)
 }
 
 func solarflare() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	SolarFlare(c, color.RGBA{255, 64, 8, 128})
-	SavePNG("solarflare.png", c)
+	im := newImage(500, 500)
+	SolarFlare(im, color.NRGBA{255, 64, 8, 255})
+	SavePNG("solarflare.png", im)
 }
 
 func spiralsquare() {
-	c := newCanvas(500, 500)
-	FillBackground(c, MistyRose)
-	SpiralSquare(c, Plasma, 10, Orange, 40, 400, 0.05, Tomato, true)
-	SavePNG("spiralsquare.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, MistyRose)
+	SpiralSquare(im, Plasma, 10, Orange, 40, 400, 0.05, Tomato, true)
+	SavePNG("spiralsquare.png", im)
 }
 
 func swirl() {
 	bg := Azure
-	c := newCanvas(1600, 1600)
-	FillBackground(c, bg)
+	im := newImage(1600, 1600)
+	FillBackground(im, bg)
 	Swirl(
-		c,
+		im,
 		color.RGBA{113, 3, 0, 140}, bg,
 		0.970, -1.899, 1.381, -1.506,
 		2.4+2.4i,
 		4000000,
 	)
-	SavePNG("swirl.png", c)
+	SavePNG("swirl.png", im)
 }
 
 func yarn() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Orange)
-	Yarn(c, 0.3, color.RGBA{A: 60}, 2000)
-	SavePNG("yarn.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, Orange)
+	Yarn(im, 0.3, color.RGBA{A: 60}, 2000)
+	SavePNG("yarn.png", im)
 }
 
 func blackhole() {
-	c := newCanvas(500, 500)
-	FillBackground(c, color.RGBA{30, 30, 30, 255})
-	BlackHole(c, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), RandomFloat64(0, 1))
-	SavePNG("blackhole.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, color.RGBA{30, 30, 30, 255})
+	BlackHole(im, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), Random())
+	SavePNG("blackhole.png", im)
 }
 
 func circlegrid() {
-	c := newCanvas(500, 500)
-	FillBackground(c, color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
-	CircleGrid(c, []color.RGBA{
+	im := newImage(500, 500)
+	FillBackground(im, color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
+	CircleGrid(im, []color.RGBA{
 		{0xED, 0x34, 0x41, 0xFF},
 		{0xFF, 0xD6, 0x30, 0xFF},
 		{0x32, 0x9F, 0xE3, 0xFF},
 		{0x15, 0x42, 0x96, 0xFF},
 		{0x00, 0x00, 0x00, 0xFF},
 		{0xFF, 0xFF, 0xFF, 0xFF},
-	}, 2, 4, 6)
-	SavePNG("circlegrid.png", c)
+	}, 2, RandomIntN(4, 6))
+	SavePNG("circlegrid.png", im)
 }
 
 func circleline() {
-	c := newCanvas(600, 600)
-	FillBackground(c, Tan)
-	CircleLine(c, 1, LightPink, 0.02, 600, 1.5, complex(2, 2))
-	SavePNG("circleline.png", c)
+	im := newImage(600, 600)
+	FillBackground(im, Tan)
+	CircleLine(im, 1, LightPink, 0.02, 600, 1.5, complex(2, 2))
+	SavePNG("circleline.png", im)
 }
 
 func circleloop() {
-	c := newCanvas(500, 500)
-	CircleLoop(c, 1, Orange, 30, 100, 1000)
-	SavePNG("circleloop.png", c)
+	im := newImage(500, 500)
+	CircleLoop(im, 1, Orange, 30, 100, 1000)
+	SavePNG("circleloop.png", im)
 }
 
 func circleloop2() {
-	c := newCanvas(500, 500)
-	FillBackground(c, color.RGBA{8, 10, 20, 255})
-	CircleLoop2(c, []color.RGBA{
+	im := newImage(500, 500)
+	FillBackground(im, color.RGBA{8, 10, 20, 255})
+	CircleLoop2(im, []color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},
 		{0xF8, 0x66, 0x24, 0xFF},
 		{0xEA, 0x35, 0x46, 0xFF},
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}, 7)
-	SavePNG("colorloop2.png", c)
+	SavePNG("circleloop2.png", im)
 }
 
 func circlemove() {
-	c := newCanvas(1200, 500)
-	FillBackground(c, White)
-	CircleMove(c, 1000)
-	SavePNG("circlemove.png", c)
+	im := newImage(1200, 500)
+	FillBackground(im, White)
+	CircleMove(im, 1000)
+	SavePNG("circlemove.png", im)
 }
 
 func circlenoise() {
@@ -296,10 +294,8 @@ func circlenoise() {
 	const _iters = 1 // 000
 	noise := NewPerlinNoiseDeprecated()
 	bar := progressbar.Default(_iters)
-	for i := range Range(_iters) {
+	for i, ralpha := range RangeF64(0, 2*PI, _iters) {
 		_ = bar.Add(1)
-
-		ralpha := float64(i) * 2 * math.Pi / _iters
 
 		angles := make([]float64, _dots)
 		for j := range angles {
@@ -312,30 +308,30 @@ func circlenoise() {
 		}
 		noise2 := NewPerlinNoise(peepo)
 
-		c := newCanvas(500, 500)
-		FillBackground(c, White)
-		CircleNoise(c, 0.3, 80, angles, 60, 80, 400, noise2)
-		SavePNG(fmt.Sprintf("circlenoise%04d.png", i), c)
+		im := newImage(500, 500)
+		FillBackground(im, White)
+		CircleNoise(im, 0.3, 80, angles, 60, 80, 400, noise2)
+		SavePNG(fmt.Sprintf("circlenoise%04d.png", i), im)
 	}
 }
 
 func colorcanvas() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	ColorCanva(c, []color.RGBA{
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	ColorCanva(im, []color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},
 		{0xF8, 0x66, 0x24, 0xFF},
 		{0xEA, 0x35, 0x46, 0xFF},
 		{0x66, 0x2E, 0x9B, 0xFF},
 		{0x43, 0xBC, 0xCD, 0xFF},
 	}, 8, 5)
-	SavePNG("colorcanva.png", c)
+	SavePNG("colorcanva.png", im)
 }
 
 func colorcircle() {
-	c := newCanvas(1000, 1000)
-	FillBackground(c, White)
-	ColorCircle(c, []color.RGBA{
+	im := newImage(1000, 1000)
+	FillBackground(im, White)
+	ColorCircle(im, []color.NRGBA{
 		{0xFF, 0xC6, 0x18, 0xFF},
 		{0xF4, 0x25, 0x39, 0xFF},
 		{0x41, 0x78, 0xF4, 0xFF},
@@ -345,52 +341,52 @@ func colorcircle() {
 		{0x98, 0x19, 0xFA, 0xFF},
 		{0xFF, 0xFF, 0xFF, 0xFF},
 	}, 500)
-	SavePNG("colorcircle.png", c)
+	SavePNG("colorcircle.png", im)
 }
 
 func colorcircle2() {
-	c := newCanvas(800, 800)
-	FillBackground(c, White)
-	ColorCircle2(c, []color.RGBA{
+	im := newImage(800, 800)
+	FillBackground(im, White)
+	ColorCircle2(im, []color.RGBA{
 		{0x11, 0x60, 0xC6, 0xFF},
 		{0xFD, 0xD9, 0x00, 0xFF},
 		{0xF5, 0xB4, 0xF8, 0xFF},
 		{0xEF, 0x13, 0x55, 0xFF},
 		{0xF4, 0x9F, 0x0A, 0xFF},
 	}, 30)
-	SavePNG("colorcircle2.png", c)
+	SavePNG("colorcircle2.png", im)
 }
 
 func contourline() {
-	c := newCanvas(1600, 1600)
-	FillBackground(c, color.RGBA{0x1a, 0x06, 0x33, 0xFF})
-	ContourLine(c, []color.RGBA{
+	im := newImage(1600, 1600)
+	FillBackground(im, color.RGBA{0x1a, 0x06, 0x33, 0xFF})
+	ContourLine(im, []color.RGBA{
 		{0x58, 0x18, 0x45, 0xFF},
 		{0x90, 0x0C, 0x3F, 0xFF},
 		{0xC7, 0x00, 0x39, 0xFF},
 		{0xFF, 0x57, 0x33, 0xFF},
 		{0xFF, 0xC3, 0x0F, 0xFF},
 	}, 500)
-	SavePNG("contourline.png", c)
+	SavePNG("contourline.png", im)
 }
 
 func domainwrap() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	DomainWarp(c, 0.01, 4, complex(4, 20), cmap, 0, 0, "")
-	SavePNG("domainwarp.png", c)
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	DomainWarp(im, 0.01, 4, complex(4, 20), cmap, 0, 0, "")
+	SavePNG("domainwarp.png", im)
 }
 
 func domainwrapFrames() {
-	c := newCanvas(500, 500)
-	FillBackground(c, Black)
-	DomainWarp(c, 0.01, 4, complex(4, 20), cmap, 0.005, 100, "./temp")
+	im := newImage(500, 500)
+	FillBackground(im, Black)
+	DomainWarp(im, 0.01, 4, complex(4, 20), cmap, 0.005, 100, "./temp")
 }
 
 func test() {
 	dest := image.NewRGBA(image.Rect(0, 0, 500, 500))
 
-	dc := NewContextForRGBA(dest)
+	dc := NewContextFromRGBA(dest)
 	dc.Stack(func(dc *Context) {
 		dc.TransformAdd(Translate(complex(500/2, 500/2)))
 		dc.TransformAdd(Rotate(40))
@@ -398,15 +394,15 @@ func test() {
 		for i := range Range(361) {
 			theta := Radians(float64(i))
 			p := complex(
-				math.Cos(theta)-math.Pow(math.Sin(theta), 2)/math.Sqrt(2),
-				math.Cos(theta)*math.Sin(theta),
+				Cos(theta)-Pow(Sin(theta), 2)/Sqrt(2.0),
+				Cos(theta)*Sin(theta),
 			)
 
 			alpha := Radians(float64(i + 1))
 
 			p1 := complex(
-				math.Cos(alpha)-math.Pow(math.Sin(alpha), 2)/math.Sqrt(2),
-				math.Cos(alpha)*math.Sin(alpha),
+				Cos(alpha)-Pow(Sin(alpha), 2)/Sqrt(2.0),
+				Cos(alpha)*Sin(alpha),
 			)
 
 			dc.DrawLine(p*100, p1*100)

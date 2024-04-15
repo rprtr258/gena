@@ -3,9 +3,10 @@ package main
 import . "github.com/rprtr258/gena"
 
 func circle() {
-	dc := NewContext(complex(1000, 1000))
-	dc.DrawCircle(500+500i, 400)
-	dc.SetColor(ColorRGB(0, 0, 0))
+	const SZ = 1000
+	dc := NewContext(Diag(SZ))
+	dc.DrawCircle(Diag(SZ)/2, SZ*0.4)
+	dc.SetColor(Black)
 	dc.Fill()
 	SavePNG("circle.png", dc.Image())
 }

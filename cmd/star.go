@@ -1,15 +1,11 @@
 package main
 
-import (
-	"math"
-
-	. "github.com/rprtr258/gena"
-)
+import . "github.com/rprtr258/gena"
 
 func PolygonAt(n int, p V2, r float64) []V2 {
 	result := make([]V2, n)
 	for i := range result {
-		result[i] = p + Polar(r, math.Pi*(float64(i)*2/float64(n)-0.5))
+		result[i] = p + Polar(r, PI*(float64(i)*2/float64(n)-0.5))
 	}
 	return result
 }

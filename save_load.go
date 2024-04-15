@@ -17,13 +17,6 @@ func Load(path string) image.Image {
 	return im
 }
 
-func LoadPNG(path string) image.Image {
-	file := must1(os.Open(path))
-	defer file.Close()
-
-	return must1(png.Decode(file))
-}
-
 // SavePNG saves the image to local with PNG format.
 func SavePNG(path string, im image.Image) {
 	file := must1(os.Create(path))
@@ -32,20 +25,14 @@ func SavePNG(path string, im image.Image) {
 	must(png.Encode(file, im))
 }
 
-func LoadJPG(path string) image.Image {
-	file := must1(os.Open(path))
-	defer file.Close()
-
-	return must1(jpeg.Decode(file))
-}
-
 // SaveJPG saves the image to local with Jpeg format.
-func SaveJPG(path string, im image.Image, quality int) {
+//   - quality ranges from 1 to 100 inclusive, higher is better.
+func SaveJPG(path string, im image.Image, quality uint8) {
 	file := must1(os.Create(path))
 	defer file.Close()
 
 	must(jpeg.Encode(file, im, &jpeg.Options{
-		Quality: quality,
+		Quality: int(quality),
 	}))
 }
 

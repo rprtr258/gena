@@ -16,6 +16,10 @@ func Y(v V2) float64 {
 	return imag(v)
 }
 
+func XY(v V2) (x, y float64) {
+	return X(v), Y(v)
+}
+
 func Polar(r, theta float64) V2 {
 	return cmplx.Exp(complex(0, theta)) * complex(r, 0)
 }

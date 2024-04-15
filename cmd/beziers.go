@@ -3,7 +3,7 @@ package main
 import . "github.com/rprtr258/gena"
 
 func random() float64 {
-	return RandomFloat64(-1, 1)
+	return RandomF64(-1, 1)
 }
 
 func point() V2 {
@@ -25,9 +25,7 @@ func drawPoints(dc *Context) {
 }
 
 func randomQuadratic(dc *Context) {
-	p0 := point()
-	p1 := point()
-	p2 := point()
+	p0, p1, p2 := point(), point(), point()
 	dc.MoveTo(p0)
 	dc.QuadraticTo(p1, p2)
 	drawCurve(dc)
@@ -38,10 +36,7 @@ func randomQuadratic(dc *Context) {
 }
 
 func randomCubic(dc *Context) {
-	p0 := point()
-	p1 := point()
-	p2 := point()
-	p3 := point()
+	p0, p1, p2, p3 := point(), point(), point(), point()
 	dc.MoveTo(p0)
 	dc.CubicTo(p1, p2, p3)
 	drawCurve(dc)
@@ -54,17 +49,16 @@ func randomCubic(dc *Context) {
 
 func beziers() {
 	const S = 256
-	const W = 8
-	const H = 8
-	dc := NewContext(complex(W, H) * Coeff(S))
+	const SZ = 8
+	dc := NewContext(Diag(SZ) * Coeff(S))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
-	for j := range Range(H) {
-		for i := range Range(W) {
+	for j := range Range(SZ) {
+		for i := range Range(SZ) {
 			v := S * (complex(float64(i), float64(j)) + Diag(0.5))
 			dc.Stack(func(dc *Context) {
 				dc.TransformAdd(Translate(v))
-				dc.TransformAdd(Scale(complex(S/2, S/2)))
+				dc.TransformAdd(Scale(S * Diag(0.5)))
 				if j%2 == 0 {
 					randomCubic(dc)
 				} else {
