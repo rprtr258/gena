@@ -659,10 +659,12 @@ func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
 
 func (dc *Context) DrawEllipticalArc(center, r V2, angle1, angle2 float64) {
 	const n = 16
-	for i, a1 := range RangeF64(angle1, angle2, n) {
+	for i := 0; i < n; i++ {
+		a1 := Lerp(angle1, angle2, float64(i+0)/n)
+		a2 := Lerp(angle1, angle2, float64(i+1)/n)
 		v0 := center + Mul2(Rotation(a1), r)
-		v1 := center + Mul2(Rotation(a1+1.0/n/2), r)
-		v2 := center + Mul2(Rotation(a1+1.0/n), r)
+		v1 := center + Mul2(Rotation((a1+a2)/2), r)
+		v2 := center + Mul2(Rotation(a2), r)
 		if i == 0 {
 			if dc.hasCurrent {
 				dc.LineTo(v0)
