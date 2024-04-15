@@ -203,8 +203,7 @@ func silksmoke() {
 
 func solarflare() {
 	im := newImage(500, 500)
-	FillBackground(im, Black)
-	SolarFlare(im, color.RGBA{255, 64, 8, 128})
+	SolarFlare(im, color.NRGBA{255, 64, 8, 255})
 	SavePNG("solarflare.png", im)
 }
 

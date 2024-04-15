@@ -19,15 +19,14 @@ func SpiralSquare(
 	randColor bool,
 ) {
 	dc := NewContextFromRGBA(im)
+	dc.TransformAdd(Translate(Size(im) / 2))
 
 	sl := rectSide
 	theta := RandomInt(360) + 1
-	for i := range Range(squareNum) {
+	for range Range(squareNum) {
+		dc.TransformAdd(Rotate(Radians(float64(theta))))
 		dc.Stack(func(ctx *Context) {
-			dc.TransformAdd(Translate(Size(im) / 2))
-			dc.TransformAdd(Rotate(Radians(float64(theta * (i + 1)))))
-
-			dc.TransformAdd(Scale(complex(sl, sl)))
+			dc.TransformAdd(Scale(Diag(sl)))
 
 			dc.LineTo(complex(-0.5, 0.5))
 			dc.LineTo(complex(0.5, 0.5))
