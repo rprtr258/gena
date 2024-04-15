@@ -190,6 +190,15 @@ SaveJPG(path string, im image.Image, quality uint8)
 ### Dots Wave
 ![](images/dotswave.png)
 
+### Gradient Conic
+![](images/gradient-conic.png)
+
+### Gradient Linear
+![](images/gradientLinear.png)
+
+### Gradient Radial
+![](images/gradientRadial.png)
+
 ### Noise Line
 ![](images/noiseline.png)
 

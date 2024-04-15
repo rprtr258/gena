@@ -12,14 +12,10 @@ func gradientLinear() {
 	grad := PatternGradientLinear(
 		complex(20, 320),
 		complex(400, 20),
-		Stops{
-			0:   color.RGBA{0, 255, 0, 255},
-			0.5: color.RGBA{255, 0, 0, 255},
-			1:   color.RGBA{0, 0, 255, 255},
-		})
+		Stops{0: Green, 0.5: Red, 1: Blue})
 
 	dc.SetColor(color.White)
-	dc.DrawRectangle(20+20i, 400-20+300i)
+	dc.DrawRectangle(complex(20, 20), complex(400-20, 300))
 	dc.Stroke()
 
 	dc.SetStrokeStyle(grad)

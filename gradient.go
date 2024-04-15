@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"image/color"
 	"math"
+	"math/cmplx"
 	"slices"
 )
 
@@ -27,22 +28,22 @@ func sortStops(stops Stops) []stop {
 }
 
 func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
+	if len(stopss) == 0 {
+		return PatternSolid(color.Transparent)
+	}
+
 	stops := sortStops(stopss)
 
 	return func(f V2) color.Color {
-		if len(stops) == 0 {
-			return color.Transparent
-		}
-
 		d := v1 - v0
 
 		// Horizontal
-		if Y(d) == 0 && X(d) != 0 {
+		if Y(d) == 0 {
 			return getColor((X(f)-X(v0))/X(d), stops...)
 		}
 
 		// Vertical
-		if X(d) == 0 && Y(d) != 0 {
+		if X(d) == 0 {
 			return getColor((Y(f)-Y(v0))/Y(d), stops...)
 		}
 
@@ -50,10 +51,11 @@ func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
 			return stops[0].color
 		}
 
-		// Calculate distance to (x0,y0) alone (x0,y0)->(x1,y1)
+		// Calculate distance to v0 along v0->v1
 		mag := Magnitude(d)
-		u := Pow(Magnitude((f-v0)*complex(0, 1)*d)/mag, 2)
-		v2 := v0 + d*complex(0, 1)*Coeff(u)
+		cross := imag((f - v0) * cmplx.Conj(d))
+		u := cross / Pow(mag, 2)
+		v2 := v0 + complex(0, 1)*d*Coeff(u)
 		return getColor(Magnitude(f-v2)/mag, stops...)
 	}
 }
@@ -167,7 +169,7 @@ func getColor(pos float64, stops ...stop) color.Color {
 
 	for i, stop := range stops[1:] {
 		if pos < stop.pos {
-			t := (pos - stops[i].pos) / (stop.pos - stops[i].pos)
+			t := Remap(pos, stops[i].pos, stop.pos, 0, 1)
 			return ColorLerp(stops[i].color, stop.color, t)
 		}
 	}
