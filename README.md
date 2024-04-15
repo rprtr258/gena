@@ -223,9 +223,6 @@ SaveJPG(path string, im image.Image, quality uint8)
 ### Random Circle
 ![](images/randcircle.png)
 
-### Random Circle Trails
-![](images/random_circle_trails.png)
-
 ### Random Shapes
 ![](images/randomshape.png)
 
