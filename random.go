@@ -38,8 +38,31 @@ func RandomV2() V2 {
 	return complex(Random(), Random())
 }
 
+func RandomV2N(min, max V2) V2 {
+	return Mul2(RandomV2(), (max-min)) + min
+}
+
 func RandomItem[T any](items []T) T {
 	return items[RandomInt(len(items))]
+}
+
+func RandomWeighted[K comparable](items map[K]float64) K {
+	sum := 0.0
+	for _, p := range items {
+		sum += p
+	}
+
+	r := Random() * sum
+	for k, p := range items {
+		r -= p
+		if r <= 0 {
+			return k
+		}
+	}
+	for k := range items {
+		return k
+	}
+	panic("empty map")
 }
 
 func Shuffle[T any](items []T) {

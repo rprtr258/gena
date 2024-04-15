@@ -239,7 +239,7 @@ func yarn() {
 func blackhole() {
 	im := newImage(500, 500)
 	FillBackground(im, color.RGBA{30, 30, 30, 255})
-	BlackHole(im, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), RandomF64(0, 1))
+	BlackHole(im, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), Random())
 	SavePNG("blackhole.png", im)
 }
 
@@ -332,7 +332,7 @@ func colorcanvas() {
 func colorcircle() {
 	im := newImage(1000, 1000)
 	FillBackground(im, White)
-	ColorCircle(im, []color.RGBA{
+	ColorCircle(im, []color.NRGBA{
 		{0xFF, 0xC6, 0x18, 0xFF},
 		{0xF4, 0x25, 0x39, 0xFF},
 		{0x41, 0x78, 0xF4, 0xFF},

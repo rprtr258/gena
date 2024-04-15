@@ -8,48 +8,41 @@ import (
 )
 
 // Generative draws a color circle images.
-func ColorCircle(im *image.RGBA, colorSchema []color.RGBA, n int) {
+func ColorCircle(im *image.RGBA, colorSchema []color.NRGBA, n int) {
 	dc := NewContextFromRGBA(im)
 
 	for range Range(n) {
-		v := Mul2(complex(
-			RandomF64(-0.1, 1.1),
-			RandomF64(-0.1, 1.1),
-		), Size(im))
-		s := RandomF64(0, RandomF64(0, float64(im.Bounds().Dx()/2))) + 10
+		v := Mul2(RandomV2N(Diag(-0.1), Diag(1.1)), Size(im))
+		s := RandomF64(0, RandomF64(0, X(Size(im))/2)) + 10
 
-		rnd := RandomInt(3)
-		if rnd == 2 {
-			rnd = RandomInt(3)
-		}
-		switch rnd {
+		switch RandomWeighted(map[int]float64{0: 4, 1: 4, 2: 1}) {
 		case 0:
+			// circle made of points
 			n := RandomIntN(4, 30)
 			cs := RandomF64(2, 8)
 			dc.SetColor(RandomItem(colorSchema))
 			dc.Stack(func(ctx *Context) {
-				dc.TransformAdd(Translate(v))
-				for a := 0.0; a < PI*2.0; a += PI * 2.0 / float64(n) {
-					dc.DrawEllipse(Polar(s, a)/2, complex(cs/2, cs/2))
+				for _, a := range RangeF64(0, PI*2, n) {
+					dc.DrawCircle(v+Polar(s/2, a), cs/2)
 					dc.Fill()
 				}
 			})
 		case 1:
-			dc.SetLineWidth(RandomF64(0, 1))
+			// regular circle
+			dc.SetLineWidth(Random())
 			dc.SetColor(RandomItem(colorSchema))
 			dc.DrawCircle(v, RandomF64(0, s)/2)
 			dc.Stroke()
 		case 2:
+			// ring cloud of points
 			cl := RandomItem(colorSchema)
 			dc.SetLineWidth(1.0)
 			sx := s * RandomF64(0.1, 0.55)
-			for j := 0.0001; j < sx; j++ {
-				dd := s + j*2.0
-				alpha := Clamp(int(255*sx/j), 0, 255)
-
-				cl.A = uint8(alpha)
+			for _, j := range RangeStepF64(0.0001, sx, 1) {
+				cl.A = 64
 				dc.SetColor(cl)
 
+				dd := s + j*2
 				for range Range(200) {
 					theta := RandomF64(0, PI*2)
 					dc.DrawPoint(v+Polar(dd*0.3, theta), 0.6)
