@@ -148,9 +148,6 @@ SaveJPG(path string, im image.Image, quality uint8)
 ### Black Hole
 ![](images/blackhole.png)
 
-### Circle Composes Circle
-![](images/colorloop2.png)
-
 ### Circle Grid
 ![](images/circlegrid.png)
 
