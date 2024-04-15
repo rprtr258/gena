@@ -7,51 +7,16 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-type oceanFish struct {
-	lineNum int
-	fishNum int
-}
-
-// OceanFish draws an ocean and some fishes in the center.
-//   - lineNum: The number of the line used to simulate the ocean wave.
-//   - fishNum: The number of fish.
-func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
-	o := &oceanFish{
-		lineNum: lineNum,
-		fishNum: fishNum,
-	}
-
-	dc := NewContextFromRGBA(im)
-
-	o.drawlines(dc, im, colorSchema)
-
-	for _, theta := range RangeF64(0, PI*2, o.fishNum) {
-		dc.Stack(func(ctx *Context) {
-			dc.Stack(func(ctx *Context) {
-				r := float64(im.Bounds().Dx()) / 4.0
-				dc.TransformAdd(Translate(Mul2(Size(im)/2, Polar(r, theta))))
-				dc.TransformAdd(Rotate(theta + PI/2))
-				o.drawfish(dc, 0, float64(im.Bounds().Dx())/10)
-			})
-			dc.Clip()
-			o.drawlines(dc, im, colorSchema)
-		})
-		dc.ClearPath()
-		dc.ResetClip()
-	}
-}
-
-func (o *oceanFish) drawlines(ctx *Context, im *image.RGBA, colorSchema []color.RGBA) {
-	for range Range(o.lineNum) {
-		cl := RandomItem(colorSchema)
-		ctx.SetColor(cl)
-		ctx.SetLineWidth(RandomF64(3, 20))
-		y := Random() * float64(im.Bounds().Dy())
-		ctx.DrawLine(
+func drawOceanFishLines(dc *Context, size V2, colorSchema []color.RGBA, n int) {
+	for range Range(n) {
+		dc.SetColor(RandomItem(colorSchema))
+		dc.SetLineWidth(RandomF64(9, 20))
+		y := RandomF64(0, Y(size))
+		dc.DrawLine(
 			complex(0, y+RandomF64(-50, 50)),
-			complex(float64(im.Bounds().Dx()), y+RandomF64(-50, 50)),
+			complex(X(size), y+RandomF64(-50, 50)),
 		)
-		ctx.Stroke()
+		dc.Stroke()
 	}
 }
 
@@ -62,15 +27,42 @@ func fishPt(r, theta float64) V2 {
 	)
 }
 
-func (o *oceanFish) drawfish(dc *Context, v V2, r float64) {
-	dc.Stack(func(ctx *Context) {
-		dc.TransformAdd(Translate(v))
-		dc.TransformAdd(Rotate(Radians(180)))
+func drawfish(dc *Context, r float64) {
+	dc.TransformAdd(Rotate(PI * 3 / 2))
 
-		dc.MoveTo(fishPt(r, 0))
-		for i := 1; i < 361; i++ {
-			dc.LineTo(fishPt(r, Radians(float64(i))))
-		}
-		dc.ClosePath()
-	})
+	for _, a := range RangeF64(0, PI*2, 360) {
+		dc.LineTo(fishPt(r, a))
+	}
+	dc.ClosePath()
+}
+
+// OceanFish draws an ocean and some fishes in the center.
+//   - lineNum: The number of the line used to simulate the ocean wave.
+//   - fishNum: The number of fish.
+func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
+	W := X(Size(im))
+
+	dc := NewContextFromRGBA(im)
+	dc.SetColor(Black)
+	dc.Clear()
+
+	drawOceanFishLines(dc, Size(im), colorSchema, lineNum)
+
+	dc.TransformAdd(Translate(Size(im) / 2))
+	for i := range Range(fishNum) {
+		dc.Stack(func(ctx *Context) {
+			dc.TransformAdd(Translate(complex(W/4, 0)))
+			drawfish(dc, W/10)
+			dc.Clip()
+
+			dc.TransformAdd(Rotate(-float64(i) * PI * 2 / float64(fishNum)))
+			dc.TransformAdd(Rotate(PI / 2))
+			dc.TransformAdd(Translate(-complex(W/4, 0)))
+			drawOceanFishLines(dc, Size(im), colorSchema, lineNum)
+			dc.TransformAdd(Rotate(float64(i) * PI * 2 / float64(fishNum)))
+		})
+		dc.ClearPath()
+		dc.ResetClip()
+		dc.TransformAdd(Rotate(PI * 2 / float64(fishNum)))
+	}
 }
