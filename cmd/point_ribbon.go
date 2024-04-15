@@ -17,7 +17,7 @@ func PointRibbon(im *image.RGBA, lineWidth, r float64, iters int) {
 	dt := 0.0001
 	for range Range(iters) {
 		delta := 2.0*r*Cos(4.0*dt*t) + r*Cos(t)
-		dc.SetColor(color.RGBA{
+		dc.SetColor(color.NRGBA{
 			uint8(delta),
 			uint8(2*r*Sin(t) - r*Cos(3*dt*t)),
 			100,
