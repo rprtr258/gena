@@ -1,12 +1,13 @@
 package main
 
 import (
+	"image"
 	"image/color"
 
 	. "github.com/rprtr258/gena"
 )
 
-func gradientRadial() {
+func gradientRadial() *image.RGBA {
 	dc := NewContext(complex(400, 200))
 
 	grad := PatternGradientRadial(100+100i, 10, 100+120i, 80, Stops{
@@ -24,5 +25,5 @@ func gradientRadial() {
 	dc.DrawCircle(complex(100, 120), 80)
 	dc.Stroke()
 
-	SavePNG("gradientRadial.png", dc.Image())
+	return dc.Image()
 }

@@ -7,9 +7,9 @@ import (
 	"github.com/golang/freetype/raster"
 )
 
-type Pattern func(f V2) color.Color
+type Pattern2D func(f V2) color.Color
 
-func PatternSolid(c color.Color) Pattern {
+func PatternSolid(c color.Color) Pattern2D {
 	return func(V2) color.Color {
 		return c
 	}
@@ -24,7 +24,7 @@ const (
 	RepeatNone
 )
 
-func PatternSurface(im image.Image, op RepeatOp) Pattern {
+func PatternSurface(im image.Image, op RepeatOp) Pattern2D {
 	return func(f V2) color.Color {
 		b := im.Bounds()
 		x, y := int(X(f)), int(Y(f))
@@ -46,7 +46,7 @@ func PatternSurface(im image.Image, op RepeatOp) Pattern {
 	}
 }
 
-func newPatternPainter(im *image.RGBA, mask *image.Alpha, pattern Pattern) raster.Painter {
+func newPatternPainter(im *image.RGBA, mask *image.Alpha, pattern Pattern2D) raster.Painter {
 	return raster.PainterFunc(func(ss []raster.Span, done bool) {
 		b := im.Bounds()
 		for _, s := range ss {

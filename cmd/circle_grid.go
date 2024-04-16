@@ -8,9 +8,11 @@ import (
 )
 
 // CircleGrid draws a circle grid image
-func CircleGrid(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int) {
-	dc := NewContextFromRGBA(im)
-	W, H := XY(Size(im))
+func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int) {
+	dc.SetColor(color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
+	dc.Clear()
+
+	W, H := XY(Size(dc.Image()))
 
 	// grid
 	{
@@ -80,4 +82,17 @@ func CircleGrid(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n i
 			}
 		})
 	}
+}
+
+func circleGrid() *image.RGBA {
+	dc := NewContext(Diag(500))
+	CircleGrid(dc, []color.RGBA{
+		{0xED, 0x34, 0x41, 0xFF},
+		{0xFF, 0xD6, 0x30, 0xFF},
+		{0x32, 0x9F, 0xE3, 0xFF},
+		{0x15, 0x42, 0x96, 0xFF},
+		{0x00, 0x00, 0x00, 0xFF},
+		{0xFF, 0xFF, 0xFF, 0xFF},
+	}, 2, RandomIntN(4, 6))
+	return dc.Image()
 }

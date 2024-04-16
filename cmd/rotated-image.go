@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func rotatedImage() {
+	. "github.com/rprtr258/gena"
+)
+
+func rotatedImage() *image.RGBA {
 	const W = 400
 	const H = 500
 	im := Load("cmd/gopher.png")
@@ -27,5 +31,5 @@ func rotatedImage() {
 	dc.StrokePreserve()
 	dc.Clip()
 	dc.DrawImageAnchored(im, complex(100, 0), 0)
-	SavePNG("rotatedImage.png", dc.Image())
+	return dc.Image()
 }

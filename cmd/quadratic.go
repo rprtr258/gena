@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func quadratic() {
+	. "github.com/rprtr258/gena"
+)
+
+func quadratic() *image.RGBA {
 	const S = 1000
 	dc := NewContext(complex(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
@@ -49,5 +53,5 @@ func quadratic() {
 	dc.DrawStringAnchored("g", complex(-5, 5), complex(0.5, 0.5))
 	dc.DrawStringAnchored("G", complex(5, -5), complex(0.5, 0.5))
 
-	SavePNG("quadratic.png", dc.Image())
+	return dc.Image()
 }

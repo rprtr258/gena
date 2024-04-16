@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func openfill() {
+	. "github.com/rprtr258/gena"
+)
+
+func openfill() *image.RGBA {
 	const N = 10
 	const SZ = 1000
 	dc := NewContext(Diag(SZ))
@@ -26,5 +30,5 @@ func openfill() {
 	dc.SetLineWidth(4)
 	dc.StrokePreserve()
 
-	SavePNG("openfill.png", dc.Image())
+	return dc.Image()
 }

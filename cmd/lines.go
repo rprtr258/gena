@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func lines() {
+	. "github.com/rprtr258/gena"
+)
+
+func lines() *image.RGBA {
 	const W = 1024
 	const H = 1024
 	dc := NewContext(complex(W, H))
@@ -23,5 +27,5 @@ func lines() {
 		dc.DrawLine(complex(x1, y1), complex(x2, y2))
 		dc.Stroke()
 	}
-	SavePNG("lines.png", dc.Image())
+	return dc.Image()
 }

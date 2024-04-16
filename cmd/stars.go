@@ -1,6 +1,10 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
+
+	. "github.com/rprtr258/gena"
+)
 
 func Polygon(n int) []V2 {
 	result := make([]V2, n)
@@ -10,7 +14,7 @@ func Polygon(n int) []V2 {
 	return result
 }
 
-func stars() {
+func stars() *image.RGBA {
 	const W = 1200
 	const H = 120
 	const S = 100
@@ -35,5 +39,5 @@ func stars() {
 			dc.Fill()
 		})
 	}
-	SavePNG("stars.png", dc.Image())
+	return dc.Image()
 }

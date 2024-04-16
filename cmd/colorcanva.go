@@ -12,10 +12,9 @@ type Rect struct {
 	Pos, Size V2
 }
 
-// ColorCanva returns a color canva image.
-func ColorCanva(im *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64) {
-	dc := NewContextFromRGBA(im)
-	dc.SetLineWidth(lineWidth)
+// ColorCanvas returns a color canva image.
+func ColorCanvas(dc *Context, colorSchema []color.RGBA, lineWidth, seg float64) {
+	im := dc.Image()
 
 	rects := make([]Rect, 0)
 	w := float64(im.Bounds().Dx()) / seg
@@ -30,6 +29,10 @@ func ColorCanva(im *image.RGBA, colorSchema []color.RGBA, lineWidth, seg float64
 
 	Shuffle(rects)
 
+	dc.SetColor(Black)
+	dc.Clear()
+
+	dc.SetLineWidth(lineWidth)
 	dc.TransformAdd(Translate(Size(im) / 2))
 	dc.TransformAdd(Scale(complex(0.6, 0.6)))
 	dc.TransformAdd(Translate(-Size(im) / 2))
@@ -60,4 +63,16 @@ func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rec
 	dc.StrokePreserve()
 	dc.SetColor(RandomItem(colorSchema))
 	dc.Fill()
+}
+
+func colorcanvas() *image.RGBA {
+	dc := NewContext(Diag(500))
+	ColorCanvas(dc, []color.RGBA{
+		{0xF9, 0xC8, 0x0E, 0xFF},
+		{0xF8, 0x66, 0x24, 0xFF},
+		{0xEA, 0x35, 0x46, 0xFF},
+		{0x66, 0x2E, 0x9B, 0xFF},
+		{0x43, 0xBC, 0xCD, 0xFF},
+	}, 8, 5)
+	return dc.Image()
 }

@@ -6,10 +6,12 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-// Generative draws a sircle moving images.
+// CircleMove draws a sircle moving images.
 //   - n: number of circles
-func CircleMove(im *image.RGBA, n int) {
-	dc := NewContextFromRGBA(im)
+func CircleMove(dc *Context, n int) {
+	im := dc.Image()
+	dc.SetColor(White)
+	dc.Clear()
 	dc.SetLineWidth(0.3)
 	noise := NewPerlinNoiseDeprecated()
 	cl := RandomInt(255)
@@ -41,4 +43,10 @@ func CircleMove(im *image.RGBA, n int) {
 		dc.Stroke()
 		dc.ClosePath()
 	}
+}
+
+func circleMove() *image.RGBA {
+	dc := NewContext(complex(1200, 500))
+	CircleMove(dc, 1000)
+	return dc.Image()
 }

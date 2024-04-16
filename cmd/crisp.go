@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func crisp() {
+	. "github.com/rprtr258/gena"
+)
+
+func crisp() *image.RGBA {
 	const W = 1000
 	const H = 1000
 	const Minor = 10
@@ -45,5 +49,5 @@ func crisp() {
 	dc.SetColor(ColorRGBA(0, 0, 0, 1))
 	dc.Stroke()
 
-	SavePNG("crisp.png", dc.Image())
+	return dc.Image()
 }

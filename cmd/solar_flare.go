@@ -9,13 +9,13 @@ import (
 
 // SolarFlare draws a solar flare images
 // TODO: looks very different from original
-func SolarFlare(im *image.RGBA, lineColor color.NRGBA) {
+func SolarFlare(dc *Context, lineColor color.NRGBA) {
 	const offsetInc = 0.006
 	const inc = 1.0
 	const m = 1.009
 
 	noise := NewPerlinNoiseDeprecated()
-	dc := NewContextFromRGBA(im)
+	im := dc.Image()
 	dc.SetColor(Black)
 	dc.Clear()
 
@@ -38,4 +38,10 @@ func SolarFlare(im *image.RGBA, lineColor color.NRGBA) {
 			r *= m
 		}
 	}
+}
+
+func solarFlare() *image.RGBA {
+	dc := NewContext(Diag(500))
+	SolarFlare(dc, color.NRGBA{255, 64, 8, 255})
+	return dc.Image()
 }

@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func linewidth() {
+	. "github.com/rprtr258/gena"
+)
+
+func linewidth() *image.RGBA {
 	dc := NewContext(complex(1000, 1000))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
@@ -15,5 +19,5 @@ func linewidth() {
 		dc.Stroke()
 		w += 0.1
 	}
-	SavePNG("linewidth.png", dc.Image())
+	return dc.Image()
 }

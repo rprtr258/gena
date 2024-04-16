@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func patternFill() {
+	. "github.com/rprtr258/gena"
+)
+
+func patternFill() *image.RGBA {
 	dc := NewContext(complex(600, 600))
 	dc.MoveTo(complex(20, 20))
 	dc.LineTo(complex(590, 20))
@@ -11,5 +15,5 @@ func patternFill() {
 	dc.ClosePath()
 	dc.SetFillStyle(PatternSurface(Load("cmd/baboon.png"), RepeatBoth))
 	dc.Fill()
-	SavePNG("patternFill.png", dc.Image())
+	return dc.Image()
 }

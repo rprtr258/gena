@@ -10,9 +10,11 @@ import (
 // RandomShape would draw images with random shapes.
 // The whole image would rotate with some degree.
 //   - n: It indicates how many shapes you want to draw.
-func RandomShape(im *image.RGBA, colorSchema []color.RGBA, n int) {
-	dc := NewContextFromRGBA(im)
+func RandomShape(dc *Context, colorSchema []color.RGBA, n int) {
+	im := dc.Image()
 
+	dc.SetColor(White)
+	dc.Clear()
 	dc.TransformAdd(Translate(Size(im) / 2))
 	dc.TransformAdd(Rotate(RandomF64(-1, 1) * PI * 0.25))
 	dc.TransformAdd(Translate(-Size(im) / 2))
@@ -50,4 +52,16 @@ func RandomShape(im *image.RGBA, colorSchema []color.RGBA, n int) {
 			dc.Fill()
 		})
 	}
+}
+
+func randomShape() *image.RGBA {
+	dc := NewContext(Diag(500))
+	RandomShape(dc, []color.RGBA{
+		{0xCF, 0x2B, 0x34, 0xFF},
+		{0xF0, 0x8F, 0x46, 0xFF},
+		{0xF0, 0xC1, 0x29, 0xFF},
+		{0x19, 0x6E, 0x94, 0xFF},
+		{0x35, 0x3A, 0x57, 0xFF},
+	}, 150)
+	return dc.Image()
 }

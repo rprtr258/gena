@@ -1,6 +1,10 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
+
+	. "github.com/rprtr258/gena"
+)
 
 var loremIpsumLines = []string{
 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
@@ -11,7 +15,7 @@ var loremIpsumLines = []string{
 	"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 }
 
-func lorem() {
+func lorem() *image.RGBA {
 	const W = 800
 	const H = 400
 	dc := NewContext(complex(W, H))
@@ -24,5 +28,5 @@ func lorem() {
 		y := H/2 - h*len(loremIpsumLines)/2 + i*h
 		dc.DrawStringAnchored(line, complex(400, float64(y)), complex(0.5, 0.5))
 	}
-	SavePNG("lorem.png", dc.Image())
+	return dc.Image()
 }

@@ -4,6 +4,7 @@ import (
 	"image"
 
 	. "github.com/rprtr258/gena"
+	"github.com/schollz/progressbar/v3"
 )
 
 type dot struct {
@@ -17,7 +18,7 @@ type dot struct {
 //   - colorMin: minimum color
 //   - colorMax: maximum color
 func CircleNoise(
-	im *image.RGBA,
+	dc *Context,
 	lineWidth float64,
 	aalpha uint8,
 	angles []float64,
@@ -25,7 +26,9 @@ func CircleNoise(
 	iters int,
 	noise PerlinNoise,
 ) {
-	dc := NewContextFromRGBA(im)
+	im := dc.Image()
+	dc.SetColor(White)
+	dc.Clear()
 	dc.SetLineWidth(2.0)
 	dc.SetColor(Black)
 	radius := float64(im.Bounds().Dx()) * 0.8 / 2
@@ -65,4 +68,31 @@ func CircleNoise(
 			}
 		}
 	}
+}
+
+func circlenoise() []*image.RGBA {
+	const _dots = 2000
+	const _iters = 100 // 0
+	noise := NewPerlinNoiseDeprecated()
+	bar := progressbar.Default(_iters)
+	res := make([]*image.RGBA, _iters)
+	for i, ralpha := range RangeF64(0, 2*PI, _iters) {
+		_ = bar.Add(1)
+
+		angles := make([]float64, _dots)
+		for j := range angles {
+			angles[j] = noise.NoiseV2_1(complex(float64(j), 0)+Polar(1, ralpha)) + ralpha
+		}
+
+		peepo := [4096]float64{}
+		for j := range peepo {
+			peepo[j] = noise.NoiseV2_1(complex(float64(j), 1) + Polar(1, ralpha))
+		}
+		noise2 := NewPerlinNoise(peepo)
+
+		dc := NewContext(Diag(500))
+		CircleNoise(dc, 0.3, 80, angles, 60, 80, 400, noise2)
+		res[i] = dc.Image()
+	}
+	return res
 }

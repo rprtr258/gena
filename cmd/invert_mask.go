@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func invertMask() {
+	. "github.com/rprtr258/gena"
+)
+
+func invertMask() *image.RGBA {
 	dc := NewContext(complex(1024, 1024))
 	dc.DrawCircle(complex(512, 512), 384)
 	dc.Clip()
@@ -10,5 +14,5 @@ func invertMask() {
 	dc.DrawRectangle(0, complex(1024, 1024))
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Fill()
-	SavePNG("invertMask.png", dc.Image())
+	return dc.Image()
 }

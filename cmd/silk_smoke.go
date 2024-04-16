@@ -9,14 +9,16 @@ import (
 
 // SilkSmoke draws a silk smoke image.
 func SilkSmoke(
-	im *image.RGBA,
+	dc *Context,
 	lineWidth float64,
 	lineColor color.RGBA,
 	alpha int,
 	maxCircle, maxStepsPerCircle int,
 	minSteps, maxSteps, minRadius, maxRadius float64,
 ) {
-	dc := NewContextFromRGBA(im)
+	im := dc.Image()
+	dc.SetColor(Black)
+	dc.Clear()
 
 	cn := RandomInt(maxCircle) + int(maxCircle/3)
 	circles := newCircleSlice(cn, Size(im), minSteps, maxSteps, minRadius, maxRadius)
@@ -46,4 +48,10 @@ func SilkSmoke(
 
 		circles = circleSliceUpdate(circles, Size(im))
 	}
+}
+
+func silkSmoke() *image.RGBA {
+	dc := NewContext(Diag(500))
+	SilkSmoke(dc, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30)
+	return dc.Image()
 }

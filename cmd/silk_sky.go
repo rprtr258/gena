@@ -9,8 +9,8 @@ import (
 // SilkSky would draw an image with multiple circles converge to one point or one circle.
 //   - n: number of circles
 //   - sunRadius: radius of sun. The sun is a point/circle where other circles meet.
-func SilkSky(im *image.RGBA, alpha, n int, sunRadius float64) {
-	dc := NewContextFromRGBA(im)
+func SilkSky(dc *Context, alpha, n int, sunRadius float64) {
+	im := dc.Image()
 	m := Mul2(RandomV2(), Size(im))/5 + Size(im)*3/5
 
 	mh := n*2 + 2
@@ -26,4 +26,10 @@ func SilkSky(im *image.RGBA, alpha, n int, sunRadius float64) {
 		dc.DrawCircle(n, r-sunRadius/2)
 		dc.Fill()
 	}
+}
+
+func silkSky() *image.RGBA {
+	dc := NewContext(Diag(600))
+	SilkSky(dc, 10, 15, 5)
+	return dc.Image()
 }

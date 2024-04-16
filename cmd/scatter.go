@@ -1,6 +1,8 @@
 package main
 
 import (
+	"image"
+
 	. "github.com/rprtr258/gena"
 )
 
@@ -14,7 +16,7 @@ func CreatePoints(n int) []V2 {
 	return points
 }
 
-func scatter() {
+func scatter() *image.RGBA {
 	const S = 1024
 	const P = 64
 	dc := NewContext(complex(S, S))
@@ -58,5 +60,5 @@ func scatter() {
 		dc.LoadFontFace("/Library/Fonts/Arial.ttf", 18)
 		dc.DrawStringAnchored("X Axis Title", complex(S/2, S-P/2), complex(0.5, 0.5))
 	}
-	SavePNG("scatter.png", dc.Image())
+	return dc.Image()
 }

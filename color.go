@@ -5,6 +5,25 @@ import (
 	"image/color"
 )
 
+type Pattern1D func(float64) color.Color
+
+func NewPaletteSolid(cl color.Color) Pattern1D {
+	return func(float64) color.Color {
+		return cl
+	}
+}
+
+func NewPaletteFromRGBAs(colors ...color.RGBA) Pattern1D {
+	return func(f float64) color.Color {
+		f = Clamp(f, 0, 1-1e-6)
+		return colors[int(f*float64(len(colors)))]
+	}
+}
+
+func (p Pattern1D) Random() color.Color {
+	return p(Random())
+}
+
 var (
 	// base colors
 	Red   = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
@@ -32,13 +51,13 @@ var (
 	LightPink        = color.RGBA{0xFF, 0xB6, 0xC1, 0xFF}
 	Tomato           = color.RGBA{0xFF, 0x63, 0x47, 0xFF}
 	Orange           = color.RGBA{0xFF, 0xA5, 0x00, 0xFF}
-	Outdoors         = []color.RGBA{
+	Outdoors         = NewPaletteFromRGBAs([]color.RGBA{
 		{67, 110, 165, 255},
 		{47, 76, 114, 255},
 		{165, 138, 3, 255},
 		{242, 182, 4, 255},
 		{191, 131, 59, 255},
-	}
+	}...)
 	Reddery = []color.RGBA{
 		{89, 2, 16, 255},
 		{37, 2, 5, 255},
@@ -46,26 +65,13 @@ var (
 		{253, 55, 51, 255},
 		{245, 169, 167, 255},
 	}
-	DarkPink = []color.RGBA{
+	DarkPink = NewPaletteFromRGBAs([]color.RGBA{
 		{2, 64, 89, 255},
 		{242, 131, 107, 255},
 		{140, 40, 31, 255},
 		{191, 69, 57, 255},
 		{13, 13, 13, 255},
-	}
-
-	DarkRed = []color.RGBA{
-		{48, 19, 21, 255},
-		{71, 15, 16, 255},
-		{92, 10, 12, 255},
-		{115, 5, 4, 255},
-		{139, 0, 3, 255},
-		{163, 32, 1, 255},
-		{185, 66, 0, 255},
-		{208, 98, 1, 255},
-		{231, 133, 0, 255},
-		{254, 165, 0, 255},
-	}
+	}...)
 
 	Sleek = []color.RGBA{
 		{0x2C, 0x35, 0x31, 0xFF},
@@ -123,7 +129,7 @@ var (
 		{0xD2, 0xFD, 0xFF, 0xFF},
 	}
 
-	Plasma = []color.RGBA{
+	Plasma = NewPaletteFromRGBAs([]color.RGBA{
 		{0x0c, 0x07, 0x86, 0xff},
 		{0x10, 0x07, 0x87, 0xff},
 		{0x13, 0x06, 0x89, 0xff},
@@ -380,8 +386,8 @@ var (
 		{0xf0, 0xf5, 0x25, 0xff},
 		{0xf0, 0xf6, 0x23, 0xff},
 		{0xef, 0xf8, 0x21, 0xff},
-	}
-	Viridis = []color.RGBA{
+	}...)
+	Viridis = NewPaletteFromRGBAs([]color.RGBA{
 		{0x44, 0x01, 0x54, 0xff},
 		{0x44, 0x02, 0x55, 0xff},
 		{0x44, 0x03, 0x57, 0xff},
@@ -638,7 +644,7 @@ var (
 		{0xf8, 0xe6, 0x21, 0xff},
 		{0xfa, 0xe6, 0x22, 0xff},
 		{0xfd, 0xe7, 0x24, 0xff},
-	}
+	}...)
 )
 
 type HSV struct {
@@ -775,6 +781,10 @@ func ColorHex(s string) color.RGBA {
 	}
 
 	return c
+}
+
+func lerp32to8(a, b uint32, t float64) uint8 {
+	return uint8(int32(float64(a)+t*(float64(b)-float64(a))) >> 8)
 }
 
 func ColorLerp(c0, c1 color.Color, t float64) color.Color {

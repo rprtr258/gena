@@ -1,6 +1,10 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
+
+	. "github.com/rprtr258/gena"
+)
 
 func random() float64 {
 	return RandomF64(-1, 1)
@@ -47,7 +51,7 @@ func randomCubic(dc *Context) {
 	drawPoints(dc)
 }
 
-func beziers() {
+func beziers() *image.RGBA {
 	const S = 256
 	const SZ = 8
 	dc := NewContext(Diag(SZ) * Coeff(S))
@@ -67,5 +71,5 @@ func beziers() {
 			})
 		}
 	}
-	SavePNG("beziers.png", dc.Image())
+	return dc.Image()
 }

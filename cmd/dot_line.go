@@ -12,8 +12,9 @@ import (
 //   - n: The number of elements in this image.
 //   - ras, canv: Control the appearance of this image.
 //   - randColor: Use the specified color or random colors.
-func DotLine(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int, ras, canv float64, randColor bool, iters int) {
-	dc := NewContextFromRGBA(im)
+func DotLine(dc *Context, palette Pattern1D, lineWidth float64, n int, ras, canv float64, randColor bool, iters int) {
+	dc.SetColor(color.RGBA{230, 230, 230, 255})
+	dc.Clear()
 	dc.SetLineWidth(lineWidth)
 	dir := []int{-1, 1}
 	for range Range(iters) {
@@ -24,7 +25,7 @@ func DotLine(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int,
 
 		k := RandomInt(7)
 		if randColor {
-			dc.SetColor(RandomItem(colorSchema))
+			dc.SetColor(palette.Random())
 		} else {
 			dc.SetColor(ColorRGBA255(color.RGBA{
 				RandomIntN[uint8](222, 255),
@@ -48,4 +49,10 @@ func DotLine(im *image.RGBA, colorSchema []color.RGBA, lineWidth float64, n int,
 			dc.Stroke()
 		}
 	}
+}
+
+func dotline() *image.RGBA {
+	dc := NewContext(Diag(2080))
+	DotLine(dc, DarkPink, 10, 100, 20, 50, false, 15000)
+	return dc.Image()
 }

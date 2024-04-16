@@ -41,10 +41,10 @@ func drawfish(dc *Context, r float64) {
 //   - fishNum: The number of fish.
 //
 // TODO: make similar to original
-func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
+func OceanFish(dc *Context, colorSchema []color.RGBA, lineNum, fishNum int) {
+	im := dc.Image()
 	W := X(Size(im))
 
-	dc := NewContextFromRGBA(im)
 	dc.SetColor(Black)
 	dc.Clear()
 
@@ -67,4 +67,24 @@ func OceanFish(im *image.RGBA, colorSchema []color.RGBA, lineNum, fishNum int) {
 		dc.ResetClip()
 		dc.TransformAdd(Rotate(PI * 2 / float64(fishNum)))
 	}
+}
+
+func oceanfish() *image.RGBA {
+	// colors := []color.RGBA{
+	// 	{0x05, 0x1F, 0x34, 0xFF},
+	// 	{0x02, 0x74, 0x95, 0xFF},
+	// 	{0x01, 0xA9, 0xC1, 0xFF},
+	// 	{0xBA, 0xD6, 0xDB, 0xFF},
+	// 	{0xF4, 0xF5, 0xF5, 0xFF},
+	// }
+	colors := []color.RGBA{
+		{0xCF, 0x2B, 0x34, 0xFF},
+		{0xF0, 0x8F, 0x46, 0xFF},
+		{0xF0, 0xC1, 0x29, 0xFF},
+		{0x19, 0x6E, 0x94, 0xFF},
+		{0x35, 0x3A, 0x57, 0xFF},
+	}
+	dc := NewContext(Diag(500))
+	OceanFish(dc, colors, 100, 8)
+	return dc.Image()
 }

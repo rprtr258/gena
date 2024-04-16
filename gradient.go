@@ -27,7 +27,28 @@ func sortStops(stops Stops) []stop {
 	return res
 }
 
-func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern {
+func getColor(pos float64, stops ...stop) color.Color {
+	if pos <= 0.0 || len(stops) == 1 {
+		return stops[0].color
+	}
+
+	last := stops[len(stops)-1]
+
+	if pos >= last.pos {
+		return last.color
+	}
+
+	for i, stop := range stops[1:] {
+		if pos < stop.pos {
+			t := Remap(pos, stops[i].pos, stop.pos, 0, 1)
+			return ColorLerp(stops[i].color, stop.color, t)
+		}
+	}
+
+	return last.color
+}
+
+func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern2D {
 	if len(stopss) == 0 {
 		return PatternSolid(color.Transparent)
 	}
@@ -77,7 +98,7 @@ func PatternGradientRadial(
 	p0 V2, r0 float64,
 	p1 V2, r1 float64,
 	stopss Stops,
-) Pattern {
+) Pattern2D {
 	stops := sortStops(stopss)
 
 	c0 := circle{p0, r0}
@@ -131,7 +152,7 @@ func PatternGradientRadial(
 	}
 }
 
-func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
+func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern2D {
 	stops := sortStops(stopss)
 
 	rotation := Mod(deg, 360) / 360
@@ -152,27 +173,8 @@ func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern {
 	}
 }
 
-func lerp32to8(a, b uint32, t float64) uint8 {
-	return uint8(int32(float64(a)+t*(float64(b)-float64(a))) >> 8)
-}
-
-func getColor(pos float64, stops ...stop) color.Color {
-	if pos <= 0.0 || len(stops) == 1 {
-		return stops[0].color
+func newPaletteGradient(stops Stops) Pattern1D {
+	return func(f float64) color.Color {
+		return getColor(f, sortStops(stops)...)
 	}
-
-	last := stops[len(stops)-1]
-
-	if pos >= last.pos {
-		return last.color
-	}
-
-	for i, stop := range stops[1:] {
-		if pos < stop.pos {
-			t := Remap(pos, stops[i].pos, stop.pos, 0, 1)
-			return ColorLerp(stops[i].color, stop.color, t)
-		}
-	}
-
-	return last.color
 }

@@ -69,7 +69,7 @@ func (s *swirlOpts) removeNoisy(im *image.RGBA) {
 }
 
 // Swirl draws a swirl image.
-func Swirl(img *image.RGBA, fg, bg color.RGBA, a, b, c, d float64, axis V2, iters int) {
+func Swirl(dc *Context, fg, bg color.RGBA, a, b, c, d float64, axis V2, iters int) {
 	s := &swirlOpts{
 		fg:    fg,
 		bg:    bg,
@@ -80,17 +80,31 @@ func Swirl(img *image.RGBA, fg, bg color.RGBA, a, b, c, d float64, axis V2, iter
 		axis:  axis,
 		iters: iters,
 	}
-	dc := NewContextFromRGBA(img)
+	im := dc.Image()
+	dc.SetColor(bg)
+	dc.Clear()
 	dc.SetLineWidth(3)
 	start := complex(1.0, 1.0)
 
 	for range Range(s.iters) {
 		next := s.swirlTransform(start)
-		xy := ToPixel(next, s.axis, Size(img))
-		img.Set(int(X(xy)), int(Y(xy)), s.fg)
+		xy := ToPixel(next, s.axis, Size(im))
+		im.Set(int(X(xy)), int(Y(xy)), s.fg)
 		start = next
 	}
 
-	s.removeNoisy(img)
-	s.removeNoisy(img)
+	s.removeNoisy(im)
+	s.removeNoisy(im)
+}
+
+func swirl() *image.RGBA {
+	dc := NewContext(Diag(1600))
+	Swirl(
+		dc,
+		color.RGBA{113, 3, 0, 140}, Azure,
+		0.970, -1.899, 1.381, -1.506,
+		2.4+2.4i,
+		4000000,
+	)
+	return dc.Image()
 }

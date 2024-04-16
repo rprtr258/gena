@@ -9,9 +9,12 @@ import (
 
 // Generative draws a dots wave images.
 //   - n: The number of dots wave in the image.
-func DotsWave(im *image.RGBA, colorSchema []color.RGBA, n int) {
-	dc := NewContextFromRGBA(im)
+func DotsWave(dc *Context, colorSchema []color.RGBA, n int) {
 	noise := NewPerlinNoiseDeprecated()
+
+	im := dc.Image()
+	dc.SetColor(Black)
+	dc.Clear()
 	for range Range(n) {
 		v := Mul2(complex(
 			RandomF64(-0.1, 1.1),
@@ -35,4 +38,16 @@ func DotsWave(im *image.RGBA, colorSchema []color.RGBA, n int) {
 			}
 		})
 	}
+}
+
+func dotswave() *image.RGBA {
+	dc := NewContext(Diag(500))
+	DotsWave(dc, []color.RGBA{
+		{0xFF, 0xBE, 0x0B, 0xFF},
+		{0xFB, 0x56, 0x07, 0xFF},
+		{0xFF, 0x00, 0x6E, 0xFF},
+		{0x83, 0x38, 0xEC, 0xFF},
+		{0x3A, 0x86, 0xFF, 0xFF},
+	}, 300)
+	return dc.Image()
 }

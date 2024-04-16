@@ -1,12 +1,13 @@
 package main
 
 import (
+	"image"
 	"image/color"
 
 	. "github.com/rprtr258/gena"
 )
 
-func gradientLinear() {
+func gradientLinear() *image.RGBA {
 	dc := NewContext(complex(500, 400))
 
 	grad := PatternGradientLinear(
@@ -35,5 +36,5 @@ func gradientLinear() {
 	dc.ClosePath()
 	dc.Fill()
 
-	SavePNG("gradientLinear.png", dc.Image())
+	return dc.Image()
 }

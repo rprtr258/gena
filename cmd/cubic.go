@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func cubic() {
+	. "github.com/rprtr258/gena"
+)
+
+func cubic() *image.RGBA {
 	const S = 1000
 	dc := NewContext(complex(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
@@ -33,5 +37,5 @@ func cubic() {
 	dc.SetDash(4, 8, 1, 8)
 	dc.Stroke()
 
-	SavePNG("cubic.png", dc.Image())
+	return dc.Image()
 }

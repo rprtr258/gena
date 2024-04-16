@@ -8,8 +8,11 @@ import (
 )
 
 // Generative draws a color circle images.
-func ColorCircle(im *image.RGBA, colorSchema []color.NRGBA, n int) {
-	dc := NewContextFromRGBA(im)
+func ColorCircle(dc *Context, colorSchema []color.NRGBA, n int) {
+	im := dc.Image()
+
+	dc.SetColor(White)
+	dc.Clear()
 
 	for range Range(n) {
 		v := Mul2(RandomV2N(Diag(-0.1), Diag(1.1)), Size(im))
@@ -51,4 +54,19 @@ func ColorCircle(im *image.RGBA, colorSchema []color.NRGBA, n int) {
 			}
 		}
 	}
+}
+
+func colorcircle() *image.RGBA {
+	dc := NewContext(Diag(1000))
+	ColorCircle(dc, []color.NRGBA{
+		{0xFF, 0xC6, 0x18, 0xFF},
+		{0xF4, 0x25, 0x39, 0xFF},
+		{0x41, 0x78, 0xF4, 0xFF},
+		{0xFE, 0x84, 0xFE, 0xFF},
+		{0xFF, 0x81, 0x19, 0xFF},
+		{0x56, 0xAC, 0x51, 0xFF},
+		{0x98, 0x19, 0xFA, 0xFF},
+		{0xFF, 0xFF, 0xFF, 0xFF},
+	}, 500)
+	return dc.Image()
 }

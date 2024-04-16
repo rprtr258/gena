@@ -9,8 +9,8 @@ import (
 
 // SpiralSquare draws a spiral square images.
 func SpiralSquare(
-	im *image.RGBA,
-	colorSchema []color.RGBA,
+	dc *Context,
+	colorSchema Pattern1D,
 	lineWidth float64,
 	lineColor color.RGBA,
 	squareNum int,
@@ -18,7 +18,9 @@ func SpiralSquare(
 	fg color.RGBA,
 	randColor bool,
 ) {
-	dc := NewContextFromRGBA(im)
+	im := dc.Image()
+	dc.SetColor(MistyRose)
+	dc.Clear()
 	dc.TransformAdd(Translate(Size(im) / 2))
 
 	sl := rectSide
@@ -39,7 +41,7 @@ func SpiralSquare(
 			dc.StrokePreserve()
 
 			if randColor {
-				dc.SetColor(RandomItem(colorSchema))
+				dc.SetColor(colorSchema.Random())
 			} else {
 				dc.SetColor(fg)
 			}
@@ -51,4 +53,10 @@ func SpiralSquare(
 			return
 		}
 	}
+}
+
+func spiralSquare() *image.RGBA {
+	dc := NewContext(Diag(500))
+	SpiralSquare(dc, Plasma, 10, Orange, 40, 400, 0.05, Tomato, true)
+	return dc.Image()
 }

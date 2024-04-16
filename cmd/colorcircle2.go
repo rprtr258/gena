@@ -29,12 +29,15 @@ func (cc *colorCircle2) circle(dc *Context, colorSchema []color.RGBA, v V2, d, d
 // ColorCircle2 is version 2 of ColorCircle.
 // It still draws the circle and point cloud.
 //   - n: number of circle
-func ColorCircle2(im *image.RGBA, colorSchema []color.RGBA, n int) {
+func ColorCircle2(dc *Context, colorSchema []color.RGBA, n int) {
 	cc := &colorCircle2{
 		circleNum: n,
 	}
 
-	dc := NewContextFromRGBA(im)
+	dc.SetColor(White)
+	dc.Clear()
+
+	im := dc.Image()
 	for range Range(cc.circleNum) {
 		v := Mul2(RandomV2(), Size(im))
 
@@ -49,4 +52,16 @@ func ColorCircle2(im *image.RGBA, colorSchema []color.RGBA, n int) {
 			dc.Fill()
 		}
 	}
+}
+
+func colorcircle2() *image.RGBA {
+	dc := NewContext(Diag(800))
+	ColorCircle2(dc, []color.RGBA{
+		{0x11, 0x60, 0xC6, 0xFF},
+		{0xFD, 0xD9, 0x00, 0xFF},
+		{0xF5, 0xB4, 0xF8, 0xFF},
+		{0xEF, 0x13, 0x55, 0xFF},
+		{0xF4, 0x9F, 0x0A, 0xFF},
+	}, 30)
+	return dc.Image()
 }

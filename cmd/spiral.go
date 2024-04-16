@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func spiral() {
+	. "github.com/rprtr258/gena"
+)
+
+func spiral() *image.RGBA {
 	const S = 1024
 	const N = 2048
 	dc := NewContext(complex(S, S))
@@ -16,5 +20,5 @@ func spiral() {
 		dc.DrawCircle(Polar(d, a)+Diag(S)/2, t*8)
 	}
 	dc.Fill()
-	SavePNG("spiral.png", dc.Image())
+	return dc.Image()
 }

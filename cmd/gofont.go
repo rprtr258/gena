@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image"
 	"log"
 
 	"github.com/golang/freetype/truetype"
@@ -8,7 +9,7 @@ import (
 	"golang.org/x/image/font/gofont/goregular"
 )
 
-func gofont() {
+func gofont() *image.RGBA {
 	font, err := truetype.Parse(goregular.TTF)
 	if err != nil {
 		log.Fatal(err)
@@ -22,5 +23,5 @@ func gofont() {
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.DrawStringAnchored("Hello, world!", complex(512, 512), complex(0.5, 0.5))
-	SavePNG("gofont.png", dc.Image())
+	return dc.Image()
 }

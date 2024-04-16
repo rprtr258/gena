@@ -1,12 +1,13 @@
 package main
 
 import (
+	"image"
 	"image/color"
 
 	. "github.com/rprtr258/gena"
 )
 
-func gradientText() {
+func gradientText() *image.RGBA {
 	const W = 1024
 	const H = 512
 
@@ -36,5 +37,5 @@ func gradientText() {
 	dc.DrawRectangle(0, complex(W, H))
 	dc.Fill()
 
-	SavePNG("gradientText.png", dc.Image())
+	return dc.Image()
 }

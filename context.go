@@ -2,6 +2,7 @@
 package gena
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
@@ -21,11 +22,6 @@ import (
 
 func Size(img image.Image) V2 {
 	return complex(float64(img.Bounds().Dx()), float64(img.Bounds().Dy()))
-}
-
-// FillBackground fills the background of the Canvas
-func FillBackground(img *image.RGBA, bg color.RGBA) {
-	draw.Draw(img, img.Bounds(), &image.Uniform{bg}, image.Point{}, draw.Src)
 }
 
 type LineCap int
@@ -69,8 +65,8 @@ type Context struct {
 	im            *image.RGBA
 	mask          *image.Alpha
 	color         color.Color
-	fillPattern   Pattern
-	strokePattern Pattern
+	fillPattern   Pattern2D
+	strokePattern Pattern2D
 	strokePath    raster.Path
 	fillPath      raster.Path
 	start         V2
@@ -110,6 +106,10 @@ func NewContextFromRGBA(im *image.RGBA) *Context {
 // NewContext creates a new image.RGBA with the specified width and height
 // and prepares a context for rendering onto that image.
 func NewContext(size V2) *Context {
+	if X(size) <= 0 || Y(size) <= 0 {
+		panic(fmt.Sprintf("invalid size: %v", size))
+	}
+
 	im := image.NewRGBA(image.Rect(0, 0, int(X(size)), int(Y(size))))
 	return NewContextFromRGBA(im)
 }
@@ -213,12 +213,12 @@ func (dc *Context) setFillAndStrokeColor(c color.Color) {
 }
 
 // SetFillStyle sets current fill style
-func (dc *Context) SetFillStyle(pattern Pattern) {
+func (dc *Context) SetFillStyle(pattern Pattern2D) {
 	dc.fillPattern = pattern
 }
 
 // SetStrokeStyle sets current stroke style
-func (dc *Context) SetStrokeStyle(pattern Pattern) {
+func (dc *Context) SetStrokeStyle(pattern Pattern2D) {
 	dc.strokePattern = pattern
 }
 

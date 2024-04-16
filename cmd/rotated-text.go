@@ -1,12 +1,14 @@
 package main
 
 import (
+	"image"
+
 	"github.com/golang/freetype/truetype"
 	. "github.com/rprtr258/gena"
 	"golang.org/x/image/font/gofont/goregular"
 )
 
-func rotatedText() {
+func rotatedText() *image.RGBA {
 	const S = 400
 	dc := NewContext(complex(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
@@ -25,5 +27,5 @@ func rotatedText() {
 	dc.DrawRectangle(complex(100, 180), wh)
 	dc.Stroke()
 	dc.DrawStringAnchored(text, complex(100, 180), 0)
-	SavePNG("rotatedText.png", dc.Image())
+	return dc.Image()
 }

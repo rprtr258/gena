@@ -1,12 +1,13 @@
 package main
 
 import (
+	"image"
 	"image/color"
 
 	. "github.com/rprtr258/gena"
 )
 
-func gradientConic() {
+func gradientConic() *image.RGBA {
 	dc := NewContext(Diag(400))
 
 	grad1 := PatternGradientConic(Diag(200), 0, Stops{
@@ -34,5 +35,5 @@ func gradientConic() {
 	dc.DrawCircle(Diag(200), 150)
 	dc.Fill()
 
-	SavePNG("gradient-conic.png", dc.Image())
+	return dc.Image()
 }

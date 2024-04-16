@@ -9,8 +9,10 @@ import (
 
 // Yarn draws a yarn image.
 //   - n: The number of the curve.
-func Yarn(im *image.RGBA, lineWidth float64, lineColor color.RGBA, n int) {
-	dc := NewContextFromRGBA(im)
+func Yarn(dc *Context, lineWidth float64, lineColor color.RGBA, n int) {
+	im := dc.Image()
+	dc.SetColor(Orange)
+	dc.Clear()
 	dc.SetLineWidth(lineWidth)
 	dc.SetColor(lineColor)
 	noise := NewPerlinNoiseDeprecated()
@@ -28,4 +30,10 @@ func Yarn(im *image.RGBA, lineWidth float64, lineColor color.RGBA, n int) {
 		dc.ClearPath()
 		offset += inc
 	}
+}
+
+func yarn() *image.RGBA {
+	dc := NewContext(Diag(500))
+	Yarn(dc, 0.3, color.RGBA{A: 60}, 2000)
+	return dc.Image()
 }

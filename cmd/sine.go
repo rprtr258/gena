@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func sine() {
+	. "github.com/rprtr258/gena"
+)
+
+func sine() *image.RGBA {
 	const W = 1200
 	const H = 60
 	dc := NewContext(complex(W, H))
@@ -21,5 +25,5 @@ func sine() {
 	dc.SetLineWidth(8)
 	dc.Stroke()
 
-	SavePNG("sine.png", dc.Image())
+	return dc.Image()
 }

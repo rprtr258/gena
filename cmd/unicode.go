@@ -1,8 +1,12 @@
 package main
 
-import . "github.com/rprtr258/gena"
+import (
+	"image"
 
-func unicode() {
+	. "github.com/rprtr258/gena"
+)
+
+func unicode() *image.RGBA {
 	const S = 4096 * 2
 	const T = 16 * 2
 	const F = 28
@@ -17,5 +21,5 @@ func unicode() {
 			dc.DrawStringAnchored(string(rune(i)), complex(float64(c), float64(r))*Coeff(T)+Diag(T/2), complex(0.5, 0.5))
 		}
 	}
-	SavePNG("unicode.png", dc.Image())
+	return dc.Image()
 }

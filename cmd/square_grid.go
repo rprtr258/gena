@@ -2,18 +2,17 @@ package main
 
 import (
 	"image"
-	"image/color"
 
 	. "github.com/rprtr258/gena"
 )
 
-// Generative draws a grid squares image.
-func GirdSquares(im *image.RGBA, colorSchema []color.RGBA, step, rectSize int, decay float64, iters int) {
-	dc := NewContextFromRGBA(im)
+// Generative draws a grid squares image
+func GirdSquares(dc *Context, palette Pattern1D, step, rectSize int, decay float64, iters int) {
+	im := dc.Image()
 
 	for x := 0; x < im.Bounds().Dx(); x += step {
 		for y := 0; y < im.Bounds().Dy(); y += step {
-			cl := RandomItem(colorSchema)
+			cl := palette.Random()
 
 			v0 := complex(float64(x), float64(y))
 			s := float64(rectSize)
@@ -35,11 +34,17 @@ func GirdSquares(im *image.RGBA, colorSchema []color.RGBA, step, rectSize int, d
 					dc.SetLineWidth(3)
 					dc.SetColor(Tomato)
 					dc.StrokePreserve()
-					dc.SetColor(ColorRGBA255(cl, 255))
+					dc.SetColor(cl)
 					dc.Fill()
 				})
 				s -= decay * float64(rectSize)
 			}
 		}
 	}
+}
+
+func gridsquares() *image.RGBA {
+	dc := NewContext(Diag(600))
+	GirdSquares(dc, DarkPink, 24, 10, 0.2, 20)
+	return dc.Image()
 }
