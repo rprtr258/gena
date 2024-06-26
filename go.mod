@@ -7,7 +7,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.14.2
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8
-	golang.org/x/image v0.15.0
+	golang.org/x/image v0.18.0
 )
 
 require (
