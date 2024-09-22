@@ -8,18 +8,20 @@ import (
 )
 
 func mystar() *image.RGBA {
-	const n = 4
-	const m = 9
+	const numPoints = 4
+	const rotations = 9
+	size := Diag(500)
+	const radius = 100
 
-	dc := NewContext(Diag(500))
+	dc := NewContext(size)
 	dc.SetColor(color.Black)
 	dc.Clear()
-	dc.TransformAdd(Translate(Diag(250)))
-	dc.TransformAdd(Scale(Diag(100)))
+	dc.TransformAdd(Translate(size / 2))
+	dc.TransformAdd(Scale(Diag(radius)))
 
-	points := Polygon(n)
-	for range Range(m) {
-		dc.TransformAdd(Rotate(PI / m))
+	points := Polygon(numPoints)
+	for range Range(rotations) {
+		dc.TransformAdd(Rotate(PI / rotations))
 
 		for _, point := range points {
 			dc.LineTo(point)
