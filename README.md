@@ -248,3 +248,6 @@ Source: https://openprocessing.org/sketch/1102157
 
 ### Yarn
 ![](images/yarn.png)
+
+### Multiply Table
+![](images/multiply_table.gif)
