@@ -2,7 +2,6 @@ package main
 
 import (
 	"image"
-	"math/cmplx"
 
 	. "github.com/rprtr258/gena"
 )
@@ -27,11 +26,11 @@ func Julia(
 	im := dc.Image()
 	for x := 0; x <= im.Bounds().Dx(); x++ {
 		for y := 0; y <= im.Bounds().Dy(); y++ {
-			f := complex(float64(x), float64(y))
-			z := Div2(f, Size(im))*Coeff(2.0*Y(axis)) - Diag(Y(axis))
+			f := P(float64(x), float64(y))
+			z := Div2(f, Size(im))*Coeff(2.0*axis.Y()) - Diag(axis.Y())
 
 			var nit int
-			for nit = 0; cmplx.Abs(z) <= maxz && nit < iters; nit++ {
+			for nit = 0; z.Magnitude() <= maxz && nit < iters; nit++ {
 				z = fn(z)
 			}
 
@@ -42,8 +41,8 @@ func Julia(
 
 func julia() *image.RGBA {
 	im := NewContext(Diag(500))
-	Julia(im, Viridis, func(z complex128) complex128 {
-		return z*z + complex(-0.1, 0.651)
+	Julia(im, Viridis, func(z V2) V2 {
+		return z*z + P(-0.1, 0.651)
 	}, 40, 1.5+1.5i, 800)
 	return im.Image()
 }

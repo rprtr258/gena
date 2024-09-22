@@ -11,17 +11,17 @@ func drawOceanFishLines(dc *Context, size V2, colorSchema []color.RGBA, n int) {
 	for range Range(n) {
 		dc.SetColor(RandomItem(colorSchema))
 		dc.SetLineWidth(RandomF64(9, 20))
-		y := RandomF64(0, Y(size))
+		y := RandomF64(0, size.Y())
 		dc.DrawLine(
-			complex(0, y+RandomF64(-50, 50)),
-			complex(X(size), y+RandomF64(-50, 50)),
+			P(0, y+RandomF64(-50, 50)),
+			P(size.X(), y+RandomF64(-50, 50)),
 		)
 		dc.Stroke()
 	}
 }
 
 func fishPt(r, theta float64) V2 {
-	return complex(
+	return P(
 		r*Cos(theta)-r*Pow(Sin(theta), 2)/Sqrt(2.0),
 		r*Cos(theta)*Sin(theta),
 	)
@@ -43,7 +43,7 @@ func drawfish(dc *Context, r float64) {
 // TODO: make similar to original
 func OceanFish(dc *Context, colorSchema []color.RGBA, lineNum, fishNum int) {
 	im := dc.Image()
-	W := X(Size(im))
+	W := Size(im).X()
 
 	dc.SetColor(Black)
 	dc.Clear()
@@ -53,13 +53,13 @@ func OceanFish(dc *Context, colorSchema []color.RGBA, lineNum, fishNum int) {
 	dc.TransformAdd(Translate(Size(im) / 2))
 	for i := range Range(fishNum) {
 		dc.Stack(func(ctx *Context) {
-			dc.TransformAdd(Translate(complex(W/4, 0)))
+			dc.TransformAdd(Translate(P(W/4, 0)))
 			drawfish(dc, W/10)
 			dc.Clip()
 
 			dc.TransformAdd(Rotate(-float64(i) * PI * 2 / float64(fishNum)))
 			dc.TransformAdd(Rotate(PI / 2))
-			dc.TransformAdd(Translate(-complex(W/4, 0)))
+			dc.TransformAdd(Translate(-P(W/4, 0)))
 			drawOceanFishLines(dc, Size(im), colorSchema, lineNum)
 			dc.TransformAdd(Rotate(float64(i) * PI * 2 / float64(fishNum)))
 		})

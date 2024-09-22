@@ -18,7 +18,7 @@ func DotLine(dc *Context, palette Pattern1D, lineWidth float64, n int, ras, canv
 	dc.SetLineWidth(lineWidth)
 	dir := []int{-1, 1}
 	for range Range(iters) {
-		old := complex(
+		old := P(
 			float64(RandomInt(n-1)),
 			float64(RandomInt(n-1)),
 		)
@@ -35,12 +35,12 @@ func DotLine(dc *Context, palette Pattern1D, lineWidth float64, n int, ras, canv
 			}, 255))
 		}
 		for range Range(k) {
-			new := old + complex(float64(dir[RandomInt(2)]), float64(dir[RandomInt(2)]))
-			if Dist(new, complex(float64(n/2), float64(n/2))) > float64(n/2-10) {
+			new := old + P(float64(dir[RandomInt(2)]), float64(dir[RandomInt(2)]))
+			if Dist(new, P(float64(n/2), float64(n/2))) > float64(n/2-10) {
 				new = old
 			}
-			if X(new) == X(old) && RandomInt(6) > 4 {
-				dc.DrawEllipse(old*Coeff(ras)+Diag(canv), complex(lineWidth, lineWidth))
+			if new.X() == old.X() && RandomInt(6) > 4 {
+				dc.DrawEllipse(old*Coeff(ras)+Diag(canv), P(lineWidth, lineWidth))
 				dc.Fill()
 				continue
 			}

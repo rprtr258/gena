@@ -35,7 +35,7 @@ func RandomGaussian(mean, std float64) float64 {
 
 // (rand(), rand())
 func RandomV2() V2 {
-	return complex(Random(), Random())
+	return P(Random(), Random())
 }
 
 func RandomV2N(min, max V2) V2 {

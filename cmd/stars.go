@@ -26,9 +26,9 @@ func stars() *image.RGBA {
 	for x := S / 2; x < W; x += S {
 		dc.Stack(func(ctx *Context) {
 			s := Random()*S/4 + S/4
-			dc.TransformAdd(Translate(complex(float64(x), H/2)))
+			dc.TransformAdd(Translate(P(float64(x), H/2)))
 			dc.TransformAdd(Rotate(Random() * 2 * PI))
-			dc.TransformAdd(Scale(complex(s, s)))
+			dc.TransformAdd(Scale(Diag(s)))
 			for i := range Range(n + 1) {
 				dc.LineTo(points[(i*2)%n])
 			}

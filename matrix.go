@@ -21,14 +21,14 @@ func Translate(v V2) Matrix {
 	return Matrix{
 		1, 0,
 		0, 1,
-		X(v), Y(v),
+		v.X(), v.Y(),
 	}
 }
 
 func Scale(v V2) Matrix {
 	return Matrix{
-		X(v), 0,
-		0, Y(v),
+		v.X(), 0,
+		0, v.Y(),
 		0, 0,
 	}
 }
@@ -45,8 +45,8 @@ func Rotate(angle float64) Matrix {
 
 func Shear(v V2) Matrix {
 	return Matrix{
-		1, Y(v),
-		X(v), 1,
+		1, v.Y(),
+		v.X(), 1,
 		0, 0,
 	}
 }
@@ -63,16 +63,16 @@ func (a Matrix) Multiply(b Matrix) Matrix {
 }
 
 func (a Matrix) TransformVector(p V2) V2 {
-	return complex(
-		a.XX*X(p)+a.XY*Y(p),
-		a.YX*X(p)+a.YY*Y(p),
+	return P(
+		a.XX*p.X()+a.XY*p.Y(),
+		a.YX*p.X()+a.YY*p.Y(),
 	)
 }
 
 func (a Matrix) TransformPoint(v V2) V2 {
-	return complex(
-		a.XX*X(v)+a.XY*Y(v)+a.X0,
-		a.YX*X(v)+a.YY*Y(v)+a.Y0,
+	return P(
+		a.XX*v.X()+a.XY*v.Y()+a.X0,
+		a.YX*v.X()+a.YY*v.Y()+a.Y0,
 	)
 }
 

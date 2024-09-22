@@ -13,7 +13,7 @@ func openfill() *image.RGBA {
 	dc.TransformAdd(Translate(Diag(SZ / N / 2)))
 	for _, y := range RangeF64(0, SZ, N) {
 		for _, x := range RangeF64(0, SZ, N) {
-			f := complex(x, y)
+			f := P(x, y)
 			a1 := PI * Random() * 2
 			a2 := PI * (Random() + 0.5)
 			dc.DrawArc(f, 40, a1, a1+a2)

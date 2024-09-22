@@ -28,8 +28,8 @@ func ContourLine(dc *Context, colorSchema []color.RGBA, n int) {
 			dc.DrawEllipse(v, complex(2, 2))
 			dc.Fill()
 
-			if X(v) > float64(im.Bounds().Dx()) || X(v) < 0 ||
-				Y(v) > float64(im.Bounds().Dy()) || Y(v) < 0 ||
+			if v.X() > float64(im.Bounds().Dx()) || v.X() < 0 ||
+				v.Y() > float64(im.Bounds().Dy()) || v.Y() < 0 ||
 				Random() < 0.001 {
 				v = Mul2(RandomV2(), Size(im))
 			}

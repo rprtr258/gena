@@ -43,15 +43,15 @@ func (p *PerlinNoise) Noise2_1(x, y float64) float64 {
 }
 
 func (p *PerlinNoise) NoiseV2_1(v V2) float64 {
-	return p.noise(X(v), Y(v), 0)
+	return p.noise(v.X(), v.Y(), 0)
 }
 
 func (p *PerlinNoise) Noise2_V2(x, y float64) V2 {
-	return complex(p.Noise1_1(x), p.Noise1_1(y))
+	return P(p.Noise1_1(x), p.Noise1_1(y))
 }
 
 func (p *PerlinNoise) Noise2V2_V2(v, d V2) V2 {
-	return complex(p.NoiseV2_1(v), p.NoiseV2_1(v+d))
+	return P(p.NoiseV2_1(v), p.NoiseV2_1(v+d))
 }
 
 // Noise3_1 returns a float noise number on three dimensions.

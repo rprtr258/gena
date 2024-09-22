@@ -17,9 +17,9 @@ type swirlOpts struct {
 }
 
 func (s *swirlOpts) swirlTransform(p V2) V2 {
-	return complex(
-		Sin(s.a*Y(p))-Cos(s.b*X(p)),
-		Sin(s.c*X(p))-Cos(s.d*Y(p)),
+	return P(
+		Sin(s.a*p.Y())-Cos(s.b*p.X()),
+		Sin(s.c*p.X())-Cos(s.d*p.Y()),
 	)
 }
 
@@ -84,12 +84,12 @@ func Swirl(dc *Context, fg, bg color.RGBA, a, b, c, d float64, axis V2, iters in
 	dc.SetColor(bg)
 	dc.Clear()
 	dc.SetLineWidth(3)
-	start := complex(1.0, 1.0)
+	start := P(1.0, 1.0)
 
 	for range Range(s.iters) {
 		next := s.swirlTransform(start)
 		xy := ToPixel(next, s.axis, Size(im))
-		im.Set(int(X(xy)), int(Y(xy)), s.fg)
+		im.Set(int(xy.X()), int(xy.Y()), s.fg)
 		start = next
 	}
 

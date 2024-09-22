@@ -9,7 +9,7 @@ import (
 func lines() *image.RGBA {
 	const W = 1024
 	const H = 1024
-	dc := NewContext(complex(W, H))
+	dc := NewContext(P(W, H))
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Clear()
 	for range Range(1000) {
@@ -24,7 +24,7 @@ func lines() *image.RGBA {
 		w := Random()*4 + 1
 		dc.SetColor(ColorRGBA(r, g, b, a))
 		dc.SetLineWidth(w)
-		dc.DrawLine(complex(x1, y1), complex(x2, y2))
+		dc.DrawLine(P(x1, y1), P(x2, y2))
 		dc.Stroke()
 	}
 	return dc.Image()

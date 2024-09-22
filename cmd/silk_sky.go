@@ -18,7 +18,7 @@ func SilkSky(dc *Context, alpha, n int, sunRadius float64) {
 	mv := 100
 
 	for _, f := range RangeV2_2(n, n) {
-		hsv := HSV{H: n + int(Y(f)), S: int(X(f)) + 50, V: 70}
+		hsv := HSV{H: n + int(f.Y()), S: int(f.X()) + 50, V: 70}
 		rgba := hsv.ToRGB(mh, ms, mv)
 		n := Mul2(f+Diag(0.5), Size(im)) / Coeff(float64(n))
 		dc.SetColor(ColorRGBA255(rgba, alpha))

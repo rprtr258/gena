@@ -14,7 +14,7 @@ func GirdSquares(dc *Context, palette Pattern1D, step, rectSize int, decay float
 		for y := 0; y < im.Bounds().Dy(); y += step {
 			cl := palette.Random()
 
-			v0 := complex(float64(x), float64(y))
+			v0 := P(float64(x), float64(y))
 			s := float64(rectSize)
 
 			theta := RandomInt(360) + 1
@@ -23,13 +23,13 @@ func GirdSquares(dc *Context, palette Pattern1D, step, rectSize int, decay float
 					dc.TransformAdd(Translate(v0 + Diag(step)/2))
 					dc.TransformAdd(Rotate(Radians(float64(theta * i))))
 
-					dc.TransformAdd(Scale(complex(s, s)))
+					dc.TransformAdd(Scale(P(s, s)))
 
-					dc.LineTo(complex(-0.5, 0.5))
-					dc.LineTo(complex(0.5, 0.5))
-					dc.LineTo(complex(0.5, -0.5))
-					dc.LineTo(complex(-0.5, -0.5))
-					dc.LineTo(complex(-0.5, 0.5))
+					dc.LineTo(P(-0.5, 0.5))
+					dc.LineTo(P(0.5, 0.5))
+					dc.LineTo(P(0.5, -0.5))
+					dc.LineTo(P(-0.5, -0.5))
+					dc.LineTo(P(-0.5, 0.5))
 
 					dc.SetLineWidth(3)
 					dc.SetColor(Tomato)

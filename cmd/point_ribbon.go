@@ -25,7 +25,7 @@ func PointRibbon(dc *Context, lineWidth, r float64, iters int) {
 			100,
 			10,
 		})
-		dc.DrawPoint(complex(
+		dc.DrawPoint(P(
 			2*Sin(2*t*dt)+Cos(t*dt),
 			2*Sin(t*dt)-Sin(5*t),
 		)*Coeff(r)+Size(im)/2, 1.0)

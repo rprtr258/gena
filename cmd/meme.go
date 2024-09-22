@@ -8,7 +8,7 @@ import (
 
 func meme() *image.RGBA {
 	const S = 1024
-	dc := NewContext(complex(S, S))
+	dc := NewContext(P(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.LoadFontFace("/Library/Fonts/Impact.ttf", 96)
@@ -21,10 +21,10 @@ func meme() *image.RGBA {
 				// give it rounded corners
 				continue
 			}
-			dc.DrawStringAnchored(s, complex(float64(dx), float64(dy))+Diag(S/2), Diag(0.5))
+			dc.DrawStringAnchored(s, P(float64(dx), float64(dy))+Diag(S/2), Diag(0.5))
 		}
 	}
 	dc.SetColor(ColorRGB(1, 1, 1))
-	dc.DrawStringAnchored(s, complex(S/2, S/2), complex(0.5, 0.5))
+	dc.DrawStringAnchored(s, P(S/2, S/2), P(0.5, 0.5))
 	return dc.Image()
 }

@@ -31,11 +31,11 @@ func Janus(dc *Context, colorSchema []color.RGBA, fg color.RGBA, decay float64) 
 			y2 += noise
 
 			s *= 0.836
-			dc.TransformAdd(Scale(complex(s, s)))
-			dc.DrawArc(complex(x1, y1), 1.0, PI*3/2+theta, PI*5/2+theta)
+			dc.TransformAdd(Scale(P(s, s)))
+			dc.DrawArc(P(x1, y1), 1.0, PI*3/2+theta, PI*5/2+theta)
 			dc.SetColor(clr)
 			dc.Fill()
-			dc.DrawArc(complex(x2, y2), 1.0, PI/2+theta, PI*3/2+theta)
+			dc.DrawArc(P(x2, y2), 1.0, PI/2+theta, PI*3/2+theta)
 			dc.SetColor(clr)
 			dc.Fill()
 		})

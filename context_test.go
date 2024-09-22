@@ -28,19 +28,19 @@ func saveImage(dc *Context, name string) {
 }
 
 func TestBlank(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	saveImage(dc, "TestBlank")
 	assertHash(t, dc, "4e0a293a5b638f0aba2c4fe2c3418d0e")
 }
 
 func TestGrid(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	for i := 10; i < 100; i += 10 {
 		x := float64(i) + 0.5
-		dc.DrawLine(complex(x, 0), complex(x, 100))
-		dc.DrawLine(complex(0, x), complex(100, x))
+		dc.DrawLine(P(x, 0), P(x, 100))
+		dc.DrawLine(P(0, x), P(100, x))
 	}
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Stroke()
@@ -49,7 +49,7 @@ func TestGrid(t *testing.T) {
 }
 
 func TestLines(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(0.5, 0.5, 0.5))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -66,7 +66,7 @@ func TestLines(t *testing.T) {
 }
 
 func TestCircles(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -84,7 +84,7 @@ func TestCircles(t *testing.T) {
 }
 
 func TestQuadratic(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(0.25, 0.25, 0.25))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -103,7 +103,7 @@ func TestQuadratic(t *testing.T) {
 }
 
 func TestCubic(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(0.75, 0.75, 0.75))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -123,7 +123,7 @@ func TestCubic(t *testing.T) {
 }
 
 func TestFill(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -141,10 +141,10 @@ func TestFill(t *testing.T) {
 }
 
 func TestClip(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.DrawCircle(complex(50, 50), 40)
+	dc.DrawCircle(P(50, 50), 40)
 	dc.Clip()
 	rnd := rand.New(rand.NewSource(99))
 	for range Range(1000) {
@@ -159,14 +159,14 @@ func TestClip(t *testing.T) {
 
 func TestPushPop(t *testing.T) {
 	const S = 100
-	dc := NewContext(complex(S, S))
+	dc := NewContext(P(S, S))
 	dc.SetColor(ColorRGBA(0, 0, 0, 0.1))
 	for i := 0; i < 360; i += 15 {
 		dc.Stack(func(dc *Context) {
-			dc.WithTransform(Translate(complex(S/2, S/2)), func(dc *Context) {
+			dc.WithTransform(Translate(P(S/2, S/2)), func(dc *Context) {
 				dc.TransformAdd(Rotate(Radians(float64(i))))
 			})
-			dc.DrawEllipse(complex(S/2, S/2), complex(S*7/16, S/8))
+			dc.DrawEllipse(P(S/2, S/2), P(S*7/16, S/8))
 			dc.Fill()
 		})
 	}
@@ -175,37 +175,37 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestDrawStringWrapped(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 0, 0))
-	dc.DrawStringWrapped("Hello, world! How are you?", complex(50, 50), complex(0.5, 0.5), 90, 1.5, AlignCenter)
+	dc.DrawStringWrapped("Hello, world! How are you?", P(50, 50), P(0.5, 0.5), 90, 1.5, AlignCenter)
 	saveImage(dc, "TestDrawStringWrapped")
 	assertHash(t, dc, "8d92f6aae9e8b38563f171abd00893f8")
 }
 
 func TestDrawImage(t *testing.T) {
-	src := NewContext(complex(100, 100))
+	src := NewContext(P(100, 100))
 	src.SetColor(ColorRGB(1, 1, 1))
 	src.Clear()
 	for i := 10; i < 100; i += 10 {
 		x := float64(i) + 0.5
-		src.DrawLine(complex(x, 0), complex(x, 100))
-		src.DrawLine(complex(0, x), complex(100, x))
+		src.DrawLine(P(x, 0), P(x, 100))
+		src.DrawLine(P(0, x), P(100, x))
 	}
 	src.SetColor(ColorRGB(0, 0, 0))
 	src.Stroke()
 
-	dc := NewContext(complex(200, 200))
+	dc := NewContext(P(200, 200))
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Clear()
-	dc.DrawImage(src.Image(), complex(50, 50))
+	dc.DrawImage(src.Image(), P(50, 50))
 	saveImage(dc, "TestDrawImage")
 	assertHash(t, dc, "282afbc134676722960b6bec21305b15")
 }
 
 func TestSetPixel(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 1, 0))
@@ -221,14 +221,14 @@ func TestSetPixel(t *testing.T) {
 }
 
 func TestDrawPoint(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(0, 0, 0))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 1, 0))
-	dc.TransformAdd(Scale(complex(10, 10)))
+	dc.TransformAdd(Scale(P(10, 10)))
 	for y := 0; y <= 10; y++ {
 		for x := 0; x <= 10; x++ {
-			dc.DrawPoint(complex(float64(x), float64(y)), 3)
+			dc.DrawPoint(P(float64(x), float64(y)), 3)
 			dc.Fill()
 		}
 	}
@@ -237,35 +237,35 @@ func TestDrawPoint(t *testing.T) {
 }
 
 func TestLinearGradient(t *testing.T) {
-	dc := NewContext(complex(100, 100))
-	g := PatternGradientLinear(0, complex(100, 100), Stops{
+	dc := NewContext(P(100, 100))
+	g := PatternGradientLinear(0, P(100, 100), Stops{
 		0:   color.RGBA{0, 255, 0, 255},
 		0.5: color.RGBA{255, 0, 0, 255},
 		1:   color.RGBA{0, 0, 255, 255},
 	})
 	dc.SetFillStyle(g)
-	dc.DrawRectangle(0, complex(100, 100))
+	dc.DrawRectangle(0, P(100, 100))
 	dc.Fill()
 	saveImage(dc, "TestLinearGradient")
 	assertHash(t, dc, "75eb9385c1219b1d5bb6f4c961802c7a")
 }
 
 func TestRadialGradient(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	g := PatternGradientRadial(30+50i, 0, 70+50i, 50, Stops{
 		0:   color.RGBA{0, 255, 0, 255},
 		0.5: color.RGBA{255, 0, 0, 255},
 		1:   color.RGBA{0, 0, 255, 255},
 	})
 	dc.SetFillStyle(g)
-	dc.DrawRectangle(0, complex(100, 100))
+	dc.DrawRectangle(0, P(100, 100))
 	dc.Fill()
 	saveImage(dc, "TestRadialGradient")
 	assertHash(t, dc, "f170f39c3f35c29de11e00428532489d")
 }
 
 func TestDashes(t *testing.T) {
-	dc := NewContext(complex(100, 100))
+	dc := NewContext(P(100, 100))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
@@ -283,12 +283,12 @@ func TestDashes(t *testing.T) {
 }
 
 func BenchmarkCircles(b *testing.B) {
-	dc := NewContext(complex(1000, 1000))
+	dc := NewContext(P(1000, 1000))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	for i := range Range(b.N) {
-		dc.DrawCircle(complex(rnd.Float64()*1000, rnd.Float64()*1000), 10)
+		dc.DrawCircle(P(rnd.Float64()*1000, rnd.Float64()*1000), 10)
 		m := float64(i % 2)
 		dc.SetColor(ColorRGB(m, m, m))
 		dc.Fill()

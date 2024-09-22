@@ -12,19 +12,19 @@ func test() *image.RGBA {
 
 	dc := NewContextFromRGBA(dest)
 	dc.Stack(func(dc *Context) {
-		dc.TransformAdd(Translate(complex(500/2, 500/2)))
+		dc.TransformAdd(Translate(P(500/2, 500/2)))
 		dc.TransformAdd(Rotate(40))
 		dc.SetColor(color.RGBA{0xFF, 0x00, 0x00, 255})
 		for i := range Range(361) {
 			theta := Radians(float64(i))
-			p := complex(
+			p := P(
 				Cos(theta)-Pow(Sin(theta), 2)/Sqrt(2.0),
 				Cos(theta)*Sin(theta),
 			)
 
 			alpha := Radians(float64(i + 1))
 
-			p1 := complex(
+			p1 := P(
 				Cos(alpha)-Pow(Sin(alpha), 2)/Sqrt(2.0),
 				Cos(alpha)*Sin(alpha),
 			)

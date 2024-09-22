@@ -12,7 +12,7 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 	dc.SetColor(color.RGBA{0xDF, 0xEB, 0xF5, 0xFF})
 	dc.Clear()
 
-	W, H := XY(Size(dc.Image()))
+	W, H := Size(dc.Image()).XY()
 
 	// grid
 	{
@@ -21,9 +21,9 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 		dc.SetColor(White)
 		dc.SetLineWidth(0.6)
 		for _, z := range RangeF64(0, W, cells) {
-			dc.DrawLine(complex(0, z), complex(W, z))
+			dc.DrawLine(P(0, z), P(W, z))
 			dc.Stroke()
-			dc.DrawLine(complex(z, 0), complex(z, H))
+			dc.DrawLine(P(z, 0), P(z, H))
 			dc.Stroke()
 		}
 	}
@@ -57,7 +57,7 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 				n := RandomIntN(1, 4) * 2
 				for range Range(n) {
 					dc.TransformAdd(Rotate(PI * 2 / float64(n)))
-					dc.DrawCircle(complex(r, 0), r*0.1)
+					dc.DrawCircle(P(r, 0), r*0.1)
 					dc.Fill()
 				}
 			case 2:
@@ -67,7 +67,7 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 				arc := PI / 2 * float64(RandomIntN(1, 5))
 				for _, d := range RangeF64(0, 1, n) {
 					dc.TransformAdd(Rotate(arc / float64(n)))
-					dc.DrawCircle(complex(r/2, 0), min(d, r*0.1)*2)
+					dc.DrawCircle(P(r/2, 0), min(d, r*0.1)*2)
 					dc.Fill()
 				}
 			case 3:
@@ -76,7 +76,7 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 				theta := PI * 2 / float64(n)
 				for range Range(n) {
 					dc.TransformAdd(Rotate(theta))
-					dc.DrawLine(complex(r*0.5, 0), complex(r*0.63, 0))
+					dc.DrawLine(P(r*0.5, 0), P(r*0.63, 0))
 					dc.Stroke()
 				}
 			}

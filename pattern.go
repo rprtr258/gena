@@ -27,7 +27,7 @@ const (
 func PatternSurface(im image.Image, op RepeatOp) Pattern2D {
 	return func(f V2) color.Color {
 		b := im.Bounds()
-		x, y := int(X(f)), int(Y(f))
+		x, y := int(f.X()), int(f.Y())
 		switch op {
 		case RepeatX:
 			if y >= b.Dy() {
@@ -79,7 +79,7 @@ func newPatternPainter(im *image.RGBA, mask *image.Alpha, pattern Pattern2D) ras
 						continue
 					}
 				}
-				c := pattern(complex(float64(x), float64(y)))
+				c := pattern(P(x, y))
 				cr, cg, cb, ca := c.RGBA()
 				dr := uint32(im.Pix[i+0])
 				dg := uint32(im.Pix[i+1])

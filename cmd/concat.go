@@ -13,8 +13,8 @@ func concat() *image.RGBA {
 	im2 := Load("cmd/gopher.png")
 	s2 := Size(im2)
 
-	dc := NewContext(complex(max(X(s1), X(s2)), Y(s1)+Y(s2)))
+	dc := NewContext(P(max(s1.X(), s2.X()), s1.Y()+s2.Y()))
 	dc.DrawImage(im1, 0)
-	dc.DrawImage(im2, complex(0, Y(s1)))
+	dc.DrawImage(im2, P(0, s1.Y()))
 	return dc.Image()
 }

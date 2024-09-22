@@ -59,13 +59,13 @@ func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern2D {
 		d := v1 - v0
 
 		// Horizontal
-		if Y(d) == 0 {
-			return getColor((X(f)-X(v0))/X(d), stops...)
+		if d.Y() == 0 {
+			return getColor((f.X()-v0.X())/d.X(), stops...)
 		}
 
 		// Vertical
-		if X(d) == 0 {
-			return getColor((Y(f)-Y(v0))/Y(d), stops...)
+		if d.X() == 0 {
+			return getColor((f.Y()-v0.Y())/d.Y(), stops...)
 		}
 
 		if s0 := Dot(d, f-v0); s0 < 0 {
@@ -73,11 +73,11 @@ func PatternGradientLinear(v0, v1 V2, stopss Stops) Pattern2D {
 		}
 
 		// Calculate distance to v0 along v0->v1
-		mag := Magnitude(d)
-		cross := imag((f - v0) * cmplx.Conj(d))
+		mag := d.Magnitude()
+		cross := ((f - v0) * V2(cmplx.Conj(complex128(d)))).Y()
 		u := cross / Pow(mag, 2)
 		v2 := v0 + complex(0, 1)*d*Coeff(u)
-		return getColor(Magnitude(f-v2)/mag, stops...)
+		return getColor((f-v2).Magnitude()/mag, stops...)
 	}
 }
 
@@ -104,7 +104,7 @@ func PatternGradientRadial(
 	c0 := circle{p0, r0}
 	// c1 := circle{p1, r1}
 	cd := circle{p1 - p0, r1 - r0}
-	a := dot3(X(cd.p), Y(cd.p), -cd.r, X(cd.p), Y(cd.p), cd.r)
+	a := dot3(cd.p.X(), cd.p.Y(), -cd.r, cd.p.X(), cd.p.Y(), cd.r)
 
 	var inva float64
 	if a != 0 {
@@ -121,8 +121,8 @@ func PatternGradientRadial(
 		// copy from pixman's pixman-radial-gradient.c
 
 		d := f + Diag(0.5) - c0.p
-		b := dot3(X(d), Y(d), c0.r, X(cd.p), Y(cd.p), cd.r)
-		c := dot3(X(d), Y(d), -c0.r, X(d), Y(d), c0.r)
+		b := dot3(d.X(), d.Y(), c0.r, cd.p.X(), cd.p.Y(), cd.r)
+		c := dot3(d.X(), d.Y(), -c0.r, d.X(), d.Y(), c0.r)
 
 		if a == 0 {
 			if b == 0 {
@@ -162,7 +162,7 @@ func PatternGradientConic(c V2, deg float64, stopss Stops) Pattern2D {
 		}
 
 		d := f - c
-		a := math.Atan2(Y(d), X(d))
+		a := math.Atan2(d.Y(), d.X())
 
 		t := Remap(a, -PI, PI, 0, 1) - rotation
 		if t < 0 {

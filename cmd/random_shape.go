@@ -20,7 +20,7 @@ func RandomShape(dc *Context, colorSchema []color.RGBA, n int) {
 	dc.TransformAdd(Translate(-Size(im) / 2))
 
 	for range Range(n) {
-		v := Mul2(complex(
+		v := Mul2(P(
 			RandomGaussian(0.5, 0.2),
 			RandomGaussian(0.5, 0.2),
 		), Size(im))
@@ -39,15 +39,15 @@ func RandomShape(dc *Context, colorSchema []color.RGBA, n int) {
 			case 0:
 				dc.DrawCircle(0, w/2)
 			case 1:
-				dc.DrawRectangle(0, complex(w/2, w/2))
+				dc.DrawRectangle(0, P(w/2, w/2))
 			case 2:
 				if Random() < 0.5 {
-					dc.DrawEllipse(0, complex(w/2, h/2))
+					dc.DrawEllipse(0, P(w/2, h/2))
 				} else {
-					dc.DrawRectangle(0, complex(w, h))
+					dc.DrawRectangle(0, P(w, h))
 				}
 			case 3:
-				dc.DrawRectangle(0, complex(w*2, RandomF64(2, 10)))
+				dc.DrawRectangle(0, P(w*2, RandomF64(2, 10)))
 			}
 			dc.Fill()
 		})

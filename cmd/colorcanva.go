@@ -21,8 +21,8 @@ func ColorCanvas(dc *Context, colorSchema []color.RGBA, lineWidth, seg float64) 
 	for i := 0.; i < seg; i += 1. {
 		for j := 0.; j < seg; j += 1. {
 			rects = append(rects, Rect{
-				Pos:  complex(i, j)*Coeff(w) + Diag(w/2),
-				Size: complex(w, w),
+				Pos:  P(i, j)*Coeff(w) + Diag(w/2),
+				Size: P(w, w),
 			})
 		}
 	}
@@ -49,15 +49,15 @@ func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rec
 	var delta V2
 	switch RandomInt(4) {
 	case 0:
-		delta = complex(-X(rect.Size), -Y(rect.Size))
+		delta = P(-rect.Size.X(), -rect.Size.Y())
 	case 1:
-		delta = complex(X(rect.Size), -Y(rect.Size))
+		delta = P(rect.Size.X(), -rect.Size.Y())
 	case 2:
-		delta = complex(-X(rect.Size), Y(rect.Size))
+		delta = P(-rect.Size.X(), rect.Size.Y())
 	case 3:
-		delta = complex(X(rect.Size), Y(rect.Size))
+		delta = P(rect.Size.X(), rect.Size.Y())
 	}
-	dc.DrawRectangle(rect.Pos-cmplx.Conj(wh)/2+delta/2, wh)
+	dc.DrawRectangle(rect.Pos-V2(cmplx.Conj(complex128(wh)))/2+delta/2, wh)
 
 	dc.SetColor(Black)
 	dc.StrokePreserve()

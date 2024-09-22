@@ -16,7 +16,7 @@ func ColorCircle(dc *Context, colorSchema []color.NRGBA, n int) {
 
 	for range Range(n) {
 		v := Mul2(RandomV2N(Diag(-0.1), Diag(1.1)), Size(im))
-		s := RandomF64(0, RandomF64(0, X(Size(im))/2)) + 10
+		s := RandomF64(0, RandomF64(0, Size(im).X()/2)) + 10
 
 		switch RandomWeighted(map[int]float64{0: 4, 1: 4, 2: 1}) {
 		case 0:

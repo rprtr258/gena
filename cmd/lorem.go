@@ -18,7 +18,7 @@ var loremIpsumLines = []string{
 func lorem() *image.RGBA {
 	const W = 800
 	const H = 400
-	dc := NewContext(complex(W, H))
+	dc := NewContext(P(W, H))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
 	dc.SetColor(ColorRGB(0, 0, 0))
@@ -26,7 +26,7 @@ func lorem() *image.RGBA {
 	const h = 24
 	for i, line := range loremIpsumLines {
 		y := H/2 - h*len(loremIpsumLines)/2 + i*h
-		dc.DrawStringAnchored(line, complex(400, float64(y)), complex(0.5, 0.5))
+		dc.DrawStringAnchored(line, P(400, float64(y)), P(0.5, 0.5))
 	}
 	return dc.Image()
 }

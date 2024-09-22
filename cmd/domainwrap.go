@@ -31,10 +31,10 @@ func domainWarp(
 	im := dc.Image()
 	for h := 0; h < im.Bounds().Dy(); h++ {
 		for w := 0; w < im.Bounds().Dx(); w++ {
-			v := complex(float64(w), float64(h)) * Coeff(scale)
-			q := noise.Noise2V2_V2(v+offset, complex(5.2, 1.3))
-			r := noise.Noise2V2_V2(v+q*Coeff(scale2)+complex(1.7, 9.2), complex(6.4, -6.4))
-			r1, m1, m2 := noise.NoiseV2_1(q+r*Coeff(scale2)), Magnitude(q), Magnitude(r)
+			v := P(float64(w), float64(h)) * Coeff(scale)
+			q := noise.Noise2V2_V2(v+offset, P(5.2, 1.3))
+			r := noise.Noise2V2_V2(v+q*Coeff(scale2)+P(1.7, 9.2), P(6.4, -6.4))
+			r1, m1, m2 := noise.NoiseV2_1(q+r*Coeff(scale2)), q.Magnitude(), r.Magnitude()
 			color := cmap(r1, m1, m2)
 			im.Set(w, h, color)
 		}
@@ -70,6 +70,6 @@ func DomainWarp(
 
 func domainwrap() *image.RGBA {
 	dc := NewContext(Diag(500))
-	domainWarp(dc, NewPerlinNoiseDeprecated(), 0.01, 4, complex(4, 20))
+	domainWarp(dc, NewPerlinNoiseDeprecated(), 0.01, 4, P(4, 20))
 	return dc.Image()
 }

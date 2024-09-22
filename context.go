@@ -21,7 +21,7 @@ import (
 )
 
 func Size(img image.Image) V2 {
-	return complex(float64(img.Bounds().Dx()), float64(img.Bounds().Dy()))
+	return P(img.Bounds().Dx(), img.Bounds().Dy())
 }
 
 type LineCap int
@@ -106,11 +106,11 @@ func NewContextFromRGBA(im *image.RGBA) *Context {
 // NewContext creates a new image.RGBA with the specified width and height
 // and prepares a context for rendering onto that image.
 func NewContext(size V2) *Context {
-	if X(size) <= 0 || Y(size) <= 0 {
+	if size.X() <= 0 || size.Y() <= 0 {
 		panic(fmt.Sprintf("invalid size: %v", size))
 	}
 
-	im := image.NewRGBA(image.Rect(0, 0, int(X(size)), int(Y(size))))
+	im := image.NewRGBA(image.Rect(0, 0, int(size.X()), int(size.Y())))
 	return NewContextFromRGBA(im)
 }
 
@@ -450,24 +450,24 @@ func flattenPath(p raster.Path) [][]V2 {
 				result = append(result, path)
 				path = nil
 			}
-			c = complex(unfix(p[i+1]), unfix(p[i+2]))
+			c = P(unfix(p[i+1]), unfix(p[i+2]))
 			path = append(path, c)
 			i += 4
 		case 1:
-			c = complex(unfix(p[i+1]), unfix(p[i+2]))
+			c = P(unfix(p[i+1]), unfix(p[i+2]))
 			path = append(path, c)
 			i += 4
 		case 2:
-			p1 := complex(unfix(p[i+1]), unfix(p[i+2]))
-			p2 := complex(unfix(p[i+3]), unfix(p[i+4]))
+			p1 := P(unfix(p[i+1]), unfix(p[i+2]))
+			p2 := P(unfix(p[i+3]), unfix(p[i+4]))
 			points := QuadraticBezier(c, p1, p2)
 			path = append(path, points...)
 			c = p2
 			i += 6
 		case 3:
-			p1 := complex(unfix(p[i+1]), unfix(p[i+2]))
-			p2 := complex(unfix(p[i+3]), unfix(p[i+4]))
-			p3 := complex(unfix(p[i+5]), unfix(p[i+6]))
+			p1 := P(unfix(p[i+1]), unfix(p[i+2]))
+			p2 := P(unfix(p[i+3]), unfix(p[i+4]))
+			p3 := P(unfix(p[i+5]), unfix(p[i+6]))
 			points := CubicBezier(c, p1, p2, p3)
 			path = append(path, points...)
 			c = p3
@@ -609,7 +609,7 @@ func (dc *Context) Clear() {
 
 // SetPixel sets the color of the specified pixel using the current color.
 func (dc *Context) SetPixel(v V2) {
-	dc.im.Set(int(X(v)), int(Y(v)), dc.color)
+	dc.im.Set(int(v.X()), int(v.Y()), dc.color)
 }
 
 // DrawPoint is like DrawCircle but ensures that a circle of the specified
@@ -631,29 +631,29 @@ func (dc *Context) DrawLine(p1, p2 V2) {
 func (dc *Context) DrawRectangle(topLeft, size V2) {
 	dc.NewSubPath()
 	dc.MoveTo(topLeft)
-	dc.LineTo(topLeft + complex(X(size), 0))
+	dc.LineTo(topLeft + P(size.X(), 0))
 	dc.LineTo(topLeft + size)
-	dc.LineTo(topLeft + complex(0, Y(size)))
+	dc.LineTo(topLeft + P(0, size.Y()))
 	dc.ClosePath()
 }
 
 func (dc *Context) DrawRoundedRectangle(topLeft, size V2, r float64) {
-	x, y := X(topLeft), Y(topLeft)
-	w, h := X(size), Y(size)
+	x, y := topLeft.X(), topLeft.Y()
+	w, h := size.X(), size.Y()
 	x0, y0 := x, y
 	x1, y1 := x+r, y+r
 	x2, y2 := x+w-r, y+h-r
 	x3, y3 := x+w, y+h
 	dc.NewSubPath()
-	dc.MoveTo(complex(x1, y0))
-	dc.LineTo(complex(x2, y0))
-	dc.DrawArc(complex(x2, y1), r, Radians(270), Radians(360))
-	dc.LineTo(complex(x3, y2))
-	dc.DrawArc(complex(x2, y2), r, Radians(0), Radians(90))
-	dc.LineTo(complex(x1, y3))
-	dc.DrawArc(complex(x1, y2), r, Radians(90), Radians(180))
-	dc.LineTo(complex(x0, y1))
-	dc.DrawArc(complex(x1, y1), r, Radians(180), Radians(270))
+	dc.MoveTo(P(x1, y0))
+	dc.LineTo(P(x2, y0))
+	dc.DrawArc(P(x2, y1), r, Radians(270), Radians(360))
+	dc.LineTo(P(x3, y2))
+	dc.DrawArc(P(x2, y2), r, Radians(0), Radians(90))
+	dc.LineTo(P(x1, y3))
+	dc.DrawArc(P(x1, y2), r, Radians(90), Radians(180))
+	dc.LineTo(P(x0, y1))
+	dc.DrawArc(P(x1, y1), r, Radians(180), Radians(270))
 	dc.ClosePath()
 }
 
@@ -777,7 +777,7 @@ func (dc *Context) drawString(im *image.RGBA, s string, pos V2) {
 		}
 		sr := dr.Sub(dr.Min)
 		transformer := draw.BiLinear
-		m := dc.matrix.Translate(complex(float64(dr.Min.X), float64(dr.Min.Y)))
+		m := dc.matrix.Translate(P(float64(dr.Min.X), float64(dr.Min.Y)))
 		s2d := f64.Aff3{m.XX, m.XY, m.X0, m.YX, m.YY, m.Y0}
 		transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
 			SrcMask:  mask,
@@ -818,21 +818,21 @@ func (dc *Context) DrawStringWrapped(s string, pos, a V2, width, lineSpacing flo
 	h := float64(len(lines)) * dc.fontHeight * lineSpacing
 	h -= (lineSpacing - 1) * dc.fontHeight
 
-	pos -= Mul2(a, complex(width, h))
+	pos -= Mul2(a, P(width, h))
 	switch align {
 	case AlignLeft:
-		a = complex(0, imag(a))
+		a = P(0, imag(a))
 	case AlignCenter:
-		a = complex(0.5, imag(a))
-		pos += complex(width/2, 0)
+		a = P(0.5, imag(a))
+		pos += P(width/2, 0)
 	case AlignRight:
-		a = complex(1, imag(a))
-		pos += complex(width, 0)
+		a = P(1, imag(a))
+		pos += P(width, 0)
 	}
-	a = complex(real(a), 1)
+	a = P(real(a), 1)
 	for _, line := range lines {
 		dc.DrawStringAnchored(line, pos, a)
-		pos += complex(0, dc.fontHeight*lineSpacing)
+		pos += P(0, dc.fontHeight*lineSpacing)
 	}
 }
 
@@ -852,7 +852,7 @@ func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) V2 {
 		}
 	}
 
-	return complex(width, height)
+	return P(width, height)
 }
 
 // MeasureString returns the rendered width and height of the specified text
@@ -860,7 +860,7 @@ func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) V2 {
 func (dc *Context) MeasureString(s string) V2 {
 	d := &font.Drawer{Face: dc.fontFace}
 	a := d.MeasureString(s)
-	return complex(float64(a>>6), dc.fontHeight)
+	return P(float64(a>>6), dc.fontHeight)
 }
 
 // WordWrap wraps the specified string to the given max width and current font face.
@@ -874,7 +874,7 @@ func (dc *Context) WordWrap(s string, width float64) []string {
 
 		x := ""
 		for i := 0; i < len(fields); i += 2 {
-			w := X(dc.MeasureString(x + fields[i]))
+			w := dc.MeasureString(x + fields[i]).X()
 			if w > width {
 				if x == "" {
 					result = append(result, fields[i])
@@ -914,8 +914,8 @@ func (dc *Context) transformPoint(v V2) V2 {
 
 // InvertY flips the Y axis so that Y grows from bottom to top and Y=0 is at the bottom of the image.
 func (dc *Context) InvertY() {
-	dc.TransformAdd(Translate(complex(0, float64(dc.height))))
-	dc.TransformAdd(Scale(complex(1, -1)))
+	dc.TransformAdd(Translate(P(0, float64(dc.height))))
+	dc.TransformAdd(Scale(P(1, -1)))
 }
 
 func (dc *Context) WithTransform(m Matrix, fn func(*Context)) {

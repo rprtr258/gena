@@ -22,7 +22,7 @@ func NoiseLine(dc *Context, colorSchema []color.RGBA, iters int) {
 
 		s := Random() * float64(dc.Image().Bounds().Dx()) / 8
 		dc.SetLineWidth(0.5)
-		dc.DrawEllipse(f, complex(s, s))
+		dc.DrawEllipse(f, P(s, s))
 		dc.Stroke()
 	}
 
@@ -36,7 +36,7 @@ func NoiseLine(dc *Context, colorSchema []color.RGBA, iters int) {
 		for j := range Range(l) {
 			ns := 0.0005
 			w := Sin(PI*float64(j)/float64(l-1)) * 5
-			theta := noise.Noise3_1(X(f)*ns, Y(f)*ns, t) * 100
+			theta := noise.Noise3_1(f.X()*ns, f.Y()*ns, t) * 100
 			dc.SetColor(cl)
 			dc.DrawCircle(f, w)
 			dc.Fill()

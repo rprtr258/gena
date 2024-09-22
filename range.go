@@ -35,7 +35,7 @@ func RangeV2_2(n, m int) []V2 {
 	result := make([]V2, 0, n*m)
 	for i := range Range(n) {
 		for j := range Range(m) {
-			f := complex(float64(i), float64(j))
+			f := P(i, j)
 			result = append(result, f)
 		}
 	}

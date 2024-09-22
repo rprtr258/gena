@@ -16,16 +16,16 @@ func Maze(dc *Context, lineWidth float64, lineColor color.RGBA, step int) {
 	dc.SetLineWidth(lineWidth)
 	for x := 0; x < dc.Image().Rect.Dx(); x += step {
 		for y := 0; y < dc.Image().Rect.Dy(); y += step {
-			v := complex(float64(x), float64(y))
+			v := P(float64(x), float64(y))
 			if Random() > 0.5 {
 				dc.DrawLine(
 					v,
-					v+complex(float64(step), float64(step)),
+					v+P(float64(step), float64(step)),
 				)
 			} else {
 				dc.DrawLine(
-					v+complex(float64(step), 0),
-					v+complex(0, float64(step)),
+					v+P(float64(step), 0),
+					v+P(0, float64(step)),
 				)
 			}
 			dc.Stroke()

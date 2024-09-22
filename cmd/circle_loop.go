@@ -23,7 +23,7 @@ func CircleLoop(
 	for i := range Range(iters) {
 		theta := PI / 2 * float64(i)
 		dc.Stack(func(dc *Context) {
-			v := complex(
+			v := P(
 				Cos(Radians(theta)),
 				Sin(Radians(theta*2)),
 			) * Coeff(radius)

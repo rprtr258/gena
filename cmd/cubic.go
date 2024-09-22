@@ -8,16 +8,16 @@ import (
 
 func cubic() *image.RGBA {
 	const S = 1000
-	dc := NewContext(complex(S, S))
+	dc := NewContext(P(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()
-	dc.TransformAdd(Translate(complex(S/2, S/2)))
-	dc.TransformAdd(Scale(complex(40, 40)))
+	dc.TransformAdd(Translate(P(S/2, S/2)))
+	dc.TransformAdd(Scale(P(40, 40)))
 
-	p0 := complex(-10, 0)
-	p1 := complex(-8, -8)
-	p2 := complex(8, 8)
-	p3 := complex(10, 0)
+	p0 := P(-10, 0)
+	p1 := P(-8, -8)
+	p2 := P(8, 8)
+	p3 := P(10, 0)
 
 	dc.MoveTo(p0)
 	dc.CubicTo(p1, p2, p3)

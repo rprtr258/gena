@@ -30,24 +30,24 @@ func circleSliceUpdate(cs []circle1, size V2) []circle1 {
 	for i, c := range cs {
 		c.center += c.d
 
-		if X(c.center) <= 0 {
-			c.center = complex(0, imag(c.center))
-			c.d = complex(-X(c.d), Y(c.d))
+		if c.center.X() <= 0 {
+			c.center = P(0, imag(c.center))
+			c.d = P(-c.d.X(), c.d.Y())
 		}
 
-		if Y(c.center) <= 0 {
-			c.center = complex(real(c.center), 0)
-			c.d = complex(X(c.d), -Y(c.d))
+		if c.center.Y() <= 0 {
+			c.center = P(real(c.center), 0)
+			c.d = P(c.d.X(), -c.d.Y())
 		}
 
-		if X(c.center) > X(size) {
-			c.center = complex(X(size), imag(c.center))
-			c.d = complex(-X(c.d), Y(c.d))
+		if c.center.X() > size.X() {
+			c.center = P(size.X(), imag(c.center))
+			c.d = P(-c.d.X(), c.d.Y())
 		}
 
-		if Y(c.center) > Y(size) {
-			c.center = complex(real(c.center), Y(size))
-			c.d = complex(X(c.d), -Y(c.d))
+		if c.center.Y() > size.Y() {
+			c.center = P(real(c.center), size.Y())
+			c.d = P(c.d.X(), -c.d.Y())
 		}
 
 		res[i] = c

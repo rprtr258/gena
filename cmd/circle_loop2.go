@@ -18,7 +18,7 @@ func recursionDraw(
 		return
 	}
 
-	H := Y(Size(im))
+	H := Size(im).Y()
 
 	lw := 1.0
 	if Random() >= 0.8 {
@@ -30,7 +30,7 @@ func recursionDraw(
 	noise = Sqrt(noise)
 	a2 := Remap(noise, 0.15, 0.85, 0.1, 0.6)
 
-	p := complex(
+	p := P(
 		H*Pow(x/H, a2),
 		H*(Pow(1-x/H, a2)-
 			RandomF64(0, RandomF64(0.18, RandomF64(0.18, 0.7)))),

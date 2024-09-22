@@ -24,11 +24,11 @@ func CircleMove(dc *Context, n int) {
 			cy := float64(im.Bounds().Dy())/2 + Sin(float64(i)/50)*float64(im.Bounds().Dy())/12.0
 			xx := Cos(theta+cx/10) * float64(im.Bounds().Dy()) / 6.0
 			yy := Sin(theta+cx/10) * float64(im.Bounds().Dy()) / 6.0
-			p := complex(xx, yy)
+			p := P(xx, yy)
 			xx = (xx + cx) / 150
 			yy = (yy + cy) / 150
 			p *= Coeff(1 + 1.5*noise.Noise2_1(xx, yy))
-			dc.LineTo(p + complex(cx, cy))
+			dc.LineTo(p + P(cx, cy))
 			cxx = cx
 		}
 

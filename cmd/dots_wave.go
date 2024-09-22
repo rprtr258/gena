@@ -16,7 +16,7 @@ func DotsWave(dc *Context, colorSchema []color.RGBA, n int) {
 	dc.SetColor(Black)
 	dc.Clear()
 	for range Range(n) {
-		v := Mul2(complex(
+		v := Mul2(P(
 			RandomF64(-0.1, 1.1),
 			RandomF64(-0.1, 1.1),
 		), Size(im))
@@ -31,9 +31,9 @@ func DotsWave(dc *Context, colorSchema []color.RGBA, n int) {
 			Shuffle(colorSchema)
 			for j := 0.0; j < num; j += ind {
 				s := float64(im.Bounds().Dx()) * 0.15 * RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, RandomF64(0, Random()))))))
-				ci := int(float64(len(colorSchema)) * noise.Noise3_1(j*0.01, X(v), Y(v)))
+				ci := int(float64(len(colorSchema)) * noise.Noise3_1(j*0.01, v.X(), v.Y()))
 				dc.SetColor(colorSchema[ci])
-				dc.DrawCircle(complex(j, r*Sin(j*0.05)), s*2/3)
+				dc.DrawCircle(P(j, r*Sin(j*0.05)), s*2/3)
 				dc.Fill()
 			}
 		})

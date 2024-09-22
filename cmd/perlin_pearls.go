@@ -27,7 +27,7 @@ func PerlinPearls(dc *Context, lineWidth float64, alpha uint8, circleN, dotsN, c
 	cs := make([]circles, 0)
 	for len(cs) < circleN {
 		c := circles{
-			pos: complex(
+			pos: P(
 				RandomF64(100, float64(im.Bounds().Dx())-50),
 				RandomF64(100, float64(im.Bounds().Dy())-50),
 			),

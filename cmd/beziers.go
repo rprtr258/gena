@@ -11,7 +11,7 @@ func random() float64 {
 }
 
 func point() V2 {
-	return complex(random(), random())
+	return P(random(), random())
 }
 
 func drawCurve(dc *Context) {
@@ -59,7 +59,7 @@ func beziers() *image.RGBA {
 	dc.Clear()
 	for j := range Range(SZ) {
 		for i := range Range(SZ) {
-			v := S * (complex(float64(i), float64(j)) + Diag(0.5))
+			v := S * (P(float64(i), float64(j)) + Diag(0.5))
 			dc.Stack(func(dc *Context) {
 				dc.TransformAdd(Translate(v))
 				dc.TransformAdd(Scale(S * Diag(0.5)))
