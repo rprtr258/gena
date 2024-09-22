@@ -109,6 +109,7 @@ func main() {
 
 	if false {
 		SaveGIF("circlenoise.gif", circlenoise()...)
+		SaveGIF("multiply_table.gif", multiplyTable()...)
 		SaveGIF("domainwrap.gif", DomainWarp(0.01, 4, complex(4, 20), 0.005, 100)...)
 	}
 
