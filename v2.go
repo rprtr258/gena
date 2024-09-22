@@ -1,8 +1,6 @@
 package gena
 
-import (
-	"math/cmplx"
-)
+import "math/cmplx"
 
 type V2 complex128
 

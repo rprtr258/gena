@@ -1,10 +1,16 @@
 package gena
 
-// TODO: change all these to iter.Seq
+import "iter"
 
 // Range is stupid range wrapper, use to repeat n times, or iterate from 0 up to n
-func Range(n int) []struct{} {
-	return make([]struct{}, n)
+func Range(n int) iter.Seq[int] {
+	return func(yield func(int) bool) {
+		for i := 0; i < n; i++ {
+			if !yield(i) {
+				return
+			}
+		}
+	}
 }
 
 func RangeStepF64(x, y, step float64) []float64 {
