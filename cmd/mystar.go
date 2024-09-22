@@ -9,6 +9,7 @@ import (
 
 func mystar() *image.RGBA {
 	const n = 4
+	const m = 9
 
 	dc := NewContext(Diag(500))
 	dc.SetColor(color.Black)
@@ -17,8 +18,8 @@ func mystar() *image.RGBA {
 	dc.TransformAdd(Scale(Diag(100)))
 
 	points := Polygon(n)
-	for range Range(10) {
-		dc.TransformAdd(Rotate(PI / 9))
+	for range Range(m + 1) {
+		dc.TransformAdd(Rotate(PI / m))
 
 		for _, point := range points {
 			dc.LineTo(point)
