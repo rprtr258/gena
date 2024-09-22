@@ -18,7 +18,7 @@ func mystar() *image.RGBA {
 	dc.TransformAdd(Scale(Diag(100)))
 
 	points := Polygon(n)
-	for range Range(m + 1) {
+	for range Range(m) {
 		dc.TransformAdd(Rotate(PI / m))
 
 		for _, point := range points {
