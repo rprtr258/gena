@@ -175,6 +175,9 @@ SaveJPG(path string, im image.Image, quality uint8)
 ### Color Circle2
 ![](images/colorcircle2.png)
 
+### Compass
+![](images/compass.png)
+
 ### Contour Line
 ![](images/contourline.png)
 
@@ -221,6 +224,9 @@ Source: https://openprocessing.org/sketch/1102157
 
 ### Point Ribbon
 ![](images/pointribbon.png)
+
+### Radial diamonds
+![](images/radialDiamonds.png)
 
 ### Random Circle
 ![](images/randcircle.png)

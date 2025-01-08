@@ -25,6 +25,7 @@ var _arts = map[string]func() *image.RGBA{
 	"colorcanva":     colorcanvas,
 	"colorcircle":    colorcircle,
 	"colorcircle2":   colorcircle2,
+	"compass":        compass,
 	"concat":         concat,
 	"contourline":    contourline,
 	"crisp":          crisp,
@@ -55,6 +56,7 @@ var _arts = map[string]func() *image.RGBA{
 	"pixelhole":      pixelhole,
 	"patternFill":    patternFill,
 	"pointribbon":    pointRibbon,
+	"radialDiamonds": radialDiamonds,
 	"randcircle":     randCircle,
 	"randomshape":    randomShape,
 	"rotatedImage":   rotatedImage,
@@ -66,14 +68,12 @@ var _arts = map[string]func() *image.RGBA{
 	"solarflare":     solarFlare,
 	"spiral":         spiral,
 	"spiralsquare":   spiralSquare,
-	"star": func() *image.RGBA {
-		return star(5)
-	},
-	"stars":  stars,
-	"swirl":  swirl,
-	"test":   test,
-	"tiling": tiling,
-	"yarn":   yarn,
+	"star":           func() *image.RGBA { return star(5) },
+	"stars":          stars,
+	"swirl":          swirl,
+	"test":           test,
+	"tiling":         tiling,
+	"yarn":           yarn,
 }
 
 func _http() error {
@@ -102,6 +102,9 @@ func main() {
 	rand.Seed(time.Now().Unix())
 
 	for name, fn := range _arts {
+		if name != "compass" {
+			continue
+		}
 		start := time.Now()
 		SavePNG(name+".png", fn())
 		log.Printf("%14s took %4dms", name, time.Since(start)/time.Millisecond)
