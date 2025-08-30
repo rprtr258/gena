@@ -24,7 +24,7 @@ func Size(img image.Image) V2 {
 	return P(img.Bounds().Dx(), img.Bounds().Dy())
 }
 
-type LineCap int
+type LineCap uint8
 
 const (
 	LineCapRound LineCap = iota
@@ -32,21 +32,21 @@ const (
 	LineCapSquare
 )
 
-type LineJoin int
+type LineJoin bool
 
 const (
-	LineJoinRound LineJoin = iota
-	LineJoinBevel
+	LineJoinRound LineJoin = false
+	LineJoinBevel LineJoin = true
 )
 
-type FillRule int
+type FillRule bool
 
 const (
-	FillRuleWinding FillRule = iota
-	FillRuleEvenOdd
+	FillRuleWinding FillRule = false
+	FillRuleEvenOdd FillRule = true
 )
 
-type Align int
+type Align uint8
 
 const (
 	AlignLeft Align = iota
