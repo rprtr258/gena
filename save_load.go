@@ -2,12 +2,14 @@ package gena
 
 import (
 	"bytes"
+	"fmt"
 	"image"
 	"image/color/palette"
 	"image/draw"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
+	"io"
 	"os"
 )
 
@@ -37,6 +39,28 @@ func SaveJPG(path string, im image.Image, quality uint8) {
 	must(jpeg.Encode(file, im, &jpeg.Options{
 		Quality: int(quality),
 	}))
+}
+
+func SavePGM(path string, im *image.Gray) {
+	w := must1(os.Create(path))
+	defer w.Close()
+
+	fmt.Fprintf(w, "P2\n%d %d 255\n", im.Bounds().Dx(), im.Bounds().Dy())
+	for _, c := range im.Pix {
+		fmt.Fprintf(w, "%d ", c)
+	}
+}
+
+func SaveTTY(w io.Writer, im *image.Gray) {
+	width := im.Bounds().Dx()
+	for y := range im.Bounds().Dy() {
+		for x := range width {
+			c := im.Pix[x+y*width]
+			pixel := " .:-=+*#%@$"[int(Clamp(c*10, 0, 10))]
+			fmt.Fprintf(w, "%c", pixel)
+		}
+		fmt.Fprintln(w)
+	}
 }
 
 // SaveGIF saves images as gif animation frames

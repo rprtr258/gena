@@ -5,11 +5,13 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 
 	. "github.com/rprtr258/gena"
+	"golang.org/x/term"
 )
 
 var _arts = map[string]func() image.Image{
@@ -100,6 +102,15 @@ func _http() error {
 func main() {
 	log.SetFlags(0)
 	rand.Seed(time.Now().Unix())
+
+	if false {
+		origin := V3{0, 1, 5}
+		SavePGM("ray.pgm", rayTracer(origin, 600, 600))
+		{
+			w, _, _ := term.GetSize(int(os.Stdout.Fd()))
+			SaveTTY(os.Stdout, rayTracer(origin, w, w/2/40*25))
+		}
+	}
 
 	for name, fn := range _arts {
 		if name != "compass" {
