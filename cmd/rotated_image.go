@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func rotatedImage() *image.RGBA {
+func rotatedImage() image.Image {
 	const W = 400
 	const H = 500
 	im := Load("cmd/gopher.png")

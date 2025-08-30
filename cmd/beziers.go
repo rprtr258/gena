@@ -51,7 +51,7 @@ func randomCubic(dc *Context) {
 	drawPoints(dc)
 }
 
-func beziers() *image.RGBA {
+func beziers() image.Image {
 	const S = 256
 	const SZ = 8
 	dc := NewContext(Diag(SZ) * Coeff(S))

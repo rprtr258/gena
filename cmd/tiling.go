@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func tiling() *image.RGBA {
+func tiling() image.Image {
 	const NX = 4
 	const NY = 3
 	im := Load("cmd/gopher.png")

@@ -7,7 +7,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func gradientRadial() *image.RGBA {
+func gradientRadial() image.Image {
 	dc := NewContext(complex(400, 200))
 
 	grad := PatternGradientRadial(100+100i, 10, 100+120i, 80, Stops{

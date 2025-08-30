@@ -43,7 +43,7 @@ func GirdSquares(dc *Context, palette Pattern1D, step, rectSize int, decay float
 	}
 }
 
-func gridsquares() *image.RGBA {
+func gridsquares() image.Image {
 	dc := NewContext(Diag(600))
 	GirdSquares(dc, DarkPink, 24, 10, 0.2, 20)
 	return dc.Image()

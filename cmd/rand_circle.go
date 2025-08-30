@@ -95,7 +95,7 @@ func RandCircle(
 	}
 }
 
-func randCircle() *image.RGBA {
+func randCircle() image.Image {
 	dc := NewContext(Diag(500))
 	RandCircle(dc, Plasma, 1, color.RGBA{122, 122, 122, 30}, 30, 80, 0.2, 2, 10, 30, 4)
 	return dc.Image()

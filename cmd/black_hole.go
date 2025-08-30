@@ -45,7 +45,7 @@ func BlackHole(
 	}
 }
 
-func blackhole() *image.RGBA {
+func blackhole() image.Image {
 	dc := NewContext(Diag(500))
 	BlackHole(dc, 1, Tomato, 200, 400, 0.03, NewPerlinNoiseDeprecated(), Random())
 	return dc.Image()

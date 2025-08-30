@@ -96,7 +96,7 @@ func PerlinPearls(dc *Context, lineWidth float64, alpha uint8, circleN, dotsN, c
 	}
 }
 
-func perlinpearls() *image.RGBA {
+func perlinpearls() image.Image {
 	dc := NewContext(Diag(500))
 	PerlinPearls(dc, 0.3, 120, 10, 200, 40, 80, 200)
 	return dc.Image()

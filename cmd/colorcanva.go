@@ -65,7 +65,7 @@ func drawColorCanva(dc *Context, seg float64, colorSchema []color.RGBA, rect Rec
 	dc.Fill()
 }
 
-func colorcanvas() *image.RGBA {
+func colorcanvas() image.Image {
 	dc := NewContext(Diag(500))
 	ColorCanvas(dc, []color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},

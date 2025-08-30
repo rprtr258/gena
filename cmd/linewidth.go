@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func linewidth() *image.RGBA {
+func linewidth() image.Image {
 	dc := NewContext(P(1000, 1000))
 	dc.SetColor(ColorRGB(1, 1, 1))
 	dc.Clear()

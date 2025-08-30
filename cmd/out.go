@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func out() *image.RGBA {
+func out() image.Image {
 	dc := NewContext(complex(1000, 1000))
 	dc.DrawCircle(complex(350, 500), 300)
 	dc.Clip()

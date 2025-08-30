@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func patternFill() *image.RGBA {
+func patternFill() image.Image {
 	dc := NewContext(complex(600, 600))
 	dc.MoveTo(complex(20, 20))
 	dc.LineTo(complex(590, 20))

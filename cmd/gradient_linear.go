@@ -7,7 +7,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func gradientLinear() *image.RGBA {
+func gradientLinear() image.Image {
 	dc := NewContext(complex(500, 400))
 
 	grad := PatternGradientLinear(

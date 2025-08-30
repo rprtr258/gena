@@ -96,7 +96,7 @@ func RadialDiamonds(
 	}
 }
 
-func radialDiamonds() *image.RGBA {
+func radialDiamonds() image.Image {
 	dc := NewContext(Diag(300))
 	RadialDiamonds(dc, Plasma, Diag(150), 20, 5, 50)
 	return dc.Image()

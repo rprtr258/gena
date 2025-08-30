@@ -55,7 +55,7 @@ func SpiralSquare(
 	}
 }
 
-func spiralSquare() *image.RGBA {
+func spiralSquare() image.Image {
 	dc := NewContext(Diag(500))
 	SpiralSquare(dc, Plasma, 10, Orange, 40, 400, 0.05, Tomato, true)
 	return dc.Image()

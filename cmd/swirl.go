@@ -97,7 +97,7 @@ func Swirl(dc *Context, fg, bg color.RGBA, a, b, c, d float64, axis V2, iters in
 	s.removeNoisy(im)
 }
 
-func swirl() *image.RGBA {
+func swirl() image.Image {
 	dc := NewContext(Diag(1600))
 	Swirl(
 		dc,

@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func ellipse() *image.RGBA {
+func ellipse() image.Image {
 	const S = 1024
 	dc := NewContext(Diag(S))
 	dc.SetColor(ColorRGBA(0, 0, 0, 0.1))

@@ -9,7 +9,7 @@ import (
 	"golang.org/x/image/font/gofont/goregular"
 )
 
-func gofont() *image.RGBA {
+func gofont() image.Image {
 	font, err := truetype.Parse(goregular.TTF)
 	if err != nil {
 		log.Fatal(err)

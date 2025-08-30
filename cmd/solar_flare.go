@@ -40,7 +40,7 @@ func SolarFlare(dc *Context, lineColor color.NRGBA) {
 	}
 }
 
-func solarFlare() *image.RGBA {
+func solarFlare() image.Image {
 	dc := NewContext(Diag(500))
 	SolarFlare(dc, color.NRGBA{255, 64, 8, 255})
 	return dc.Image()

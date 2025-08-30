@@ -4,11 +4,12 @@ import (
 	"image"
 
 	"github.com/golang/freetype/truetype"
-	. "github.com/rprtr258/gena"
 	"golang.org/x/image/font/gofont/goregular"
+
+	. "github.com/rprtr258/gena"
 )
 
-func rotatedText() *image.RGBA {
+func rotatedText() image.Image {
 	const S = 400
 	dc := NewContext(complex(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))

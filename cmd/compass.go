@@ -54,7 +54,7 @@ func Compass(
 	}
 }
 
-func compass() *image.RGBA {
+func compass() image.Image {
 	dc := NewContext(Diag(300))
 	Compass(dc, Plasma, Diag(150), 5, 50, 100)
 	return dc.Image()

@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func circle() *image.RGBA {
+func circle() image.Image {
 	const SZ = 1000
 	dc := NewContext(Diag(SZ))
 	dc.DrawCircle(Diag(SZ)/2, SZ*0.4)

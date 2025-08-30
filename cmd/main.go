@@ -12,7 +12,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-var _arts = map[string]func() *image.RGBA{
+var _arts = map[string]func() image.Image{
 	"beziers":        beziers,
 	"blackhole":      blackhole,
 	"circlegrid":     circleGrid,
@@ -68,7 +68,7 @@ var _arts = map[string]func() *image.RGBA{
 	"solarflare":     solarFlare,
 	"spiral":         spiral,
 	"spiralsquare":   spiralSquare,
-	"star":           func() *image.RGBA { return star(5) },
+	"star":           func() image.Image { return star(5) },
 	"stars":          stars,
 	"swirl":          swirl,
 	"test":           test,

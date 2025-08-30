@@ -33,7 +33,7 @@ func Maze(dc *Context, lineWidth float64, lineColor color.RGBA, step int) {
 	}
 }
 
-func maze() *image.RGBA {
+func maze() image.Image {
 	dc := NewContext(Diag(600))
 	Maze(dc, 3, Orange, 20)
 	return dc.Image()

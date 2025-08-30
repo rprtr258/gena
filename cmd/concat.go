@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func concat() *image.RGBA {
+func concat() image.Image {
 	im1 := Load("cmd/baboon.png")
 	s1 := Size(im1)
 

@@ -28,7 +28,7 @@ func SilkSky(dc *Context, alpha, n int, sunRadius float64) {
 	}
 }
 
-func silkSky() *image.RGBA {
+func silkSky() image.Image {
 	dc := NewContext(Diag(600))
 	SilkSky(dc, 10, 15, 5)
 	return dc.Image()

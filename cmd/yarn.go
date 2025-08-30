@@ -32,7 +32,7 @@ func Yarn(dc *Context, lineWidth float64, lineColor color.RGBA, n int) {
 	}
 }
 
-func yarn() *image.RGBA {
+func yarn() image.Image {
 	dc := NewContext(Diag(500))
 	Yarn(dc, 0.3, color.RGBA{A: 60}, 2000)
 	return dc.Image()

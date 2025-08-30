@@ -40,7 +40,7 @@ func DotsWave(dc *Context, colorSchema []color.RGBA, n int) {
 	}
 }
 
-func dotswave() *image.RGBA {
+func dotswave() image.Image {
 	dc := NewContext(Diag(500))
 	DotsWave(dc, []color.RGBA{
 		{0xFF, 0xBE, 0x0B, 0xFF},

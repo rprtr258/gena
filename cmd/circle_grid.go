@@ -84,7 +84,7 @@ func CircleGrid(dc *Context, colorSchema []color.RGBA, lineWidth float64, n int)
 	}
 }
 
-func circleGrid() *image.RGBA {
+func circleGrid() image.Image {
 	dc := NewContext(Diag(500))
 	CircleGrid(dc, []color.RGBA{
 		{0xED, 0x34, 0x41, 0xFF},

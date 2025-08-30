@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func invertMask() *image.RGBA {
+func invertMask() image.Image {
 	dc := NewContext(complex(1024, 1024))
 	dc.DrawCircle(complex(512, 512), 384)
 	dc.Clip()

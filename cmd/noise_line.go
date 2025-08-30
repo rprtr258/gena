@@ -46,7 +46,7 @@ func NoiseLine(dc *Context, colorSchema []color.RGBA, iters int) {
 	}
 }
 
-func noiseline() *image.RGBA {
+func noiseline() image.Image {
 	dc := NewContext(Diag(1000))
 	NoiseLine(dc, []color.RGBA{
 		{0x06, 0x7B, 0xC2, 0xFF},

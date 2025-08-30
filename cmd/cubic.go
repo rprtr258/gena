@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func cubic() *image.RGBA {
+func cubic() image.Image {
 	const S = 1000
 	dc := NewContext(P(S, S))
 	dc.SetColor(ColorRGB(1, 1, 1))

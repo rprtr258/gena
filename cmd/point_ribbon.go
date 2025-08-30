@@ -35,7 +35,7 @@ func PointRibbon(dc *Context, lineWidth, r float64, iters int) {
 	}
 }
 
-func pointRibbon() *image.RGBA {
+func pointRibbon() image.Image {
 	dc := NewContext(Diag(500))
 	PointRibbon(dc, 2, 50, 150000)
 	return dc.Image()

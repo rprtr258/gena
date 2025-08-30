@@ -54,7 +54,7 @@ func RandomShape(dc *Context, colorSchema []color.RGBA, n int) {
 	}
 }
 
-func randomShape() *image.RGBA {
+func randomShape() image.Image {
 	dc := NewContext(Diag(500))
 	RandomShape(dc, []color.RGBA{
 		{0xCF, 0x2B, 0x34, 0xFF},

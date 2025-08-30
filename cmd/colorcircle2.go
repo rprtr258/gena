@@ -54,7 +54,7 @@ func ColorCircle2(dc *Context, colorSchema []color.RGBA, n int) {
 	}
 }
 
-func colorcircle2() *image.RGBA {
+func colorcircle2() image.Image {
 	dc := NewContext(Diag(800))
 	ColorCircle2(dc, []color.RGBA{
 		{0x11, 0x60, 0xC6, 0xFF},

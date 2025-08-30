@@ -45,7 +45,7 @@ func CircleMove(dc *Context, n int) {
 	}
 }
 
-func circleMove() *image.RGBA {
+func circleMove() image.Image {
 	dc := NewContext(complex(1200, 500))
 	CircleMove(dc, 1000)
 	return dc.Image()

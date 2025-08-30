@@ -7,7 +7,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func test() *image.RGBA {
+func test() image.Image {
 	dest := image.NewRGBA(image.Rect(0, 0, 500, 500))
 
 	dc := NewContextFromRGBA(dest)

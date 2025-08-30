@@ -37,7 +37,7 @@ func ContourLine(dc *Context, colorSchema []color.RGBA, n int) {
 	}
 }
 
-func contourline() *image.RGBA {
+func contourline() image.Image {
 	dc := NewContext(Diag(1600))
 	ContourLine(dc, []color.RGBA{
 		{0x58, 0x18, 0x45, 0xFF},

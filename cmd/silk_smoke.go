@@ -50,7 +50,7 @@ func SilkSmoke(
 	}
 }
 
-func silkSmoke() *image.RGBA {
+func silkSmoke() image.Image {
 	dc := NewContext(Diag(500))
 	SilkSmoke(dc, 1, MediumAquamarine, 30, 400, 20, 0.2, 2, 10, 30)
 	return dc.Image()

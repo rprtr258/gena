@@ -7,7 +7,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func gradientConic() *image.RGBA {
+func gradientConic() image.Image {
 	dc := NewContext(Diag(400))
 
 	grad1 := PatternGradientConic(Diag(200), 0, Stops{

@@ -16,7 +16,7 @@ func CreatePoints(n int) []V2 {
 	return points
 }
 
-func scatter() *image.RGBA {
+func scatter() image.Image {
 	const S = 1024
 	const p = 64
 	dc := NewContext(P(S, S))

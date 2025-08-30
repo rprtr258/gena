@@ -39,7 +39,7 @@ func Julia(
 	}
 }
 
-func julia() *image.RGBA {
+func julia() image.Image {
 	im := NewContext(Diag(500))
 	Julia(im, Viridis, func(z V2) V2 {
 		return z*z + P(-0.1, 0.651)

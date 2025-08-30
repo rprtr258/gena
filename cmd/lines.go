@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func lines() *image.RGBA {
+func lines() image.Image {
 	const W = 1024
 	const H = 1024
 	dc := NewContext(P(W, H))

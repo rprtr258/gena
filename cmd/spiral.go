@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func spiral() *image.RGBA {
+func spiral() image.Image {
 	const S = 1024
 	const N = 2048
 	dc := NewContext(complex(S, S))

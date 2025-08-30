@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func mask() *image.RGBA {
+func mask() image.Image {
 	dc := NewContext(complex(512, 512))
 	dc.DrawRoundedRectangle(0, complex(512, 512), 64)
 	dc.Clip()

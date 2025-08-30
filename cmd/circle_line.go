@@ -36,7 +36,7 @@ func CircleLine(
 	}
 }
 
-func circleLine() *image.RGBA {
+func circleLine() image.Image {
 	dc := NewContext(Diag(600))
 	CircleLine(dc, 1, LightPink, 0.02, 600, 1.5, complex(2, 2))
 	return dc.Image()

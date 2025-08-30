@@ -68,7 +68,7 @@ func DomainWarp(
 	return res
 }
 
-func domainwrap() *image.RGBA {
+func domainwrap() image.Image {
 	dc := NewContext(Diag(500))
 	domainWarp(dc, NewPerlinNoiseDeprecated(), 0.01, 4, P(4, 20))
 	return dc.Image()

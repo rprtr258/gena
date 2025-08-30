@@ -7,7 +7,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func mystar() *image.RGBA {
+func mystar() image.Image {
 	const numPoints = 4
 	const rotations = 9
 	size := Diag(500)

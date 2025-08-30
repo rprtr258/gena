@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func sine() *image.RGBA {
+func sine() image.Image {
 	const W = 1200
 	const H = 60
 	dc := NewContext(P(W, H))

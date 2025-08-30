@@ -42,7 +42,7 @@ func Janus(dc *Context, colorSchema []color.RGBA, fg color.RGBA, decay float64) 
 	}
 }
 
-func janus() *image.RGBA {
+func janus() image.Image {
 	DarkRed := []color.RGBA{
 		{48, 19, 21, 255},
 		{71, 15, 16, 255},

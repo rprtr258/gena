@@ -36,7 +36,7 @@ func CircleLoop(
 	}
 }
 
-func circleLoop() *image.RGBA {
+func circleLoop() image.Image {
 	dc := NewContext(Diag(500))
 	CircleLoop(dc, 1, Orange, 30, 100, 1000)
 	return dc.Image()

@@ -14,7 +14,7 @@ func Polygon(n int) []V2 {
 	return result
 }
 
-func stars() *image.RGBA {
+func stars() image.Image {
 	const W = 1200
 	const H = 120
 	const S = 100

@@ -42,7 +42,7 @@ func PixelHole(dc *Context, colorSchema []color.RGBA, n, iters int) {
 	}
 }
 
-func pixelhole() *image.RGBA {
+func pixelhole() image.Image {
 	dc := NewContext(Diag(800))
 	PixelHole(dc, []color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},

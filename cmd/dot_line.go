@@ -51,7 +51,7 @@ func DotLine(dc *Context, palette Pattern1D, lineWidth float64, n int, ras, canv
 	}
 }
 
-func dotline() *image.RGBA {
+func dotline() image.Image {
 	dc := NewContext(Diag(2080))
 	DotLine(dc, DarkPink, 10, 100, 20, 50, false, 15000)
 	return dc.Image()

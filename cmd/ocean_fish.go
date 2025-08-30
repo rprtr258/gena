@@ -69,7 +69,7 @@ func OceanFish(dc *Context, colorSchema []color.RGBA, lineNum, fishNum int) {
 	}
 }
 
-func oceanfish() *image.RGBA {
+func oceanfish() image.Image {
 	// colors := []color.RGBA{
 	// 	{0x05, 0x1F, 0x34, 0xFF},
 	// 	{0x02, 0x74, 0x95, 0xFF},

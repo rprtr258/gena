@@ -74,7 +74,7 @@ func CircleLoop2(dc *Context, palette Pattern1D, depth int) {
 	recursionDraw(dc, dc.Image(), float64(dc.Image().Bounds().Dx()), depth, &noise, palette)
 }
 
-func circleloop2() *image.RGBA {
+func circleloop2() image.Image {
 	dc := NewContext(Diag(500))
 	CircleLoop2(dc, NewPaletteFromRGBAs([]color.RGBA{
 		{0xF9, 0xC8, 0x0E, 0xFF},

@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func crisp() *image.RGBA {
+func crisp() image.Image {
 	const W = 1000
 	const H = 1000
 	const Minor = 10

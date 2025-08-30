@@ -15,7 +15,7 @@ var loremIpsumLines = []string{
 	"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 }
 
-func lorem() *image.RGBA {
+func lorem() image.Image {
 	const W = 800
 	const H = 400
 	dc := NewContext(P(W, H))

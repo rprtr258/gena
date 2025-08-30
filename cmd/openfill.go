@@ -6,7 +6,7 @@ import (
 	. "github.com/rprtr258/gena"
 )
 
-func openfill() *image.RGBA {
+func openfill() image.Image {
 	const N = 10
 	const SZ = 1000
 	dc := NewContext(Diag(SZ))
