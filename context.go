@@ -903,8 +903,10 @@ func (dc *Context) TransformSet(m Matrix) {
 	dc.matrix = m
 }
 
-func (dc *Context) TransformAdd(m Matrix) {
-	dc.matrix = m.Multiply(dc.matrix)
+func (dc *Context) TransformAdd(ms ...Matrix) {
+	for _, m := range ms {
+		dc.matrix = m.Multiply(dc.matrix)
+	}
 }
 
 // transformPoint multiplies the specified point by the current matrix, returning a transformed position.
